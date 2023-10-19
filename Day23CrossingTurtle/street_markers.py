@@ -15,7 +15,7 @@ class Lanes(Turtle):
 
         # lane spacing
         for start_y in range(-240, 300, 60):
-            print(start_y)
+            print(f"Drawing Lane at y_cord: {start_y}")
             self.goto(-300, start_y)
             self.penup()
             # draw lane
@@ -31,4 +31,4 @@ class Lanes(Turtle):
         self.pendown()
         self.goto(300, FINISH_LINE_Y + 10)
 
-        print("done")
+        print("Line drawing complete")

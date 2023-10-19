@@ -72,7 +72,7 @@ while game_is_on:
         player.reset_position()
 
     # spawn car with randomness
-    print(len(active_cars))
+    print(f"Active Cars: {len(active_cars)}")
     random_value = random.random()
     if random_value < PROBABILITY_THRESHOLD:
         if len(active_cars) < ACTIVE_CAR_GOAL:
