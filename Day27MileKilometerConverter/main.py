@@ -26,7 +26,7 @@ def mode_to_miles():
 
 # Window
 window = Tk()
-window.title("Mile > Kilometer Converter")
+window.title("Mile <> Kilometer Converter")
 window.config(padx=25, pady=25)
 
 # Label
