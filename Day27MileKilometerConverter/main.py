@@ -12,3 +12,17 @@ from tkinter import *
 # radiobutton2 = Radiobutton(text="Option2", value=2, variable=radio_state, command=radio_used)
 # radiobutton1.pack()
 # radiobutton2.pack()
+
+# Window
+window = Tk()
+window.title("Mile <> Kilometer Converter")
+window.minsize(width=500, height=300)
+window.maxsize(width=500, height=300)
+
+# Label
+
+# Entry
+
+# Button
+
+window.mainloop()
