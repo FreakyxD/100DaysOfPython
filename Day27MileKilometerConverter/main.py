@@ -55,6 +55,7 @@ radio_state = IntVar()  # Variable to hold on to which radio button value is che
 
 # Preselect radiobutton1
 radio_state.set(1)
+mode_to_miles()
 
 radiobutton1 = Radiobutton(text="Miles", value=1, variable=radio_state, command=mode_to_miles)
 radiobutton1.grid(column=1, row=0)
