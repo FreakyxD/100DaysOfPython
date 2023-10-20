@@ -7,9 +7,9 @@ def convert():
     mode = radio_state.get()
     n = float(user_input.get())
 
-    if mode == 1: # radio == 1 means to miles
+    if mode == 1:  # radio == 1 means to miles
         result = round(n / 1.609344, 2)
-    elif mode == 2: # radio == 2 means to km
+    elif mode == 2:  # radio == 2 means to km
         result = round(n * 1.609344, 2)
 
     result_label.config(text=result)
@@ -18,10 +18,13 @@ def convert():
 def mode_to_km():
     first_label.config(text="Miles")
     second_label.config(text="Km")
+    result_label.config(text="0")  # Reset result on switch
+
 
 def mode_to_miles():
     first_label.config(text="Km")
     second_label.config(text="Miles")
+    result_label.config(text="0")  # Reset result on switch
 
 
 # Window
