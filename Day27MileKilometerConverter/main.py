@@ -4,8 +4,8 @@ FONT = ("arial", 20)
 
 
 def convert():
-    n = user_input.get()
-    result = round(float(n) * 1.609344, 2)
+    n = float(user_input.get())
+    result = round(n * 1.609344, 2)
     result_label.config(text=result)
 
 
