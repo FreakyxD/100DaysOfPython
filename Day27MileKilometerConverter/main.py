@@ -17,12 +17,12 @@ def convert():
 
 
 def mode_to_km():
-    first_label.config(text="Km")
-    second_label.config(text="Miles")
-
-def mode_to_miles():
     first_label.config(text="Miles")
     second_label.config(text="Km")
+
+def mode_to_miles():
+    first_label.config(text="Km")
+    second_label.config(text="Miles")
 
 
 # Window
