@@ -40,6 +40,8 @@ km_label.grid(column=2, row=1)
 km_label.config(padx=5, pady=5)
 
 # Entry
+user_input = Entry(width=10)
+user_input.grid(column=1, row=0)
 
 # Button
 
