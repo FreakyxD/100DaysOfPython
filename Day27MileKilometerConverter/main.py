@@ -44,5 +44,7 @@ user_input = Entry(width=10)
 user_input.grid(column=1, row=0)
 
 # Button
+calc_button = Button(text="Calculate")
+calc_button.grid(column=1, row=2)
 
 window.mainloop()
