@@ -17,7 +17,7 @@ FONT = ("arial", 20)
 
 # Window
 window = Tk()
-window.title("Mile <> Kilometer Converter")
+window.title("Mile > Kilometer Converter")
 window.minsize(width=350, height=150)
 window.maxsize(width=350, height=150)
 window.config(padx=25, pady=25)
