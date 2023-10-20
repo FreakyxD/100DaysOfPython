@@ -5,14 +5,13 @@ FONT = ("arial", 20)
 
 def convert():
     mode = radio_state.get()
+    n = float(user_input.get())
 
     if mode == 1: # radio == 1 means to miles
-        pass
+        result = round(n / 1.609344, 2)
     elif mode == 2: # radio == 2 means to km
-        pass
+        result = round(n * 1.609344, 2)
 
-    n = float(user_input.get())
-    result = round(n * 1.609344, 2)
     result_label.config(text=result)
 
 
