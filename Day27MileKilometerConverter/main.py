@@ -4,13 +4,25 @@ FONT = ("arial", 20)
 
 
 def convert():
+    mode = radio_state.get()
+
+    if mode == 1: # radio == 1 means to miles
+        pass
+    elif mode == 2: # radio == 2 means to km
+        pass
+
     n = float(user_input.get())
     result = round(n * 1.609344, 2)
     result_label.config(text=result)
 
 
-def radio_used():
-    print(radio_state.get())
+def mode_to_km():
+    first_label.config(text="Km")
+    second_label.config(text="Miles")
+
+def mode_to_miles():
+    first_label.config(text="Miles")
+    second_label.config(text="Km")
 
 
 # Window
@@ -22,9 +34,9 @@ window.config(padx=25, pady=25)
 convert_choice_label = Label(text="Convert to:", font=FONT)
 convert_choice_label.grid(column=0, row=0)
 
-miles_label = Label(text="Miles", font=FONT)
-miles_label.grid(column=2, row=2)
-miles_label.config(padx=5, pady=5)
+first_label = Label(font=FONT)
+first_label.grid(column=2, row=2)
+first_label.config(padx=5, pady=5)
 
 equal_label = Label(text="is equal to", font=FONT)
 equal_label.grid(column=0, row=3)
@@ -34,17 +46,20 @@ result_label = Label(text="0", font=FONT)
 result_label.grid(column=1, row=3)
 result_label.config(padx=5, pady=5)
 
-km_label = Label(text="Km", font=FONT)
-km_label.grid(column=2, row=3)
-km_label.config(padx=5, pady=5)
+second_label = Label(font=FONT)
+second_label.grid(column=2, row=3)
+second_label.config(padx=5, pady=5)
 
 # Radio
 radio_state = IntVar()  # Variable to hold on to which radio button value is checked
 
-radiobutton1 = Radiobutton(text="Miles", value=1, variable=radio_state, command=radio_used)
+# Preselect radiobutton1
+radio_state.set(1)
+
+radiobutton1 = Radiobutton(text="Miles", value=1, variable=radio_state, command=mode_to_miles)
 radiobutton1.grid(column=1, row=0)
 
-radiobutton2 = Radiobutton(text="Km", value=2, variable=radio_state, command=radio_used)
+radiobutton2 = Radiobutton(text="Km", value=2, variable=radio_state, command=mode_to_km)
 radiobutton2.grid(column=2, row=0)
 
 # Entry
