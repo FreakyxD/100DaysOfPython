@@ -22,7 +22,7 @@ window.config(background=YELLOW, padx=100, pady=50)
 
 canvas = Canvas(width=200, height=224)
 tomato_img = PhotoImage(file="tomato.png")
-canvas.create_image(100, 112, image=tomato_img)
+canvas.create_image(103, 112, image=tomato_img)
 canvas.pack()
 
 
