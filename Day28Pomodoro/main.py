@@ -34,9 +34,9 @@ checkmark_label = Label(text="✔", background=YELLOW)
 checkmark_label.grid(column=1, row=3)
 
 # buttons
-start_btn = Button(text="Start", highlightthickness=0)
+start_btn = Button(text="Start", highlightbackground=YELLOW)
 start_btn.grid(column=0, row=2)
-reset_btn = Button(text="Reset", highlightthickness=0)
+reset_btn = Button(text="Reset", highlightbackground=YELLOW)
 reset_btn.grid(column=2, row=2)
 
 window.mainloop()
