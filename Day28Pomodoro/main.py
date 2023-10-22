@@ -1,4 +1,5 @@
 from tkinter import *
+
 # ---------------------------- CONSTANTS ------------------------------- #
 PINK = "#e2979c"
 RED = "#e7305b"
@@ -29,8 +30,10 @@ canvas.grid(column=1, row=1)
 # label
 timer_label = Label(text="Timer")
 timer_label.grid(column=1, row=0)
+timer_label.config(background=YELLOW)
 checkmark_label = Label(text="✔")
 checkmark_label.grid(column=1, row=3)
+checkmark_label.config(background=YELLOW)
 
 # buttons
 start_btn = Button(text="Start")
