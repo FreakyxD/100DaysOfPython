@@ -28,15 +28,15 @@ canvas.create_text(100, 130, text="00:00", fill="white", font=(FONT_NAME, 35, "b
 canvas.grid(column=1, row=1)
 
 # label
-timer_label = Label(text="Timer", background=YELLOW)
+timer_label = Label(text="Timer", background=YELLOW, foreground=GREEN, font=(FONT_NAME, 50))
 timer_label.grid(column=1, row=0)
 checkmark_label = Label(text="✔", background=YELLOW)
 checkmark_label.grid(column=1, row=3)
 
 # buttons
-start_btn = Button(text="Start", background=YELLOW)
+start_btn = Button(text="Start", highlightthickness=0)
 start_btn.grid(column=0, row=2)
-reset_btn = Button(text="Reset", background=YELLOW)
+reset_btn = Button(text="Reset", highlightthickness=0)
 reset_btn.grid(column=2, row=2)
 
 window.mainloop()
