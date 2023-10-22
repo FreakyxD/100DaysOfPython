@@ -23,19 +23,18 @@ def start_timer():
     global reps
     reps += 1
 
-    # work_sec = WORK_MIN * 60
-    # short_break_sec = SHORT_BREAK_MIN * 60
-    # long_break_sec = LONG_BREAK_MIN * 60
-
-    work_sec = 5
-    short_break_sec = 2
-    long_break_sec = 4
+    work_sec = WORK_MIN * 60
+    short_break_sec = SHORT_BREAK_MIN * 60
+    long_break_sec = LONG_BREAK_MIN * 60
 
     if reps % 8 == 0:
+        timer_label.config(text="Break+", foreground=RED)
         count_down(long_break_sec)
     elif reps % 2 == 0:  # even reps
+        timer_label.config(text="Break", foreground=PINK)
         count_down(short_break_sec)
     else:  # uneven reps
+        timer_label.config(text="Work", foreground=GREEN)
         count_down(work_sec)
 
 
