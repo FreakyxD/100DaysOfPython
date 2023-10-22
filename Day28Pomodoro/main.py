@@ -11,6 +11,7 @@ WORK_MIN = 25
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
 reps = 0
+checkmarks = ""
 
 
 # ---------------------------- TIMER RESET ------------------------------- #
@@ -42,6 +43,8 @@ def start_timer():
 
 
 def count_down(count):
+    global checkmarks
+
     count_min = math.floor(count / 60)
     count_sec = count % 60
     if count_sec < 10:
@@ -52,6 +55,9 @@ def count_down(count):
         window.after(1000, count_down, count - 1)
     else:
         start_timer()
+        if reps % 2 == 0:
+            checkmarks += "✔"
+            checkmark_label.config(text=checkmarks)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -68,7 +74,7 @@ canvas.grid(column=1, row=1)
 # label
 timer_label = Label(text="Timer", background=YELLOW, foreground=GREEN, font=(FONT_NAME, 50))
 timer_label.grid(column=1, row=0)
-checkmark_label = Label(text="✔", background=YELLOW)
+checkmark_label = Label(background=YELLOW, foreground=GREEN)
 checkmark_label.grid(column=1, row=3)
 
 # buttons
