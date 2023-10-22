@@ -26,9 +26,8 @@ def reset_timer():
     checkmark_label.config(text=checkmarks)
     reps = 0
 
+
 # ---------------------------- TIMER MECHANISM ------------------------------- #
-
-
 def start_timer():
     """pass in an int in minutes"""
     global reps
@@ -50,8 +49,6 @@ def start_timer():
 
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
-
-
 def count_down(count):
     global checkmarks
     global timer
