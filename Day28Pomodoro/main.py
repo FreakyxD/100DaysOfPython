@@ -27,7 +27,8 @@ canvas.create_text(100, 130, text="00:00", fill="white", font=(FONT_NAME, 35, "b
 canvas.pack()
 
 # label
-timer_label = Label(text="Timter")
+timer_label = Label(text="Timer")
+timer_label.grid(column=1, row=0)
 checkmark_label = Label(text="✔")
 
 # buttons
