@@ -4,6 +4,8 @@ from tkinter import *
 
 # Save Password
 
+
+
 # UI Setup
 window = Tk()
 window.title("Password Manager")
@@ -25,8 +27,10 @@ password_label.grid(column=0, row=3)
 # Entry
 website_input = Entry(width=35)
 website_input.grid(column=1, row=1, columnspan=2)
+website_input.focus()
 mail_user_input = Entry(width=35)
 mail_user_input.grid(column=1, row=2, columnspan=2)
+mail_user_input.insert(0, "email@outlook.com")
 password_input = Entry(width=21)
 password_input.grid(column=1, row=3)
 
