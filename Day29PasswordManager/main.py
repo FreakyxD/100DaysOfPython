@@ -3,6 +3,9 @@ from tkinter import *
 # Password generator
 
 # Save Password
+def save():
+    with open("data.txt", mode="w") as file:
+        print("ok")
 
 
 
@@ -39,7 +42,7 @@ password_input.grid(column=1, row=4)
 # Button
 password_btn = Button(text="New Password")
 password_btn.grid(column=2, row=4)
-add_btn = Button(text="Add", width=33)
+add_btn = Button(text="Add", width=33, command=save)
 add_btn.grid(column=1, row=5, columnspan=2)
 
 window.mainloop()
