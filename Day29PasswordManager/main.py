@@ -4,10 +4,15 @@ from tkinter import *
 
 # Save Password
 def save():
-    with open("data.txt", mode="w") as file:
-        print("ok")
+    website = website_input.get()
+    username = mail_user_input.get()
+    password = password_input.get()
+
+    with open("data.txt", mode="a") as file:
+        file.write(f"{website} | {username} | {password}\n")
 
 
+#clear all expect email entry
 
 # UI Setup
 window = Tk()
