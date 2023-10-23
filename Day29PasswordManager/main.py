@@ -4,6 +4,7 @@ from tkinter import *
 
 # Save Password
 def save():
+    # TODO warn if no data returned by any of the get()
     website = website_input.get()
     username = mail_user_input.get()
     password = password_input.get()
@@ -11,8 +12,11 @@ def save():
     with open("data.txt", mode="a") as file:
         file.write(f"{website} | {username} | {password}\n")
 
+    reset_fields()
 
-#clear all expect email entry
+def reset_fields():
+    website_input.delete(0, "end")
+    password_input.delete(0, "end")
 
 # UI Setup
 window = Tk()
