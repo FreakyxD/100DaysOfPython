@@ -1,5 +1,5 @@
 from tkinter import *
-
+from tkinter import messagebox
 
 # Password generator
 
@@ -10,10 +10,13 @@ def save():
     username = mail_user_input.get()
     password = password_input.get()
 
-    with open("data.txt", mode="a") as file:
-        file.write(f"{website} | {username} | {password}\n")
+    is_ok = messagebox.askokcancel(title=website, message=f"These are the details entered: \nEmail: {username} \nPassword: {password} \nIs it ok to save?")
 
-    reset_fields()
+    if is_ok:
+        with open("data.txt", mode="a") as file:
+            file.write(f"{website} | {username} | {password}\n")
+
+        reset_fields()
 
 
 def reset_fields():
