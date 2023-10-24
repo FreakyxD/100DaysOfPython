@@ -1,5 +1,6 @@
 from tkinter import *
 
+
 # Password generator
 
 # Save Password
@@ -14,9 +15,11 @@ def save():
 
     reset_fields()
 
+
 def reset_fields():
     website_input.delete(0, "end")
     password_input.delete(0, "end")
+
 
 # UI Setup
 window = Tk()
