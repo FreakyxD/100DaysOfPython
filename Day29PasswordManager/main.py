@@ -32,7 +32,7 @@ canvas.grid(column=1, row=1)
 canvas.create_image(100, 100, image=logo)
 
 # Label
-sec_warning_label = Label(text="Do not use - insecure!", font=("Segoe UI", 20, "bold"), fg="red")
+sec_warning_label = Label(text="Do not use - insecure!", font=("Segoe UI", 20, "bold"), fg="#CF382B")
 sec_warning_label.grid(column=1, row=0)
 website_label = Label(text="Website:")
 website_label.grid(column=0, row=2)
