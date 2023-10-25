@@ -4,6 +4,7 @@ from passwordgenerator import generate_password
 
 
 def handle_password():
+    password_input.delete(0, "end")
     password_input.insert(0, generate_password())
 
 
