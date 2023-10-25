@@ -3,6 +3,10 @@ from tkinter import messagebox
 from passwordgenerator import generate_password
 
 
+def handle_password():
+    password_input.insert(0, generate_password())
+
+
 # Save Password
 def save():
     # TODO warn if no data returned by any of the get()
@@ -60,7 +64,7 @@ password_input = Entry(width=21)
 password_input.grid(column=1, row=4)
 
 # Button
-password_btn = Button(text="New Password")
+password_btn = Button(text="New Password", command=handle_password)
 password_btn.grid(column=2, row=4)
 add_btn = Button(text="Add", width=33, command=save)
 add_btn.grid(column=1, row=5, columnspan=2)
