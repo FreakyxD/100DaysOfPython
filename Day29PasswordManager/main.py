@@ -1,8 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
+from passwordgenerator import generate_password
 
-
-# Password generator
 
 # Save Password
 def save():
