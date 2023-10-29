@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from passwordgenerator import generate_password
+import json
 
 
 def handle_password():
@@ -14,12 +15,25 @@ def save():
     website = website_input.get()
     username = mail_user_input.get()
     password = password_input.get()
+    data_dict = {
+        website: {
+            "email": username,
+            "password": password,
+        }
+    }
 
     if website == "" or username == "" or password == "":
         messagebox.showwarning(title="Oops", message="Please don't leave any fields empty!")
     else:
-        with open("data.txt", mode="a") as file:
-            file.write(f"{website} | {username} | {password}\n")
+        with open("data.json", mode="r") as file:
+            # reading old data
+            data = json.load(file)  # creates a python dictionary
+            # updating old data with new data
+            data.update(data_dict)
+
+        with open("data.json", mode="w") as file:
+            # saving updated data
+            json.dump(data, file, indent=4)
 
         reset_fields()
 
