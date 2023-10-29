@@ -9,6 +9,11 @@ def handle_password():
     password_input.insert(0, generate_password())
 
 
+def save_json(data):
+    with open("data.json", mode="w") as file:
+        json.dump(data, file, indent=4)
+
+
 # Save Password
 def save():
     # TODO warn if no data returned by any of the get()
@@ -30,15 +35,11 @@ def save():
                 # reading old data
                 data = json.load(file)  # creates a python dictionary
         except FileNotFoundError:
-            with open("data.json", mode="w") as file:
-                json.dump(data_dict, file, indent=4)
+            save_json(data_dict)
         else:
             # updating old data with new data
             data.update(data_dict)
-
-            with open("data.json", mode="w") as file:
-                # saving updated data
-                json.dump(data, file, indent=4)
+            save_json(data)
 
         reset_fields()
 
