@@ -25,11 +25,14 @@ def save():
     if website == "" or username == "" or password == "":
         messagebox.showwarning(title="Oops", message="Please don't leave any fields empty!")
     else:
-        with open("data.json", mode="r") as file:
-            # reading old data
-            data = json.load(file)  # creates a python dictionary
-            # updating old data with new data
-            data.update(data_dict)
+        try:
+            with open("data.json", mode="r") as file:
+                # reading old data
+                data = json.load(file)  # creates a python dictionary
+                # updating old data with new data
+                data.update(data_dict)
+        except FileNotFoundError:
+            data = data_dict
 
         with open("data.json", mode="w") as file:
             # saving updated data
