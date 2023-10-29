@@ -40,8 +40,8 @@ def save():
             # updating old data with new data
             data.update(data_dict)
             save_json(data)
-
-        reset_fields()
+        finally:
+            reset_fields()
 
 
 def reset_fields():
