@@ -70,8 +70,8 @@ password_label = Label(text="Password:")
 password_label.grid(column=0, row=4)
 
 # Entry
-website_input = Entry(width=35)
-website_input.grid(column=1, row=2, columnspan=2)
+website_input = Entry(width=21)
+website_input.grid(column=1, row=2)
 website_input.focus()
 mail_user_input = Entry(width=35)
 mail_user_input.grid(column=1, row=3, columnspan=2)
@@ -80,6 +80,8 @@ password_input = Entry(width=21)
 password_input.grid(column=1, row=4)
 
 # Button
+search_btn = Button(text="Search", width=10)
+search_btn.grid(column=2, row=2)
 password_btn = Button(text="New Password", command=handle_password)
 password_btn.grid(column=2, row=4)
 add_btn = Button(text="Add", width=33, command=save)
