@@ -16,7 +16,6 @@ def save_json(data):
 
 # Save Password
 def save():
-    # TODO warn if no data returned by any of the get()
     website = website_input.get()
     username = mail_user_input.get()
     password = password_input.get()
