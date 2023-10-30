@@ -48,6 +48,19 @@ def reset_fields():
     password_input.delete(0, "end")
 
 
+def find_password():
+    search_term = website_input.get()
+    if website_input.get() == "":
+        messagebox.showwarning(title="Oops", message="Please fill the website field!")
+    else:
+        with open("data.json", mode="r") as file:
+            try:
+                data = json.load(file)
+            except FileNotFoundError:
+                messagebox.showerror(title="Error", message="No saved passwords found!")
+            else:
+                print(data) # TODO remove debug line
+
 # UI Setup
 window = Tk()
 window.title("Password Manager")
@@ -79,7 +92,7 @@ password_input = Entry(width=21)
 password_input.grid(column=1, row=4)
 
 # Button
-search_btn = Button(text="Search", width=10)
+search_btn = Button(text="Search", width=10, command=find_password)
 search_btn.grid(column=2, row=2)
 password_btn = Button(text="New Password", command=handle_password)
 password_btn.grid(column=2, row=4)
