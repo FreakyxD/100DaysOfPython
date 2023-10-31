@@ -57,9 +57,18 @@ def find_password():
             try:
                 data = json.load(file)
             except FileNotFoundError:
-                messagebox.showerror(title="Error", message="No saved passwords found!")
+                messagebox.showwarning(title="Warning", message="No saved passwords found!")
             else:
-                print(data) # TODO remove debug line
+                try:
+                    current_entry = data[search_term]
+                except KeyError:
+                    messagebox.showwarning(title="Warning", message="No search results!")
+                else:
+                    email = current_entry["email"]
+                    password = current_entry["password"]
+                    print(current_entry["email"])
+                    messagebox.showinfo(title="Search Result", message=f"Email: {email}\nPassword: {password}")
+
 
 # UI Setup
 window = Tk()
