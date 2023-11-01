@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from passwordgenerator import generate_password
+import json
 
 
 def handle_password():
@@ -8,30 +9,62 @@ def handle_password():
     password_input.insert(0, generate_password())
 
 
+def save_json(data):
+    with open("data.json", mode="w") as file:
+        json.dump(data, file, indent=4)
+
+
 # Save Password
 def save():
-    # TODO warn if no data returned by any of the get()
     website = website_input.get()
     username = mail_user_input.get()
     password = password_input.get()
+    data_dict = {
+        website: {
+            "email": username,
+            "password": password,
+        }
+    }
 
     if website == "" or username == "" or password == "":
         messagebox.showwarning(title="Oops", message="Please don't leave any fields empty!")
     else:
-        is_ok = messagebox.askokcancel(title=website,
-                                       message=f"These are the details entered: \nEmail: {username} \nPassword: "
-                                               f"{password} \nIs it ok to save?")
-
-        if is_ok:
-            with open("data.txt", mode="a") as file:
-                file.write(f"{website} | {username} | {password}\n")
-
+        try:
+            with open("data.json", mode="r") as file:
+                # reading old data
+                data = json.load(file)  # creates a python dictionary
+        except FileNotFoundError:
+            save_json(data_dict)
+        else:
+            # updating old data with new data
+            data.update(data_dict)
+            save_json(data)
+        finally:
             reset_fields()
 
 
 def reset_fields():
     website_input.delete(0, "end")
     password_input.delete(0, "end")
+
+
+def find_password():
+    search_term = website_input.get()
+    if website_input.get() == "":
+        messagebox.showwarning(title="Oops", message="Please fill the website field!")
+    else:
+        with open("data.json", mode="r") as file:
+            try:
+                data = json.load(file)
+            except FileNotFoundError:
+                messagebox.showwarning(title="Warning", message="No saved passwords found!")
+            else:
+                if search_term in data:
+                    email = data[search_term]["email"]
+                    password = data[search_term]["password"]
+                    messagebox.showinfo(title="Search Result", message=f"Email: {email}\nPassword: {password}")
+                else:
+                    messagebox.showwarning(title="Warning", message=f"No entry for '{search_term}' found.")
 
 
 # UI Setup
@@ -55,8 +88,8 @@ password_label = Label(text="Password:")
 password_label.grid(column=0, row=4)
 
 # Entry
-website_input = Entry(width=35)
-website_input.grid(column=1, row=2, columnspan=2)
+website_input = Entry(width=21)
+website_input.grid(column=1, row=2)
 website_input.focus()
 mail_user_input = Entry(width=35)
 mail_user_input.grid(column=1, row=3, columnspan=2)
@@ -65,6 +98,8 @@ password_input = Entry(width=21)
 password_input.grid(column=1, row=4)
 
 # Button
+search_btn = Button(text="Search", width=10, command=find_password)
+search_btn.grid(column=2, row=2)
 password_btn = Button(text="New Password", command=handle_password)
 password_btn.grid(column=2, row=4)
 add_btn = Button(text="Add", width=33, command=save)
