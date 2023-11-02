@@ -17,9 +17,10 @@ card_back_img = PhotoImage(file="images/card_back.png")
 canvas = Canvas(width=800, height=526, bg=BACKGROUND_COLOR, highlightthickness=0)
 canvas.create_image(400, 263, image=card_front_img)
 canvas.grid(column=0, row=0, columnspan=2)
-lang_label = canvas.create_text(400, 150, text="language", font=(
-"arial", 40, "italic"))  # change later with canvas.itemconfig(lang_label, text="change")
-world_label = canvas.create_text(400, 263, text="word", font=("arial", 60, "bold"))
+
+# change later with canvas.itemconfig(lang_label, text="change")
+lang_label = canvas.create_text(400, 150, text="language", font=("arial", 40, "italic"), fill="black")
+world_label = canvas.create_text(400, 263, text="word", font=("arial", 60, "bold"), fill="black")
 
 # Buttons
 right_btn = Button(image=right_img, highlightthickness=0, borderwidth=0, height=97, width=97)
