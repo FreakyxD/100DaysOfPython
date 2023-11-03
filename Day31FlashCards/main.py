@@ -7,6 +7,7 @@ BACKGROUND_COLOR = "#B1DDC6"
 df = pd.read_csv("data/100_croatian_words.csv")
 df.drop("Word Frequency", axis=1, inplace=True)
 word_list = df.to_dict("records")
+foreign_langauge = list(word_list[0].keys())[0]  # define foreign language depending on CSV data
 
 # UI Setup
 window = Tk()
