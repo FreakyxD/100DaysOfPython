@@ -27,7 +27,7 @@ canvas.grid(column=0, row=0, columnspan=2)
 
 # change later with canvas.itemconfig(lang_label, text="change")
 lang_label = canvas.create_text(400, 150, text="language", font=("arial", 40, "italic"), fill="black")
-world_label = canvas.create_text(400, 263, text="word", font=("arial", 60, "bold"), fill="black")
+word_label = canvas.create_text(400, 263, text="word", font=("arial", 60, "bold"), fill="black")
 
 # Buttons
 right_btn = Button(image=right_img, highlightthickness=0, borderwidth=0, height=97, width=97)
