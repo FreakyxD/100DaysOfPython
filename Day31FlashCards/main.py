@@ -1,6 +1,12 @@
 from tkinter import *
+import pandas as pd
 
 BACKGROUND_COLOR = "#B1DDC6"
+
+# Load CSV
+df = pd.read_csv("data/100_croatian_words.csv")
+df.drop("Word Frequency", axis=1, inplace=True)
+word_list = df.to_dict("records")
 
 # UI Setup
 window = Tk()
