@@ -4,18 +4,26 @@ import random
 import time
 
 BACKGROUND_COLOR = "#B1DDC6"
+current_card = {}
 
 
 def next_card():
-    current_card = random.choice(word_list)  # {'Croatian': 'me', 'English': 'me'}
-    canvas.itemconfig(lang_label, text=FOREIGN_LANGUAGE)
-    canvas.itemconfig(word_label, text=current_card[FOREIGN_LANGUAGE])
+    global current_card, flip_timer
 
-    # flip
-    # TODO bug, first launch takes 3s
-    time.sleep(3)
-    canvas.itemconfig(lang_label, text=NATIVE_LANGUAGE)
-    canvas.itemconfig(word_label, text=current_card[NATIVE_LANGUAGE])
+    window.after_cancel(flip_timer)
+
+    current_card = random.choice(word_list)  # {'Croatian': 'me', 'English': 'me'}
+    canvas.itemconfig(canvas_img, image=card_front_img)
+    canvas.itemconfig(lang_label, text=FOREIGN_LANGUAGE, fill="black")
+    canvas.itemconfig(word_label, text=current_card[FOREIGN_LANGUAGE], fill="black")
+
+    flip_timer = window.after(3000, func=flip_card)  # need to refresh timer duration
+
+
+def flip_card():
+    canvas.itemconfig(canvas_img, image=card_back_img)
+    canvas.itemconfig(lang_label, text=NATIVE_LANGUAGE, fill="white")
+    canvas.itemconfig(word_label, text=current_card[NATIVE_LANGUAGE], fill="white")
 
 
 # Load CSV
@@ -31,6 +39,8 @@ window = Tk()
 window.title("Flashy")
 window.config(padx=50, pady=50, bg=BACKGROUND_COLOR)
 
+flip_timer = window.after(3000, func=flip_card)
+
 # Load images
 right_img = PhotoImage(file="images/right.png")
 wrong_img = PhotoImage(file="images/wrong.png")
@@ -39,10 +49,10 @@ card_back_img = PhotoImage(file="images/card_back.png")
 
 # Canvas
 canvas = Canvas(width=800, height=526, bg=BACKGROUND_COLOR, highlightthickness=0)
-canvas.create_image(400, 263, image=card_front_img)
+canvas_img = canvas.create_image(400, 263)
 canvas.grid(column=0, row=0, columnspan=2)
-lang_label = canvas.create_text(400, 150, text="", font=("arial", 40, "italic"), fill="black")
-word_label = canvas.create_text(400, 263, text="", font=("arial", 60, "bold"), fill="black")
+lang_label = canvas.create_text(400, 150, text="", font=("arial", 40, "italic"))
+word_label = canvas.create_text(400, 263, text="", font=("arial", 60, "bold"))
 
 # Buttons
 right_btn = Button(image=right_img, highlightthickness=0, borderwidth=0, height=97, width=97, command=next_card)
