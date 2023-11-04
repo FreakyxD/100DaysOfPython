@@ -7,6 +7,12 @@ BACKGROUND_COLOR = "#B1DDC6"
 current_card = {}
 
 
+def card_memorized():
+    word_list.remove(current_card)
+    save_words_to_learn()
+    next_card()
+
+
 def next_card():
     global current_card, flip_timer
 
@@ -24,6 +30,10 @@ def flip_card():
     canvas.itemconfig(canvas_img, image=card_back_img)
     canvas.itemconfig(lang_label, text=NATIVE_LANGUAGE, fill="white")
     canvas.itemconfig(word_label, text=current_card[NATIVE_LANGUAGE], fill="white")
+
+def save_words_to_learn():
+    words_to_learn = pd.DataFrame(word_list)
+    words_to_learn.to_csv(path_or_buf="words_to_learn.csv", index=False)
 
 
 # Load CSV
@@ -55,9 +65,9 @@ lang_label = canvas.create_text(400, 150, text="", font=("arial", 40, "italic"))
 word_label = canvas.create_text(400, 263, text="", font=("arial", 60, "bold"))
 
 # Buttons
-right_btn = Button(image=right_img, highlightthickness=0, borderwidth=0, height=97, width=97, command=next_card)
+right_btn = Button(image=right_img, highlightthickness=0, borderwidth=0, height=97, width=97, command=card_memorized)
 right_btn.grid(column=1, row=1)
-wrong_btn = Button(image=wrong_img, highlightthickness=0, borderwidth=0, height=97, width=97, command=next_card)
+wrong_btn = Button(image=wrong_img,highlightthickness=0, borderwidth=0, height=97, width=97, command=next_card)
 wrong_btn.grid(column=0, row=1)
 
 next_card()
