@@ -37,12 +37,16 @@ def save_words_to_learn():
 
 
 # Load CSV
-df = pd.read_csv("data/100_croatian_words.csv")
-df.drop("Word Frequency", axis=1, inplace=True)
-word_list = df.to_dict("records")
-# set languages based on CSV
-FOREIGN_LANGUAGE = list(word_list[0].keys())[0]
-NATIVE_LANGUAGE = list(word_list[0].keys())[1]
+try:
+    df = pd.read_csv("words_to_learn.csv")
+except FileNotFoundError:
+    df = pd.read_csv("data/100_croatian_words.csv")
+    df.drop("Word Frequency", axis=1, inplace=True)
+finally:
+    word_list = df.to_dict("records")
+    # set languages based on CSV
+    FOREIGN_LANGUAGE = list(word_list[0].keys())[0]
+    NATIVE_LANGUAGE = list(word_list[0].keys())[1]
 
 # UI Setup
 window = Tk()
