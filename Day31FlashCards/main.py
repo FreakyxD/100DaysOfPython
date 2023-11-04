@@ -8,7 +8,7 @@ current_card = {}
 
 
 def card_memorized():
-    word_list.remove(current_card)
+    word_list.remove(current_card)  # TODO what if list is empty? also on load - messagebox
     save_words_to_learn()
     next_card()
 
@@ -33,7 +33,7 @@ def flip_card():
 
 def save_words_to_learn():
     words_to_learn = pd.DataFrame(word_list)
-    words_to_learn.to_csv(path_or_buf="words_to_learn.csv", index=False)
+    words_to_learn.to_csv(path_or_buf="data/words_to_learn.csv", index=False)
 
 
 # Load CSV
