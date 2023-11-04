@@ -1,7 +1,6 @@
 from tkinter import *
 import pandas as pd
 import random
-import time
 
 BACKGROUND_COLOR = "#B1DDC6"
 current_card = {}
@@ -30,6 +29,7 @@ def flip_card():
     canvas.itemconfig(canvas_img, image=card_back_img)
     canvas.itemconfig(lang_label, text=NATIVE_LANGUAGE, fill="white")
     canvas.itemconfig(word_label, text=current_card[NATIVE_LANGUAGE], fill="white")
+
 
 def save_words_to_learn():
     words_to_learn = pd.DataFrame(word_list)
@@ -71,7 +71,7 @@ word_label = canvas.create_text(400, 263, text="", font=("arial", 60, "bold"))
 # Buttons
 right_btn = Button(image=right_img, highlightthickness=0, borderwidth=0, height=97, width=97, command=card_memorized)
 right_btn.grid(column=1, row=1)
-wrong_btn = Button(image=wrong_img,highlightthickness=0, borderwidth=0, height=97, width=97, command=next_card)
+wrong_btn = Button(image=wrong_img, highlightthickness=0, borderwidth=0, height=97, width=97, command=next_card)
 wrong_btn.grid(column=0, row=1)
 
 next_card()
