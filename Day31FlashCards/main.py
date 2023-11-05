@@ -39,7 +39,7 @@ def save_words_to_learn():
 
 # Load CSV
 try:
-    df = pd.read_csv("words_to_learn.csv")
+    df = pd.read_csv("data/words_to_learn.csv")
 except FileNotFoundError:
     try:
         df = pd.read_csv("data/100_croatian_words.csv")
