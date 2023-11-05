@@ -2,13 +2,14 @@ from tkinter import *
 from tkinter import messagebox
 import pandas as pd
 import random
+import pandas.errors
 
 BACKGROUND_COLOR = "#B1DDC6"
 current_card = {}
 
 
 def card_memorized():
-    word_list.remove(current_card)  # TODO what if list is empty? also on load - messagebox
+    word_list.remove(current_card)
     save_words_to_learn()
     next_card()
 
@@ -17,8 +18,12 @@ def next_card():
     global current_card, flip_timer
 
     window.after_cancel(flip_timer)
-
-    current_card = random.choice(word_list)  # {'Croatian': 'me', 'English': 'me'}
+    try:
+        current_card = random.choice(word_list)  # {'Croatian': 'me', 'English': 'me'}
+    except IndexError:
+        messagebox.showinfo(title="Information", message="Congratulations, all words memorized ✅\n\nTo restart, "
+                                                         "delete\ndata/words_to_learn.csv")
+        quit()
     canvas.itemconfig(canvas_img, image=card_front_img)
     canvas.itemconfig(lang_label, text=FOREIGN_LANGUAGE, fill="black")
     canvas.itemconfig(word_label, text=current_card[FOREIGN_LANGUAGE], fill="black")
@@ -47,6 +52,10 @@ except FileNotFoundError:
     except FileNotFoundError:
         messagebox.showerror(title="Error", message="No readable CSV found!")
         quit()
+except pandas.errors.EmptyDataError:
+    messagebox.showinfo(title="Information", message="Congratulations, all words memorized ✅\n\nTo restart, "
+                                                     "delete\ndata/words_to_learn.csv")
+    quit()
 
 word_list = df.to_dict("records")
 # set languages based on CSV
