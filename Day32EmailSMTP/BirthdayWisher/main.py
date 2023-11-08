@@ -1,7 +1,7 @@
 from Day32EmailSMTP.credentials import MY_EMAIL, MY_PASSWORD, SMTP_SERVER, SMTP_SERVER_PORT
+from datetime import datetime
 import smtplib
 import pandas as pd
-import datetime as dt
 import random
 
 # csv input format:
@@ -34,16 +34,12 @@ def send_letter(letter_text, recipient):
 
 
 # Check if today matches a birthday in the birthdays.csv
-now = dt.datetime.now()
-current_year = now.year
-current_month = now.month
-current_day = now.day
+today_tuple = (datetime.now().month, datetime.now().day)
 
 for person_dict in birthday_dict:
-    birthday_month = person_dict["month"]
-    birthday_day = person_dict["day"]
+    birthday_tuple = (person_dict["month"], person_dict["day"])
     recipient_email = person_dict["email"]
 
-    if birthday_day == current_day and birthday_month == current_month:
+    if birthday_tuple == today_tuple:
         final_letter = generate_letter(person_dict)
         send_letter(final_letter, recipient_email)
