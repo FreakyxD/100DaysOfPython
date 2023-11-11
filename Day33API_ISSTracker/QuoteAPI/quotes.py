@@ -1,8 +1,13 @@
 from tkinter import *
+import requests
 
 
 def get_quote():
-    pass  # TODO
+    request = requests.get(url="https://api.kanye.rest/")
+    request.raise_for_status()
+    data = request.json()
+
+    canvas.itemconfig(quote_text, text=data["quote"])
 
 
 window = Tk()
@@ -14,7 +19,7 @@ background_img = PhotoImage(file="background.png")
 canvas.create_image(150, 207, image=background_img)
 quote_text = canvas.create_text(
     150, 207,
-    text="Click me",
+    text="Click my face",
     width=250,
     font=("Arial", 30, "bold"),
     fill="white")
