@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 import requests
 import time
 from Day33API_ISSTracker.locationdata import MY_LAT, MY_LONG
@@ -29,7 +29,7 @@ def is_dark():
     sunrise = int(data["results"]["sunrise"].split("T")[1].split(":")[0])
     sunset = int(data["results"]["sunset"].split("T")[1].split(":")[0])
 
-    time_now = datetime.now()
+    time_now = datetime.now(timezone.utc)
     hour_now = time_now.hour
 
     if sunrise <= hour_now <= sunset:
