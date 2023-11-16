@@ -8,7 +8,7 @@ You can use this repository to follow along with my progress, see the solutions 
 
 To run the code in this repository, you will need Python 3 installed on your computer. You may also need to install some additional libraries or modules depending on the project.
 
-## Table of Contents [Under construction]
+## Table of Contents (🚧 Under construction)
 
 I'm aiming to showcase the more interesting projects here. Projects are organized into subfolders based on days, following the course structure.
 
