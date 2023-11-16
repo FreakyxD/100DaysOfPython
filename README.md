@@ -10,7 +10,7 @@ To run the code in this repository, you will need Python 3 installed on your com
 
 ## Table of Contents [Under construction]
 
-I'm aiming to showcase the more interesting projects here.
+I'm aiming to showcase the more interesting projects here. Projects are organized into days (like the course structure).
 
 ## Feedback and Suggestions
 
