@@ -12,11 +12,11 @@ for q_dict in question_data:
     new_question = Question(question_text, question_answer)
     question_bank.append(new_question)
 
-go_quiz = QuizBrain(question_bank)
-quiz_ui = QuizInterface()
+quiz = QuizBrain(question_bank)
+quiz_ui = QuizInterface(quiz)
 
 # while go_quiz.still_has_questions():
 #     go_quiz.next_question()
 
 print("You've completed the quiz")
-print(f"Your final score was: {go_quiz.score}/{go_quiz.question_number}")
+print(f"Your final score was: {quiz.score}/{quiz.question_number}")
