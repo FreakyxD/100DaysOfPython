@@ -1,5 +1,6 @@
 from tkinter import *
 from quiz_brain import QuizBrain
+import time
 
 THEME_COLOR = "#375362"
 
@@ -39,11 +40,22 @@ class QuizInterface:
         self.window.mainloop()
 
     def get_next_question(self):
+        self.canvas.config(bg="white")
+        self.score_label.config(text=f"Score: {self.quiz.score}")
         q_text = self.quiz.next_question()
         self.canvas.itemconfig(self.question_text, text=q_text)
 
     def true_pressed(self):
-        self.quiz.check_answer("True")
+        is_right = self.quiz.check_answer("True")
+        self.give_feedback(is_right)
 
     def false_pressed(self):
-        self.quiz.check_answer("False")
+        is_right = self.quiz.check_answer("False")
+        self.give_feedback(is_right)
+
+    def give_feedback(self, is_right):
+        if is_right:
+            self.canvas.config(bg="#ade38d")
+        else:
+            self.canvas.config(bg="#d2686c")
+        self.window.after(ms=2000, func=self.get_next_question)
