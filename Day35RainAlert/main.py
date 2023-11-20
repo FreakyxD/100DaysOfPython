@@ -7,8 +7,8 @@ from credentials import api_key
 
 URL = "https://api.openweathermap.org/data/2.8/onecall"
 parameters = {
-    "lat": MY_LOCATION[0],
-    "lon": MY_LOCATION[1],
+    "lat": MY_LOCATION["latitude"],
+    "lon": MY_LOCATION["longitude"],
     "units": "metric",
     "appid": api_key,
     "exclude": "current,minutely,daily"
