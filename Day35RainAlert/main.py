@@ -2,7 +2,10 @@ import requests
 from Day33API_ISSTracker.locationdata import MY_LOCATION
 from credentials import api_key
 
-URL = "https://api.openweathermap.org/data/2.5/onecall"
+# current https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
+# forecast https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
+
+URL = "https://api.openweathermap.org/data/2.8/onecall"
 parameters = {
     "lat": MY_LOCATION[0],
     "lon": MY_LOCATION[1],
