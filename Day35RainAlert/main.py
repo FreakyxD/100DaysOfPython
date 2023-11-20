@@ -11,10 +11,8 @@ parameters = {
     "lon": MY_LOCATION[1],
     "units": "metric",
     "appid": api_key,
+    "exclude": "current,minutely,daily"
 }
-
-# current https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
-# forecast https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
 
 response = requests.get(url=URL, params=parameters)
 response.raise_for_status()
