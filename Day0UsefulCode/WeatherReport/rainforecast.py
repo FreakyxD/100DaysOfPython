@@ -1,6 +1,6 @@
 import requests
-from secrets import api_key
-from locationdata import MY_LOCATION
+from auth import OWM_API_KEY
+from sensitive import MY_LOCATION
 
 
 # current https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
@@ -12,7 +12,7 @@ parameters = {
     "lat": MY_LOCATION["latitude"],
     "lon": MY_LOCATION["longitude"],
     "units": "metric",
-    "appid": api_key,
+    "appid": OWM_API_KEY,
     "exclude": "current,minutely,daily"
 }
 

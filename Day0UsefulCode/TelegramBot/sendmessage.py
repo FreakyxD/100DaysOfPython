@@ -1,5 +1,5 @@
 import requests
-from secrets import telegram_bot_token, telegram_bot_chat_ID
+from auth import telegram_bot_token, telegram_bot_chat_ID
 
 
 def send_message_to_telegram_bot(message):

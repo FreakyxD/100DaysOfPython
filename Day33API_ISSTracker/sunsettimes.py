@@ -1,6 +1,6 @@
 import pprint
 import requests
-from locationdata import MY_LAT, MY_LONG
+from sensitive import MY_LAT, MY_LONG
 from datetime import datetime
 
 parameters = {

@@ -1,13 +1,9 @@
+**/sensitive.py
+**/auth.py
 /Day29PasswordManager/data.txt
 /Day29PasswordManager/data.json
 /Day31FlashCards/data/Wordlist Sources/
 /Day31FlashCards/data/words_to_learn.csv
-/Day32EmailSMTP/credentials.py
 /Day15CoffeeMachine/Coffee+Machine+Program+Requirements.pdf
 /Day22Pong/Project Plan.txt
 /Day32EmailSMTP/BirthdayWisher/birthdays.csv
-/Day33API_ISSTracker/locationdata.py
-/Day35RainAlert/credentials.py
-/Day0UsefulCode/WeatherReport/locationdata.py
-/Day0UsefulCode/WeatherReport/secrets.py
-/Day0UsefulCode/TelegramBot/secrets.py

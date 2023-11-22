@@ -1,5 +1,5 @@
 import smtplib
-from credentials import MY_EMAIL, MY_PASSWORD, SMTP_SERVER, SMTP_SERVER_PORT, TO_ADDRESS
+from auth import MY_EMAIL, MY_EMAIL_PASSWORD, SMTP_SERVER, SMTP_SERVER_PORT, TO_ADDRESS
 import datetime as dt
 import random
 
@@ -21,7 +21,7 @@ random_quote = random.choice(quotes)
 # send email
 with smtplib.SMTP(host=SMTP_SERVER, port=SMTP_SERVER_PORT) as connection:
     connection.starttls()
-    connection.login(user=MY_EMAIL, password=MY_PASSWORD)
+    connection.login(user=MY_EMAIL, password=MY_EMAIL_PASSWORD)
     connection.sendmail(
         from_addr=MY_EMAIL,
         to_addrs=TO_ADDRESS,

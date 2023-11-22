@@ -1,9 +1,9 @@
 from datetime import datetime, timezone
 import requests
 import time
-from Day33API_ISSTracker.locationdata import MY_LAT, MY_LONG
+from sensitive import MY_LAT, MY_LONG
 from smtplib import SMTP
-from Day32EmailSMTP.credentials import SMTP_SERVER, SMTP_SERVER_PORT, MY_EMAIL, MY_PASSWORD, TO_ADDRESS
+from auth import SMTP_SERVER, SMTP_SERVER_PORT, MY_EMAIL, MY_EMAIL_PASSWORD, TO_ADDRESS
 
 
 def get_iss_position():
@@ -56,7 +56,7 @@ def is_iss_close():
 def send_mail():
     with SMTP(SMTP_SERVER, SMTP_SERVER_PORT) as connection:
         connection.starttls()
-        connection.login(MY_EMAIL, MY_PASSWORD)
+        connection.login(MY_EMAIL, MY_EMAIL_PASSWORD)
         connection.sendmail(
             from_addr=MY_EMAIL,
             to_addrs=TO_ADDRESS,

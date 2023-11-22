@@ -1,4 +1,4 @@
-from Day32EmailSMTP.credentials import MY_EMAIL, MY_PASSWORD, SMTP_SERVER, SMTP_SERVER_PORT
+from auth import MY_EMAIL, MY_EMAIL_PASSWORD, SMTP_SERVER, SMTP_SERVER_PORT
 from datetime import datetime
 import smtplib
 import pandas as pd
@@ -25,7 +25,7 @@ def generate_letter(recipient):
 def send_letter(letter_text, recipient):
     with smtplib.SMTP(SMTP_SERVER, SMTP_SERVER_PORT) as connection:
         connection.starttls()
-        connection.login(MY_EMAIL, MY_PASSWORD)
+        connection.login(MY_EMAIL, MY_EMAIL_PASSWORD)
         connection.sendmail(
             from_addr=MY_EMAIL,
             to_addrs=recipient,

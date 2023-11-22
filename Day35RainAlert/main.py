@@ -1,6 +1,6 @@
 import requests
-from Day33API_ISSTracker.locationdata import MY_LOCATION
-from credentials import api_key, telegram_bot_token, telegram_bot_chat_ID
+from sensitive import MY_LOCATION
+from auth import OWM_API_KEY, telegram_bot_token, telegram_bot_chat_ID
 
 
 # current https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
@@ -23,7 +23,7 @@ parameters = {
     "lat": MY_LOCATION["latitude"],
     "lon": MY_LOCATION["longitude"],
     "units": "metric",
-    "appid": api_key,
+    "appid": OWM_API_KEY,
     "exclude": "current,minutely,daily"
 }
 
