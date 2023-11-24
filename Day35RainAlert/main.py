@@ -1,15 +1,15 @@
 import requests
 from sensitive import MY_LOCATION
-from auth import OWM_API_KEY, telegram_bot_token, telegram_bot_chat_ID
+from auth import OWM_API_KEY, TELEGRAM_BOT_TOKEN, TELEGRAM_BOT_CHAT_ID
 
 
 # current https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
 # forecast https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
 
 def send_message_to_telegram_bot(message):
-    telegram_bot_url = "https://api.telegram.org/bot" + telegram_bot_token + "/sendMessage"
+    telegram_bot_url = "https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendMessage"
     telegram_parameters = {
-        "chat_id": telegram_bot_chat_ID,
+        "chat_id": TELEGRAM_BOT_CHAT_ID,
         "parse_mode": "Markdown",
         "text": message
     }
