@@ -12,6 +12,3 @@ def send_message_to_telegram_bot(message):
     telegram_response = requests.get(url=telegram_bot_url, params=telegram_parameters)
     telegram_response.raise_for_status()
     print(f"Telegram response: {telegram_response}")
-
-
-send_message_to_telegram_bot("Sample Message")
