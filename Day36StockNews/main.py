@@ -15,16 +15,15 @@ def changed_5_percent(yesterday_price, day_before_price):
 
 
 def format_send(percent_change, news_list):
-    percent_change = str(percent_change)
     titles = [news["title"] for news in news_list[:NUMBER_OF_ARTICLES]]
     descriptions = [news["description"] for news in news_list[:NUMBER_OF_ARTICLES]]
     urls = [news["url"] for news in news_list[:NUMBER_OF_ARTICLES]]
 
     # prepare symbol and percentage number
-    if "-" in percent_change:
+    if percent_change < 0:
         # decrease
         symbol = "🔻"
-        percent_change = percent_change.split("-")[1]
+        percent_change = abs(percent_change)
     else:
         # increase
         symbol = "🔺"
