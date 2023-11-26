@@ -50,11 +50,11 @@ day_before_last_close_price = round(float(data_previous_days[1]["4. close"]), 2)
 
 percent = changed_5_percent(last_close_price, day_before_last_close_price)
 if percent:
-    news_endpoint = "https://newsapi.org/v2/top-headlines"
+    news_endpoint = "https://newsapi.org/v2/everything"
     parameter = {
         "apiKey": NEWS_API_KEY,
         "pageSize": NUMBER_OF_ARTICLES,
-        "q": COMPANY_NAME,
+        "qInTitle": COMPANY_NAME,
     }
     response = requests.get(url=news_endpoint, params=parameter)
     response.raise_for_status()
