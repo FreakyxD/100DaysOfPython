@@ -28,6 +28,7 @@ hours_label.pack()
 # Create and pack the entry widget for entering a float with larger font
 entry = tk.Entry(root, width=5, font=("Helvetica", 18))
 entry.pack(pady=10)
+entry.focus()
 
 # Create and pack the "Enter" button with larger font
 enter_button = tk.Button(root, text="Enter", command=on_enter_click, font=("Helvetica", 18))
