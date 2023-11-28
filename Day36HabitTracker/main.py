@@ -7,17 +7,16 @@ pixela_endpoint = "https://pixe.la/v1/users"
 graph_endpoint = f"{pixela_endpoint}/{PIXELA_USERNAME}/graphs"
 graph_endpoint_id = graph_endpoint + f"/{PIXELA_GRAPH_ID}"
 
-parameters = {
+headers = {
+    "X-USER-TOKEN": PIXELA_TOKEN,
+}
+
+user_creation_parameters = {
     "token": PIXELA_TOKEN,
     "username": PIXELA_USERNAME,
     "agreeTermsOfService": "yes",
     "notMinor": "yes"
 }
-
-# Creating user - only once!
-# response = requests.post(url=pixela_endpoint, json=parameters)
-# print(response.text)
-
 
 graph_config = {
     "id": PIXELA_GRAPH_ID,
@@ -27,21 +26,30 @@ graph_config = {
     "color": "sora",
 }
 
-headers = {
-    "X-USER-TOKEN": PIXELA_TOKEN,
-}
+
+# Creating user - only once!
+def create_user():
+    response = requests.post(url=pixela_endpoint, json=user_creation_parameters)
+    print(response.text)
+
+
+
+
 
 # Creating graph - only once!
-# response = requests.post(url=graph_endpoint, headers=headers, json=graph_config)
-# print(response.text)
+def create_graph():
+    response = requests.post(url=graph_endpoint, headers=headers, json=graph_config)
+    print(response.text)
 
 
 # Changing graph
-# graph_config_changes = {
-#     "timezone": PIXELA_TIMEZONE
-# }
-# response = requests.post(url=graph_endpoint_id, headers=headers, json=graph_config_changes)
-# print(response)
+def change_graph_config():
+    graph_config_changes = {
+        "timezone": PIXELA_TIMEZONE
+    }
+    response = requests.post(url=graph_endpoint_id, headers=headers, json=graph_config_changes)
+    print(response)
+
 
 def post_a_pixel(amount):
     current_date = datetime.now().strftime("%Y%m%d")
