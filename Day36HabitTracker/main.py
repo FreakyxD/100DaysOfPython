@@ -50,5 +50,5 @@ pixel_config = {
     "date": current_date,
     "quantity": "1"
 }
-request = requests.post(url=graph_endpoint_id, headers=headers, json=pixel_config)
-print(request)
+response = requests.post(url=graph_endpoint_id, headers=headers, json=pixel_config)
+print(response)
