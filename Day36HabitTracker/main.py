@@ -32,7 +32,7 @@ graph_config = {
 # Creating user - only once!
 def create_user():
     response = requests.post(url=pixela_endpoint, json=user_creation_parameters)
-    print(response.text)
+    print(response, response.text)
 
 
 # Creating graph - only once!
@@ -46,8 +46,8 @@ def change_graph_config():
     graph_config_changes = {
         "timezone": PIXELA_TIMEZONE
     }
-    response = requests.post(url=graph_endpoint_id, headers=headers, json=graph_config_changes)
-    print(response)
+    response = requests.put(url=graph_endpoint_id, headers=headers, json=graph_config_changes)
+    print(response, response.text)
 
 
 def post_a_pixel(amount):
