@@ -22,7 +22,7 @@ headline_label = tk.Label(root, text="Habit Tracker", font=("Helvetica", 24))
 headline_label.pack(pady=15)
 
 # Create a label for the entry widget
-hours_label = tk.Label(root, text="Enter the hours:", font=("Helvetica", 16))
+hours_label = tk.Label(root, text="Hours today?", font=("Helvetica", 16))
 hours_label.pack()
 
 # Create and pack the entry widget for entering a float with larger font
