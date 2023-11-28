@@ -1,4 +1,5 @@
 import requests
+from datetime import datetime
 from auth import PIXELA_TOKEN
 from sensitive import PIXELA_USERNAME, PIXELA_GRAPH_ID, PIXELA_TIMEZONE
 
@@ -41,3 +42,14 @@ headers = {
 # }
 # response = requests.post(url=graph_endpoint_id, headers=headers, json=graph_config_changes)
 # print(response)
+
+# Post a Pixel
+current_date = datetime.now()
+formatted_date = current_date.strftime("%Y%m%d")
+
+pixel_config = {
+    "date": formatted_date,
+    "quantity": "1"
+}
+request = requests.post(url=graph_endpoint_id, headers=headers, json=pixel_config)
+print(request)
