@@ -59,9 +59,6 @@ def post_a_pixel(amount):
     return response, response.text
 
 
-# print(post_a_pixel(12))
-
-
 def update_a_pixel(amount):
     put_endpoint = graph_endpoint_id + f"/{current_date}"
     update_config = {
