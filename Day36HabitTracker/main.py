@@ -43,12 +43,12 @@ headers = {
 # response = requests.post(url=graph_endpoint_id, headers=headers, json=graph_config_changes)
 # print(response)
 
-# Post a Pixel
-current_date = datetime.now().strftime("%Y%m%d")
+def post_a_pixel(amount):
+    current_date = datetime.now().strftime("%Y%m%d")
 
-pixel_config = {
-    "date": current_date,
-    "quantity": "1"
-}
-response = requests.post(url=graph_endpoint_id, headers=headers, json=pixel_config)
-print(response)
+    pixel_config = {
+        "date": current_date,
+        "quantity": amount  # str
+    }
+    response = requests.post(url=graph_endpoint_id, headers=headers, json=pixel_config)
+    return response, response.text
