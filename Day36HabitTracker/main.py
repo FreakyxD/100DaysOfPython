@@ -44,11 +44,10 @@ headers = {
 # print(response)
 
 # Post a Pixel
-current_date = datetime.now()
-formatted_date = current_date.strftime("%Y%m%d")
+current_date = datetime.now().strftime("%Y%m%d")
 
 pixel_config = {
-    "date": formatted_date,
+    "date": current_date,
     "quantity": "1"
 }
 request = requests.post(url=graph_endpoint_id, headers=headers, json=pixel_config)
