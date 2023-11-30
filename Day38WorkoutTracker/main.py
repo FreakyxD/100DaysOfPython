@@ -1,4 +1,5 @@
-import requests, datetime
+import requests
+import datetime
 from auth import NUTRITIONIX_APP_ID, NUTRITIONIX_API_KEY, SHEETY_BEARER_TOKEN
 from sensitive import GENDER, WEIGHT_KG, HEIGHT_CM, AGE, SHEETY_PRIVATE_ENDPOINT
 
@@ -18,10 +19,10 @@ parameters = {
 
 
 def get_nutritionix_data():
-    response = requests.post(url=NUTRITIONIX_NAT_EXERCISE_ENDPOINT, headers=headers, json=parameters)
-    response.raise_for_status()
-    print(response.status_code)
-    return response.json()
+    nutritionix_response = requests.post(url=NUTRITIONIX_NAT_EXERCISE_ENDPOINT, headers=headers, json=parameters)
+    nutritionix_response.raise_for_status()
+    print(nutritionix_response.status_code)
+    return nutritionix_response.json()
 
 
 def format_nutritionix_data(filtered_exercise_dict):
@@ -54,6 +55,10 @@ all_exercise_list = get_nutritionix_data()["exercises"]
 
 for exercise in all_exercise_list:
     formatted_exercise = format_nutritionix_data(exercise)
-    response = requests.post(url=SHEETY_PRIVATE_ENDPOINT, json=formatted_exercise, auth=BearerAuth(SHEETY_BEARER_TOKEN))
-    response.raise_for_status()
-    print("posting...\n", response.json())
+    sheety_response = requests.post(
+        url=SHEETY_PRIVATE_ENDPOINT,
+        json=formatted_exercise,
+        auth=BearerAuth(SHEETY_BEARER_TOKEN)
+    )
+    sheety_response.raise_for_status()
+    print("posting...\n", sheety_response.json())
