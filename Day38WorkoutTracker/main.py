@@ -1,7 +1,7 @@
 import requests
 import datetime
 from auth import NUTRITIONIX_APP_ID, NUTRITIONIX_API_KEY, SHEETY_BEARER_TOKEN
-from sensitive import GENDER, WEIGHT_KG, HEIGHT_CM, AGE, SHEETY_PRIVATE_ENDPOINT
+from sensitive import GENDER, WEIGHT_KG, HEIGHT_CM, AGE, SHEETY_PRIVATE_ENDPOINT_WORKOUTS
 
 NUTRITIONIX_NAT_EXERCISE_ENDPOINT = "https://trackapi.nutritionix.com/v2/natural/exercise"
 headers = {
@@ -56,7 +56,7 @@ all_exercise_list = get_nutritionix_data()["exercises"]
 for exercise in all_exercise_list:
     formatted_exercise = format_nutritionix_data(exercise)
     sheety_response = requests.post(
-        url=SHEETY_PRIVATE_ENDPOINT,
+        url=SHEETY_PRIVATE_ENDPOINT_WORKOUTS,
         json=formatted_exercise,
         auth=BearerAuth(SHEETY_BEARER_TOKEN)
     )
