@@ -2,9 +2,11 @@
 # program requirements.
 
 from data_manager import DataManager
+from flight_search import FlightSearch
 
 # load sheet data
 data_manger = DataManager()
+flight_search = FlightSearch()
 sheet_data = data_manger.get_sheet_content()["prices"]
 
 
@@ -16,7 +18,7 @@ for city in rows_empty_iata:
 
     change_json = {
         "price": {
-            "iataCode": data_manger.get_iata_codes()
+            "iataCode": flight_search.get_iata_codes()
         }
     }
 

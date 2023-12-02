@@ -24,10 +24,6 @@ class DataManager:
         # {'city': 'San Francisco', 'iataCode': 'd', 'lowestPrice': 260, 'id': 9}, {'city': 'Cape Town', 'iataCode':
         # '', 'lowestPrice': 378, 'id': 10}]}
 
-    def get_iata_codes(self):
-        # TODO search for the actual string
-        return "TESTING"
-
     def update_sheet_row(self, row_id, change_json):
         edit_endpoint = self.ENDPOINT + f"/{row_id}"
         response = requests.put(url=edit_endpoint, auth=BearerAuth(self.BEARER_TOKEN), json=change_json)
