@@ -18,7 +18,7 @@ for city in rows_empty_iata:
 
     change_json = {
         "price": {
-            "iataCode": flight_search.get_iata_codes()
+            "iataCode": flight_search.get_iata_codes(city["city"])
         }
     }
 
