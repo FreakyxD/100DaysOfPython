@@ -1,14 +1,20 @@
 import tkinter as tk
+import time
 from main import post_a_pixel
 
 
 def on_enter_click():
     entered_value = entry.get()
     if entered_value.replace(".", "", 1).isdigit():
-        post_result = post_a_pixel(entered_value)
-        if post_result:
-            print(post_result)
-            root.after(1000, root.destroy)
+        success = False
+
+        while not success:
+            if post_a_pixel(entered_value) == 200:
+                success = True
+            time.sleep(1)
+
+        # exit program
+        root.after(1000, root.destroy)
     else:
         print("Please enter a valid number.")
     entry.delete(0, tk.END)

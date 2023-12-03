@@ -56,10 +56,8 @@ def post_a_pixel(amount):
         "quantity": str(amount)
     }
     response = requests.post(url=graph_endpoint_id, headers=headers, json=pixel_config)
-    if response.status_code != 200:
-        print(response.status_code, response.text)
-        return False
-    return response, response.text
+    print(response.status_code, response.text)
+    return response.status_code
 
 
 def update_a_pixel(amount):
