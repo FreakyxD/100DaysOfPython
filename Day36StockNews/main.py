@@ -1,6 +1,6 @@
 import requests
 from auth import ALPHA_VANTAGE_API_KEY as STOCK_API, NEWS_API_KEY
-from Day0UsefulCode.TelegramBot.sendmessage import send_message_to_telegram_bot
+from Day0UsefulCode.TelegramBot.main import TelegramBot
 # from sampledata import sample_stock_data as stock_data - Sample data if API is limiting requests
 
 STOCK = "TSLA"
@@ -30,7 +30,8 @@ def format_send(percent_change, news_list):
 
     for title, description, url in zip(titles, descriptions, urls):
         message = f"{STOCK}: {symbol}{percent_change}%\nHeadline: {title}\nLink: {description}\nURL: {url}"
-        send_message_to_telegram_bot(message)
+        telegram_bot = TelegramBot()
+        telegram_bot.send_message_to_telegram_bot(message)
 
 
 stock_endpoint = "https://www.alphavantage.co/query?"
