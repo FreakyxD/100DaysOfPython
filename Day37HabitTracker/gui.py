@@ -5,8 +5,10 @@ from main import post_a_pixel
 def on_enter_click():
     entered_value = entry.get()
     if entered_value.replace(".", "", 1).isdigit():
-        print(post_a_pixel(entered_value))
-        root.after(1000, root.destroy)
+        post_result = post_a_pixel(entered_value)
+        if post_result:
+            print(post_result)
+            root.after(1000, root.destroy)
     else:
         print("Please enter a valid number.")
     entry.delete(0, tk.END)
