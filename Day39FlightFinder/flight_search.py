@@ -29,13 +29,13 @@ class FlightSearch:
         """Uses the Flight Search API to check for the cheapest flights from tomorrow to 6 months later for the
         provided city IATA code"""
 
-        date_today = datetime.today()
-        date_plus_6m = date_today + timedelta(weeks=24)
+        date_tomorrow = datetime.today() + timedelta(days=1)
+        date_plus_6m = datetime.today() + timedelta(weeks=24)
 
         parameters = {
             "fly_from": self.DEPARTURE,
             "fly_to": city_iata,
-            "date_from": date_today.strftime("%d/%m/%Y"),
+            "date_from": date_tomorrow.strftime("%d/%m/%Y"),
             "date_to": date_plus_6m.strftime("%d/%m/%Y"),
             "nights_in_dst_from": 7,
             "nights_in_dst_to": 28,
