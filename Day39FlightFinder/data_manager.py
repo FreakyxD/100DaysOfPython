@@ -1,5 +1,5 @@
 from auth import SHEETY_BEARER_TOKEN
-from sensitive import SHEETY_PRIVATE_ENDPOINT_PRICES
+from sensitive import SHEETY_PRIVATE_ENDPOINT_PRICES, SHEETY_PRIVATE_ENDPOINT_USERS
 import requests
 
 
@@ -21,6 +21,12 @@ class DataManager:
         response = requests.put(url=edit_endpoint, auth=BearerAuth(self.BEARER_TOKEN), json=change_json)
         response.raise_for_status()
         print(response.status_code)
+
+    def get_customer_emails(self):
+        customer_endpoint = SHEETY_PRIVATE_ENDPOINT_USERS
+        response = requests.get(customer_endpoint, auth=BearerAuth(self.BEARER_TOKEN))
+        response.raise_for_status()
+        return response.json()["users"]
 
 
 class BearerAuth(requests.auth.AuthBase):
