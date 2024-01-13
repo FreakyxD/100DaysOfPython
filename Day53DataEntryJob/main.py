@@ -1,8 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-from sensitive import USER_AGENT
+from sensitive import USER_AGENT, GOOGLE_FORM_URL
 from submitdata import SubmitToGoogleSheets
-from sensitive import GOOGLE_FORM_URL
 
 ZILLOW_CLONE_URL = "https://appbrewery.github.io/Zillow-Clone/"
 
