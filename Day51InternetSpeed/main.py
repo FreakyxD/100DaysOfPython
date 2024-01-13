@@ -4,7 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 
-class InternetSpeedBot():
+class InternetSpeedBot:
     def __init__(self, url):
         self.driver = webdriver.Firefox()
         self.down = 0
