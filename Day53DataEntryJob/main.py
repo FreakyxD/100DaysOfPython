@@ -61,4 +61,5 @@ for n in range(len(apartment_links)):
     }
 
 # Part 2 - Submit the data
-submitter = SubmitToGoogleSheets(GOOGLE_FORM_URL)
+submitter = SubmitToGoogleSheets(url=GOOGLE_FORM_URL, apartment_listings=apartments)
+submitter.submit_data()
