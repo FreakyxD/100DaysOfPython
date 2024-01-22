@@ -3,6 +3,33 @@ from flask import Flask
 app = Flask(__name__)
 
 
+def make_bold(function):
+    def wrapper_function():
+        input_string = function()
+        formatted_string = f"<b>{input_string}</b>"
+        return formatted_string
+
+    return wrapper_function
+
+
+def make_emphasis(function):
+    def wrapper_function():
+        input_string = function()
+        formatted_string = f"<em>{input_string}</em>"
+        return formatted_string
+
+    return wrapper_function
+
+
+def make_underlined(function):
+    def wrapper_function():
+        input_string = function()
+        formatted_string = f"<u>{input_string}</u>"
+        return formatted_string
+
+    return wrapper_function
+
+
 @app.route("/")
 def hello_world():
     return ("<h1 style='text-align: center'>Hello, World!</h1>"
@@ -16,6 +43,14 @@ def hello_world():
 @app.route("/username/<name>/1")
 def greet(name):
     return f"<p style='font-size: 200px'>Hello {name}!</p>"
+
+
+@app.route("/bye")
+@make_bold
+@make_underlined
+@make_emphasis
+def bye():
+    return "Bye!"
 
 
 @app.route("/math/add_ten/<int:number>")
