@@ -10,7 +10,7 @@ def logging_decorator(function):
         print(f"You called {function.__name__}({a}, {b}, {c})")
         result = function(a, b, c)
         print(f"It returned: {result}")
-
+        return result
     return wrapper
 
 
