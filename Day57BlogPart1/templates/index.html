@@ -11,20 +11,15 @@
     <div class="top">
         <div class="title"><h1>My Blog</h1></div>
     </div>
+    {% for post_obj in post_objects %}
     <div class="content">
         <div class="card">
-            <h2>Just a blog post</h2>
-            <p class="text">Lorem ipsum dolor sit </p>
-            <a href="#">Read</a>
+            <h2>{{ post_obj.title }}</h2>
+            <p class="text">{{ post_obj.subtitle }}</p>
+            <a href="{{ url_for('get_blog', num=post_obj.id) }}">Read</a>
         </div>
     </div>
-    <div class="content">
-        <div class="card">
-            <h2>Another blog post</h2>
-            <p class="text">Lorem ipsum dolor sit </p>
-            <a href="#">Read</a>
-        </div>
-    </div>
+    {% endfor %}
 </div>
 </body>
 <footer>
