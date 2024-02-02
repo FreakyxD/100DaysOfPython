@@ -1,5 +1,5 @@
 import requests
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
 
 app = Flask(__name__)
 
@@ -24,7 +24,9 @@ def get_blogs():
 
 @app.route("/")
 def landing_page():
-    return "<h1 style='font-size: 30px'>Please go to /guess/yourname<h1>"
+    return (f"<a href='{url_for('get_blog', num=1)}'>Go to blog 1</a><br>"
+            f"<a href='{url_for('get_blog', num=2)}'>Go to blog 2</a><br>"
+            f"<a href='{url_for('get_blog', num=3)}'>Go to blog 3</a>")
 
 
 @app.route("/guess/<name>")
@@ -34,10 +36,10 @@ def guess(name):
     return render_template("guess.html", person_name=name.title(), person_age=age, person_gender=gender)
 
 
-@app.route("/blog")
-def blog():
+@app.route("/blog/<int:num>")
+def get_blog(num):
     all_posts = get_blogs()
-    return render_template("blog.html", posts=all_posts)
+    return render_template("blog.html", posts=all_posts, blog_num=num)
 
 
 if __name__ == "__main__":
