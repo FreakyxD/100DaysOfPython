@@ -27,18 +27,19 @@ def save_to_file(data):
 
 
 while True:
-    user_choice = input("Choose an operation: encode or decode?").lower()
+    user_choice = input("Choose an operation: encode (e), decode (d), or quit (q)?").lower()
 
-    if user_choice == "encode" or user_choice == "e":
-        print("⏳ encoding and saving file...")
+    if user_choice in ("encode", "e"):
+        print("⏳ Encoding and saving file...")
         encoded_save = encode_to_base64(SAVE_DATA, OBFUSCATION)
         save_to_file(encoded_save)
-
-    elif user_choice == "decode" or user_choice == "d":
+    elif user_choice in ("decode", "d"):
+        print("⏳ Reading and decoding file...")
         encoded_save = read_savegame()
-        print("⏳ reading and decoding file...")
         decoded_save = decode_from_base64(encoded_save, OBFUSCATION)
         print(f"Decoded save: {decoded_save}")
-
+    elif user_choice in ("quit", "q"):
+        print("Exiting program.")
+        break
     else:
-        print("❌ not a valid choice")
+        print("❌ Not a valid choice. Please enter 'encode', 'decode', or 'quit'.")
