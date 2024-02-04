@@ -9,7 +9,11 @@ save_data = {
 
 
 def read_savegame():
-    pass
+    try:
+        with open("char1.sav", "r") as file:
+            return file.read()
+    except FileNotFoundError:
+        print("File not found!")
 
 
 def save_to_file(data):
