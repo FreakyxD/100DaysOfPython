@@ -14,6 +14,7 @@ def read_savegame():
             return file.read()
     except FileNotFoundError:
         print("File not found!")
+        exit()
 
 
 def save_to_file(data):
