@@ -26,12 +26,12 @@ def save_to_file(data):
 while True:
     user_choice = input("Choose an operation: encode or decode?").lower()
 
-    if user_choice == "encode":
+    if user_choice == "encode" or user_choice == "e":
         print("⏳ encoding and saving file...")
         encoded_save = encode_to_base64(SAVE_DATA)
         save_to_file(encoded_save)
 
-    elif user_choice == "decode":
+    elif user_choice == "decode" or user_choice == "d":
         encoded_save = read_savegame()
         print("⏳ reading and decoding file...")
         decoded_save = decode_from_base64(encoded_save)
