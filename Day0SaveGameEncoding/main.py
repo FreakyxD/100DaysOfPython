@@ -1,0 +1,21 @@
+from data_codec import encode_to_base64
+
+# initialize save data
+save_data = {
+    "character_name": "Shyla",
+    "level": 25,
+    "inventory": ["sword", "shield", "flask", "cheese wheel"],
+}
+
+
+def read_savegame():
+    pass
+
+
+def save_to_file(data):
+    with open("char1.sav", "w") as file:
+        file.write(data)
+
+
+encoded_save = encode_to_base64(save_data)
+save_to_file(encoded_save)
