@@ -1,16 +1,17 @@
 from data_codec import encode_to_base64, decode_from_base64
 
 # initialize save data
-save_data = {
+SAVE_DATA = {
     "character_name": "Shyla",
     "level": 25,
     "inventory": ["sword", "shield", "flask", "cheese wheel"],
 }
+FILE_NAME = "char1.sav"
 
 
 def read_savegame():
     try:
-        with open("char1.sav", "r") as file:
+        with open(FILE_NAME, "r") as file:
             return file.read()
     except FileNotFoundError:
         print("File not found!")
@@ -18,7 +19,7 @@ def read_savegame():
 
 
 def save_to_file(data):
-    with open("char1.sav", "w") as file:
+    with open(FILE_NAME, "w") as file:
         file.write(data)
 
 
@@ -27,7 +28,7 @@ while True:
 
     if user_choice == "encode":
         print("⏳ encoding and saving file...")
-        encoded_save = encode_to_base64(save_data)
+        encoded_save = encode_to_base64(SAVE_DATA)
         save_to_file(encoded_save)
 
     elif user_choice == "decode":
