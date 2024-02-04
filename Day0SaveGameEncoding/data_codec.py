@@ -4,7 +4,7 @@ import base64
 
 def encode_to_base64(data_dict):
     # convert the dictionary to a JSON string
-    json_string = json.dumps(data_dict)
+    json_string = json.dumps(data_dict, indent=4)
 
     # convert data to bytes
     data_bytes = json_string.encode("utf-8")
