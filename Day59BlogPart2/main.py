@@ -5,8 +5,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return render_template("index.html", css_url=url_for("static", filename="css/styles.css"),
-                           js_url=(url_for("static", filename="js/scripts.js")))
+    return render_template("index.html")
 
 
 if __name__ == "__main__":
