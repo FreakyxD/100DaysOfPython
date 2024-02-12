@@ -1,6 +1,12 @@
 from flask import Flask, render_template
+import requests
 
 app = Flask(__name__)
+
+blog_api_endpoint = "https://api.npoint.io/bc879b1dd6bf9685207d"
+response = requests.get(blog_api_endpoint)
+response.raise_for_status()
+blog_data = response.json()
 
 
 @app.route("/")
