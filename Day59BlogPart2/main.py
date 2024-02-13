@@ -11,7 +11,7 @@ blog_data = response.json()
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return render_template("index.html", blogs=blog_data)
 
 
 @app.route("/about")
