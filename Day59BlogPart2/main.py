@@ -27,7 +27,11 @@ def contact():
 @app.route("/post/<int:post_number>")
 def get_post(post_number):
     post_list_id = post_number - 1
-    post_data = blog_data[post_list_id]
+    try:
+        post_data = blog_data[post_list_id]
+    # if the user is calling a blog number that doesn't exist
+    except IndexError:
+        return home()
 
     return render_template("post.html", post_data=post_data)
 
