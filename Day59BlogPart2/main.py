@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 import requests
 
-blog_api_endpoint = "https://api.npoint.io/c1e867adbdc58198de7b"
+blog_api_endpoint = "https://api.npoint.io/e1461bef64973f02c2ff"
 response = requests.get(blog_api_endpoint)
 response.raise_for_status()
 blog_data = response.json()
