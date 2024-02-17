@@ -39,9 +39,8 @@ def contact():
         print(data["email"])
         print(data["phone"])
         print(data["message"])
-        return "Successfully received data"
-    if request.method == "GET":
-        return render_template("contact.html")
+        return render_template("contact.html", msg_sent=True)
+    return render_template("contact.html", msg_sent=False)
 
 
 if __name__ == "__main__":
