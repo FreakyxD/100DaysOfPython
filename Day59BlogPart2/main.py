@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import requests
 
 blog_api_endpoint = "https://api.npoint.io/e1461bef64973f02c2ff"
@@ -34,6 +34,10 @@ def get_post(post_number):
         return home()
 
     return render_template("post.html", post_data=post_data)
+
+@app.route("/form-entry", methods=["POST", "GET"] )
+def receive_data():
+    return "Successfully received data"
 
 
 if __name__ == "__main__":
