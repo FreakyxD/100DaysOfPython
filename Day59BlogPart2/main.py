@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import requests
+from Day0UsefulCode.TelegramBot.main import TelegramBot
 
 blog_api_endpoint = "https://api.npoint.io/e1461bef64973f02c2ff"
 response = requests.get(blog_api_endpoint)
@@ -35,10 +36,11 @@ def get_post(post_number):
 def contact():
     if request.method == "POST":
         data = request.form
-        print(data["name"])
-        print(data["email"])
-        print(data["phone"])
-        print(data["message"])
+        received_message = f"Name: {data['name']}\nEmail: {data['email']}\nPhone: {data['phone']}\nMessage: {data['message']}"
+        telegram_bot = TelegramBot()
+        print(received_message)
+        telegram_bot.send_message_to_telegram_bot(message=received_message)
+
         return render_template("contact.html", msg_sent=True)
     return render_template("contact.html", msg_sent=False)
 
