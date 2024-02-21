@@ -6,7 +6,7 @@ from sensitive import SECRET_KEY
 
 
 class LoginForm(FlaskForm):
-    username = StringField('username', validators=[DataRequired()])
+    email = StringField('email', validators=[DataRequired()])
     password = PasswordField('password', validators=[DataRequired()])
     submit = SubmitField("Log In")
 
@@ -24,7 +24,7 @@ def home():
 def login():
     login_form = LoginForm()
     if login_form.validate_on_submit():  # also needed for validating CSRF token
-        username = login_form.username.data
+        username = login_form.email.data
         password = login_form.password.data
         print(username, password)
         # login logic
