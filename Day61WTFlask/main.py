@@ -1,13 +1,13 @@
 from flask import Flask, render_template
 from flask_wtf import FlaskForm
-from wtforms import StringField
+from wtforms import StringField, PasswordField
 from wtforms.validators import DataRequired
 from sensitive import SECRET_KEY
 
 
 class LoginForm(FlaskForm):
-    username = StringField('username')
-    password = StringField('password', validators=[DataRequired()])
+    username = StringField('username', validators=[DataRequired()])
+    password = PasswordField('password', validators=[DataRequired()])
 
 
 app = Flask(__name__)
