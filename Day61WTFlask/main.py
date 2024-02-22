@@ -26,9 +26,10 @@ def login():
     if login_form.validate_on_submit():  # also needed for validating CSRF token
         username = login_form.email.data
         password = login_form.password.data
-        print(username, password)
-        # login logic
-        return f"<h1>Login Successful for {username}</h1>"
+        if username == "admin@email.com" and password == "11223344556677":
+            return render_template("success.html")
+        else:
+            return render_template("denied.html")
     # for GET requests or if validation fails, render the form again
     return render_template("login.html", form=login_form)
 
