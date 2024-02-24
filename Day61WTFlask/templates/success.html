@@ -1,4 +1,8 @@
 {% extends "base.html" %}
+{% block styles %}
+    <!-- Bootstrap CSS -->
+    {{ bootstrap.load_css() }}
+{% endblock %}
 {% block title %}Success{% endblock %}
 {% block content %}
    <div class="container">
