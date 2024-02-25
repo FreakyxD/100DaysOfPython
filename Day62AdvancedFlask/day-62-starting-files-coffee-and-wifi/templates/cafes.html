@@ -21,7 +21,11 @@
                 {% for cafe in cafes[1:] %}
                     <tr>
                         {% for cafe_detail in cafe %}
+                        {% if "http" in cafe_detail %}
+                            <td><a href="{{ cafe_detail }}">Maps Link</a></td>
+                        {% else %}
                             <td>{{ cafe_detail }}</td>
+                        {% endif %}
                         {% endfor %}
                     </tr>
                 {% endfor %}
