@@ -49,7 +49,19 @@ def home():
 def add_cafe():
     form = CafeForm()
     if form.validate_on_submit():
-        print("True")
+        form_answers = [
+            form.cafe.data,
+            form.location_url.data,
+            form.open_time.data,
+            form.closing_time.data,
+            form.coffee_rating.data,
+            form.wifi_rating.data,
+            form.power_outlet_rating.data,
+        ]
+
+        with open('cafe-data.csv', 'a', encoding='utf-8') as csv_file:
+            csv_file.write("\n" + ','.join(form_answers))
+
     # Exercise:
     # Make the form write a new row into cafe-data.csv
     # with   if form.validate_on_submit()
