@@ -31,10 +31,10 @@ class CafeForm(FlaskForm):
     closing_time = StringField('Closing Time', validators=[DataRequired()])
     coffee_rating = SelectField('Coffee Rating', choices=['☕', '☕☕', '☕☕☕', '☕☕☕☕', '☕☕☕☕☕'],
                                 validators=[DataRequired()])
-    wifi_rating = SelectField('Wifi Rating', choices=['💪', '💪💪', '💪💪💪', '💪💪💪💪', '💪💪💪💪💪'],
+    wifi_rating = SelectField('Wifi Rating', choices=['✘', '💪', '💪💪', '💪💪💪', '💪💪💪💪', '💪💪💪💪💪'],
                               validators=[DataRequired()])
     power_outlet_rating = SelectField('Power Outlet Rating',
-                                      choices=['🔌', '🔌🔌', '🔌🔌🔌', '🔌🔌🔌🔌', '🔌🔌🔌🔌🔌'],
+                                      choices=['✘', '🔌', '🔌🔌', '🔌🔌🔌', '🔌🔌🔌🔌', '🔌🔌🔌🔌🔌'],
                                       validators=[DataRequired()])
     submit = SubmitField('Submit')
 
