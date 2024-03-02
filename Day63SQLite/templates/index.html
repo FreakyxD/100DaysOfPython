@@ -6,10 +6,11 @@
   </head>
   <body>
     <h1>My Library</h1>
-    <ul>
-      <li></li>
-    </ul>
-
-    <a href="{{ url_for('add')}}">Add New Book</a>
+    {% for book in all_books %}
+      <ul>
+        <li>{{ book.title }} - {{ book.author }} - {{ book.rating }}</li>
+      </ul>
+    {% endfor %}
+    <a href="{{ url_for('add') }}">Add New Book</a>
   </body>
 </html>
