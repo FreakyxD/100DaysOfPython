@@ -1,5 +1,6 @@
 **/sensitive.py
 **/auth.py
+**/*.db
 /Day29PasswordManager/data.txt
 /Day29PasswordManager/data.json
 /Day31FlashCards/data/Wordlist Sources/
