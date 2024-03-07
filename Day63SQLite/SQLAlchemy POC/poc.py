@@ -35,8 +35,8 @@ class Books(db.Model):
 with app.app_context():
     db.create_all()
 
-    # Create record
-    with app.app_context():
-        new_book = Books(id=1, title="Harry Potter", author="J. K. Rowling", rating=9.3)
-        db.session.add(new_book)
-        db.session.commit()
+# Create record
+with app.app_context():
+    new_book = Books(id=1, title="Harry Potter", author="J. K. Rowling", rating=9.3)
+    db.session.add(new_book)
+    db.session.commit()
