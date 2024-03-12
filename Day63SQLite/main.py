@@ -49,7 +49,7 @@ with app.app_context():
     db.create_all()
 
 
-@app.route('/')
+@app.route("/")
 def home():
     # Read all records
     result = db.session.execute(db.select(Books).order_by(Books.title))
