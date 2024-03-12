@@ -53,7 +53,7 @@ with app.app_context():
 def home():
     # Read all records
     result = db.session.execute(db.select(Books).order_by(Books.title))
-    all_books = result.scalars()
+    all_books = list(result.scalars())
     return render_template("index.html", all_books=all_books)
 
 
