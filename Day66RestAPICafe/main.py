@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, abort, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Boolean
@@ -59,6 +59,8 @@ def home():
 @app.route("/random")  # methods=["GET"] can be omitted
 def get_random_cafe():
     row_count = db.session.query(Cafe).count()
+    if row_count == 0:
+        return abort(404)
     choice_id = random.randint(1, row_count)
     cafe = db.get_or_404(Cafe, choice_id)
     return f"#{choice_id} - {cafe.name}"
