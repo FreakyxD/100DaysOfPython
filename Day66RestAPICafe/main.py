@@ -63,7 +63,19 @@ def get_random_cafe():
         return abort(404)
     choice_id = random.randint(1, row_count)
     cafe = db.get_or_404(Cafe, choice_id)
-    return f"#{choice_id} - {cafe.name}"
+    return jsonify(cafe={
+        "id": cafe.id,
+        "name": cafe.name,
+        "map_url": cafe.map_url,
+        "img_url": cafe.img_url,
+        "location": cafe.location,
+        "seats": cafe.seats,
+        "has_toilet": cafe.has_toilet,
+        "has_wifi": cafe.has_wifi,
+        "has_sockets": cafe.has_sockets,
+        "can_take_calls": cafe.can_take_calls,
+        "coffee_price": cafe.coffee_price,
+    })
 
 
 # HTTP POST - Create Record
