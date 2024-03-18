@@ -19,9 +19,12 @@ This will install the packages from requirements.txt for this project.
 
 app = Flask(__name__)
 
+
 # CREATE DB
 class Base(DeclarativeBase):
     pass
+
+
 # Connect to Database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cafes.db'
 db = SQLAlchemy(model_class=Base)
@@ -53,12 +56,13 @@ def home():
 
 
 # HTTP GET - Read Record
-@app.route("/random") # methods=["GET"] can be omitted
+@app.route("/random")  # methods=["GET"] can be omitted
 def get_random_cafe():
     row_count = db.session.query(Cafe).count()
     choice_id = random.randint(1, row_count)
     cafe = db.get_or_404(Cafe, choice_id)
     return f"#{choice_id} - {cafe.name}"
+
 
 # HTTP POST - Create Record
 
