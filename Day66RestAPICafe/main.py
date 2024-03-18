@@ -2,6 +2,7 @@ from flask import Flask, jsonify, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Boolean
+import random
 
 '''
 Install the required packages first: 
@@ -52,6 +53,13 @@ def home():
 
 
 # HTTP GET - Read Record
+@app.route("/random") # methods=["GET"] can be omitted
+def get_random_cafe():
+    row_count = db.session.query(Cafe.id).count()
+    choice = random.randint(1, row_count)
+
+    cafe = db.session.execute(db.select(Cafe).where(Cafe.id == choice)).scalar()
+    return f"{cafe.name}"
 
 # HTTP POST - Create Record
 
