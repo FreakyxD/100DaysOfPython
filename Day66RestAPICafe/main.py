@@ -88,7 +88,7 @@ def search():
     all_cafes = result.scalars().all()
 
     if not all_cafes:
-        return jsonify(error={"Not Found": "Sorry, we don't have a cafe at that location."})
+        return jsonify(error={"Not Found": "Sorry, we don't have a cafe at that location."}), 404
     return jsonify(cafes=[cafe.to_dict() for cafe in all_cafes])
 
 
