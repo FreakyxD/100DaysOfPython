@@ -45,6 +45,13 @@ class Cafe(db.Model):
     can_take_calls: Mapped[bool] = mapped_column(Boolean, nullable=False)
     coffee_price: Mapped[str] = mapped_column(String(250), nullable=True)
 
+    def to_dict(self):
+        dictionary = {}
+
+        for column in self.__table__.columns:
+            dictionary[column.name] = getattr(self, column.name)
+        return dictionary
+
 
 with app.app_context():
     db.create_all()
@@ -63,55 +70,15 @@ def get_random_cafe():
         return abort(404)
     choice_id = random.randint(1, row_count)
     cafe = db.get_or_404(Cafe, choice_id)
-    return jsonify(cafe={
-        # Omit the id from the response
-        # "id": cafe.id,
-        "name": cafe.name,
-        "map_url": cafe.map_url,
-        "img_url": cafe.img_url,
-        "location": cafe.location,
-
-        # Put some properties in a sub-category
-        "amenities": {
-            "seats": cafe.seats,
-            "has_toilet": cafe.has_toilet,
-            "has_wifi": cafe.has_wifi,
-            "has_sockets": cafe.has_sockets,
-            "can_take_calls": cafe.can_take_calls,
-            "coffee_price": cafe.coffee_price,
-        }
-    })
+    return jsonify(cafe=cafe.to_dict())
 
 
 @app.route("/all")
 def get_all_cafes():
+    result = db.session.execute(db.select(Cafe).order_by(Cafe.name))
+    all_cafes = result.scalars().all()
 
-    all_cafe_objects = db.session.query(Cafe).all()
-
-    all_cafes_list = []
-
-    for cafe_object in all_cafe_objects:
-        all_cafes_list.append(
-            {
-                # Omit the id from the response
-                # "id": cafe_object.id,
-                "name": cafe_object.name,
-                "map_url": cafe_object.map_url,
-                "img_url": cafe_object.img_url,
-                "location": cafe_object.location,
-
-                # Put some properties in a sub-category
-                "amenities": {
-                    "seats": cafe_object.seats,
-                    "has_toilet": cafe_object.has_toilet,
-                    "has_wifi": cafe_object.has_wifi,
-                    "has_sockets": cafe_object.has_sockets,
-                    "can_take_calls": cafe_object.can_take_calls,
-                    "coffee_price": cafe_object.coffee_price,
-                }
-            }
-        )
-    return jsonify(cafes=all_cafes_list)
+    return jsonify(cafes=[cafe.to_dict() for cafe in all_cafes])
 
 
 # HTTP POST - Create Record
