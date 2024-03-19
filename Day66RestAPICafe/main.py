@@ -67,7 +67,7 @@ def home():
 def get_random_cafe():
     row_count = db.session.query(Cafe).count()
     if row_count == 0:
-        return abort(404)
+        return jsonify(error={"Not Found": "Sorry, we don't know any cafes."}), 404
     choice_id = random.randint(1, row_count)
     cafe = db.get_or_404(Cafe, choice_id)
     return jsonify(cafe=cafe.to_dict())
@@ -78,6 +78,8 @@ def get_all_cafes():
     result = db.session.execute(db.select(Cafe).order_by(Cafe.name))
     all_cafes = result.scalars().all()
 
+    if not all_cafes:
+        return jsonify(error={"Not Found": "Sorry, we don't know any cafes."}), 404
     return jsonify(cafes=[cafe.to_dict() for cafe in all_cafes])
 
 
