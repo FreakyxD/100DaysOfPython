@@ -95,6 +95,27 @@ def search():
 
 
 # HTTP POST - Create Record
+@app.route("/add", methods=["POST"])
+def add_cafe():
+    new_cafe = Cafe(
+        name=request.form.get("name"),
+        map_url=request.form.get("map_url"),
+        img_url=request.form.get("img_url"),
+        location=request.form.get("location"),
+        seats=request.form.get("seats"),
+        has_toilet=request.form.get("has_toilet", "").lower() == "true",  # comparison results in a boolean; "" if no
+        # data in form field
+        has_wifi=request.form.get("has_wifi", "").lower() == "true",
+        has_sockets=request.form.get("has_sockets", "").lower() == "true",
+        can_take_calls=request.form.get("can_take_calls", "").lower() == "true",
+        coffee_price=request.form.get("coffee_price")
+    )
+
+    db.session.add(new_cafe)
+    db.session.commit()
+
+    return jsonify({"success": "Cafe added successfully"}), 201
+
 
 # HTTP PUT/PATCH - Update Record
 
