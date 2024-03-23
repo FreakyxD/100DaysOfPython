@@ -2,9 +2,104 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Cafe&Wifi API</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafe & Wi-Fi API</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h1, h2 { color: #333; }
+        .endpoint { background-color: #f4f4f4; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
+        .method { font-weight: bold; }
+        .url { color: #0077CC; }
+        .description, .parameters, .response { margin-top: 10px; }
+        .parameter-name { font-weight: bold; }
+    </style>
 </head>
 <body>
-    <h1>Welcome to the Cafe & Wi-Fi API</h1>
+<h1>API Documentation</h1>
+
+<section class="endpoint">
+    <h2>GET /random</h2>
+    <p class="description">Returns a random cafe from the database.</p>
+    <p class="response">Response: JSON object containing cafe details or an error message.</p>
+</section>
+
+<section class="endpoint">
+    <h2>GET /all</h2>
+    <p class="description">Retrieves all cafes in the database, ordered by name.</p>
+    <p class="response">Response: JSON array of cafes or an error message.</p>
+</section>
+
+<section class="endpoint">
+    <h2>GET /search</h2>
+    <p class="description">Searches for cafes by location.</p>
+    <div class="parameters">
+        <p>Query Parameters:</p>
+        <ul>
+            <li><span class="parameter-name">loc</span> - Location to search for.</li>
+        </ul>
+    </div>
+    <p class="response">Response: JSON array of cafes or an error message.</p>
+</section>
+
+<section class="endpoint">
+    <h2>POST /add</h2>
+    <p class="description">Adds a new cafe to the database.</p>
+    <div class="parameters">
+        <p>Form Data Parameters:</p>
+        <ul>
+            <li><span class="parameter-name">name</span> <strong>(String)</strong> - Name of the cafe.</li>
+            <li><span class="parameter-name">map_url</span> <strong>(String)</strong> - Google Maps URL of the cafe.
+            </li>
+            <li><span class="parameter-name">img_url</span> <strong>(String)</strong> - Image URL of the cafe.</li>
+            <li><span class="parameter-name">location</span> <strong>(String)</strong> - Location of the cafe.</li>
+            <li><span class="parameter-name">seats</span> <strong>(String)</strong> - Number of seats available at the
+                cafe.
+            </li>
+            <li><span class="parameter-name">has_toilet</span> <strong>(Boolean)</strong> - Indicates if the cafe has a
+                toilet. Accepts "true" or "false".
+            </li>
+            <li><span class="parameter-name">has_wifi</span> <strong>(Boolean)</strong> - Indicates if the cafe has
+                WiFi. Accepts "true" or "false".
+            </li>
+            <li><span class="parameter-name">has_sockets</span> <strong>(Boolean)</strong> - Indicates if the cafe has
+                electrical sockets. Accepts "true" or "false".
+            </li>
+            <li><span class="parameter-name">can_take_calls</span> <strong>(Boolean)</strong> - Indicates if phone calls
+                can be taken inside the cafe. Accepts "true" or "false".
+            </li>
+            <li><span class="parameter-name">coffee_price</span> <strong>(String)</strong> - Price of coffee at the
+                cafe.
+            </li>
+        </ul>
+
+
+    </div>
+    <p class="response">Response: Success message or an error.</p>
+</section>
+
+<section class="endpoint">
+    <h2>PATCH /update-price/&lt;int:cafe_id&gt;</h2>
+    <p class="description">Updates the coffee price of a specified cafe.</p>
+    <div class="parameters">
+        <p>Query Parameters:</p>
+        <ul>
+            <li><span class="parameter-name">new_price</span> - New coffee price.</li>
+        </ul>
+    </div>
+    <p class="response">Response: Success message or an error.</p>
+</section>
+
+<section class="endpoint">
+    <h2>DELETE /report-closed/&lt;int:cafe_id&gt;</h2>
+    <p class="description">Deletes a cafe from the database.</p>
+    <div class="parameters">
+        <p>Query Parameters:</p>
+        <ul>
+            <li><span class="parameter-name">api-key</span> - API key for authentication.</li>
+        </ul>
+    </div>
+    <p class="response">Response: Success message or an error.</p>
+</section>
+
 </body>
 </html>
