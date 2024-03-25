@@ -54,9 +54,9 @@ with app.app_context():
 
 @app.route('/')
 def get_all_posts():
-    # TODO: Query the database for all the posts. Convert the data to a python list.
-    posts = []
-    return render_template("index.html", all_posts=posts)
+    result = db.session.execute(db.select(BlogPost).order_by(BlogPost.title))
+    all_blogs = result.scalars()
+    return render_template("index.html", all_posts=all_blogs)
 
 
 # TODO: Add a route so that you can click on individual posts.
