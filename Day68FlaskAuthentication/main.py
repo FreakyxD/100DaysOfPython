@@ -47,7 +47,7 @@ def register():
         )
         db.session.add(new_user)
         db.session.commit()
-        return render_template("secrets.html")
+        return render_template("secrets.html", username=new_user.name)
     return render_template("register.html")
 
 
