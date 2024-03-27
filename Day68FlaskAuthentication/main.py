@@ -7,7 +7,8 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, cur
 from sensitive import SECRET_KEY
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = SECRET_KEY
+app.config["SECRET_KEY"] = SECRET_KEY
+app.config["UPLOAD_FOLDER"] = "static/files"
 
 
 # CREATE DATABASE
@@ -66,9 +67,11 @@ def logout():
     pass
 
 
-@app.route('/download')
-def download():
-    pass
+@app.route('/download/<path:filename>')
+def download(filename):
+    return send_from_directory(
+        app.config['UPLOAD_FOLDER'], filename, as_attachment=True
+    )
 
 
 if __name__ == "__main__":
