@@ -70,8 +70,23 @@ def register():
     return render_template("register.html")
 
 
-@app.route('/login')
+@app.route('/login', methods=["GET", "POST"])
 def login():
+    if request.method == "POST":
+        # Retrieve form input
+        submitted_email = request.form.get("email")
+        submitted_password = request.form.get("password")
+
+        user = db.session.query(User).filter(User.email == submitted_email).first()
+        hashed_password = user.password
+
+        if check_password_hash(hashed_password, submitted_password):
+            login_user(user)
+            flash("Logged in successfully.")
+            return redirect(url_for("secrets"))
+        else:
+            flash("Login failed.")
+            return redirect(url_for('login'))
     return render_template("login.html")
 
 
@@ -82,8 +97,11 @@ def secrets():
 
 
 @app.route('/logout')
+@login_required
 def logout():
-    pass
+    logout_user()
+    flash("Logout successful.")
+    return redirect(url_for('home'))
 
 
 @app.route('/download/<path:filename>')
