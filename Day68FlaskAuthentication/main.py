@@ -65,8 +65,7 @@ def register():
         db.session.commit()
 
         login_user(new_user)
-        flash('Logged in successfully.')
-
+        flash('Registration successful.')
         return render_template("secrets.html", username=new_user.name)
     return render_template("register.html")
 
