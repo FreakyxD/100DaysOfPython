@@ -9,6 +9,8 @@ from sensitive import SECRET_KEY
 app = Flask(__name__)
 app.config["SECRET_KEY"] = SECRET_KEY
 app.config["UPLOAD_FOLDER"] = "static/files"
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 
 # CREATE DATABASE
@@ -22,7 +24,7 @@ db.init_app(app)
 
 
 # CREATE TABLE IN DB
-class User(db.Model):
+class User(UserMixin, db.Model):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     email: Mapped[str] = mapped_column(String(100), unique=True)
     password: Mapped[str] = mapped_column(String(100))
@@ -41,6 +43,14 @@ def hash_password(password):
     )
 
 
+@login_manager.user_loader
+def load_user(user_id):
+    user = db.session.execute(db.select(User).where(User.id == int(user_id))).scalar()
+    if not user:
+        return None
+    return user
+
+
 @app.route('/')
 def home():
     return render_template("index.html")
@@ -56,6 +66,10 @@ def register():
         )
         db.session.add(new_user)
         db.session.commit()
+
+        login_user(new_user)
+        flash('Logged in successfully.')
+
         return render_template("secrets.html", username=new_user.name)
     return render_template("register.html")
 
@@ -66,6 +80,7 @@ def login():
 
 
 @app.route('/secrets')
+@login_required
 def secrets():
     return render_template("secrets.html")
 
@@ -76,6 +91,7 @@ def logout():
 
 
 @app.route('/download/<path:filename>')
+@login_required
 def download(filename):
     return send_from_directory(
         app.config['UPLOAD_FOLDER'], filename, as_attachment=True
@@ -83,4 +99,4 @@ def download(filename):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
