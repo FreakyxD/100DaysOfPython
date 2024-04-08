@@ -79,7 +79,7 @@ def login():
 @app.route('/secrets')
 @login_required
 def secrets():
-    return render_template("secrets.html")
+    return render_template("secrets.html", username=current_user.name)
 
 
 @app.route('/logout')
