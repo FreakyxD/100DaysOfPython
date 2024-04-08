@@ -45,10 +45,7 @@ def hash_password(password):
 
 @login_manager.user_loader
 def load_user(user_id):
-    user = db.session.execute(db.select(User).where(User.id == int(user_id))).scalar()
-    if not user:
-        return None
-    return user
+    return db.get_or_404(User, user_id)
 
 
 @app.route('/')
