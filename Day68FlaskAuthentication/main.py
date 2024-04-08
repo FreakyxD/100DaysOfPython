@@ -57,9 +57,9 @@ def home():
 def register():
     if request.method == "POST":
         new_user = User(
-            name=request.form["name"],
-            email=request.form["email"],
-            password=hash_password(request.form["password"])
+            name=request.form.get("name"),
+            email=request.form.get("email"),
+            password=hash_password(request.form.get("password"))
         )
         db.session.add(new_user)
         db.session.commit()
