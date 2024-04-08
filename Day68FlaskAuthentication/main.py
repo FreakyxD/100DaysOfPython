@@ -33,6 +33,14 @@ with app.app_context():
     db.create_all()
 
 
+def hash_password(password):
+    return generate_password_hash(
+        password,
+        method="scrypt",
+        salt_length=16
+    )
+
+
 @app.route('/')
 def home():
     return render_template("index.html")
@@ -44,7 +52,7 @@ def register():
         new_user = User(
             name=request.form["name"],
             email=request.form["email"],
-            password=request.form["password"]
+            password=hash_password(request.form["password"])
         )
         db.session.add(new_user)
         db.session.commit()
