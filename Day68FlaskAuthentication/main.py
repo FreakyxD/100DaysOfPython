@@ -61,11 +61,16 @@ def register():
             email=request.form.get("email"),
             password=hash_password(request.form.get("password"))
         )
-        db.session.add(new_user)
-        db.session.commit()
 
-        login_user(new_user)
-        return render_template("secrets.html", username=new_user.name)
+        existing_user = db.session.query(User).filter(User.email == new_user.email).first()
+        if not existing_user:
+            db.session.add(new_user)
+            db.session.commit()
+            login_user(new_user)
+            return render_template("secrets.html", username=new_user.name)
+        else:
+            flash("You've already signed in with that email! Log in instead.")
+            return redirect(url_for('login'))
     return render_template("register.html")
 
 
@@ -77,6 +82,10 @@ def login():
         submitted_password = request.form.get("password")
 
         user = db.session.query(User).filter(User.email == submitted_email).first()
+        if not user:
+            flash("The email does not exist. Please try again.")
+            return redirect(url_for('login'))
+
         hashed_password = user.password
 
         if check_password_hash(hashed_password, submitted_password):
