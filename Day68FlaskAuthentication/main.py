@@ -82,7 +82,6 @@ def login():
 
         if check_password_hash(hashed_password, submitted_password):
             login_user(user)
-            flash("Logged in successfully.")
             return redirect(url_for("secrets"))
         else:
             flash("Login failed.")
