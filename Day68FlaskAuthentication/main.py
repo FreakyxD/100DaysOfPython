@@ -82,18 +82,15 @@ def login():
         submitted_password = request.form.get("password")
 
         user = db.session.query(User).filter(User.email == submitted_email).first()
-        if not user:
-            flash("The email does not exist. Please try again.")
-            return redirect(url_for('login'))
 
-        hashed_password = user.password
-
-        if check_password_hash(hashed_password, submitted_password):
+        # User exists and password correct
+        if user and check_password_hash(user.password, submitted_password):
             login_user(user)
             return redirect(url_for("secrets"))
-        else:
-            flash("Password incorrect. Please try again.")
-            return redirect(url_for('login'))
+
+        # General error message for security to avoid enumerating whether the email or password is incorrect
+        flash("Login failed. Please check your email and password.")
+        return redirect(url_for('login'))
     return render_template("login.html")
 
 
