@@ -84,7 +84,7 @@ def login():
             login_user(user)
             return redirect(url_for("secrets"))
         else:
-            flash("Login failed.")
+            flash("Password incorrect. Please try again.")
             return redirect(url_for('login'))
     return render_template("login.html")
 
