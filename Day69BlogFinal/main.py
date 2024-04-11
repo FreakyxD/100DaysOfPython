@@ -53,17 +53,36 @@ class BlogPost(db.Model):
     img_url: Mapped[str] = mapped_column(String(250), nullable=False)
 
 
-# TODO: Create a User table for all your registered users. 
 
+class User(UserMixin, db.Model):
+    __tablename__ = "users"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    email: Mapped[str] = mapped_column(String(100), unique=True)
+    password: Mapped[str] = mapped_column(String(100))
+    name: Mapped[str] = mapped_column(String(1000))
 
 with app.app_context():
     db.create_all()
 
 
-# TODO: Use Werkzeug to hash the user's password when creating a new user.
-@app.route('/register')
+@app.route('/register', methods=["GET", "POST"])
 def register():
-    return render_template("register.html")
+    form = RegisterForm()
+    if form.validate_on_submit():
+        hash_and_salted_password = generate_password_hash(
+            form.password.data,
+            method="scrypt",
+            salt_length=16
+        )
+        new_user = User(
+            email=form.email.data,
+            name=form.name.data,
+            password=hash_and_salted_password,
+        )
+        db.session.add(new_user)
+        db.session.commit()
+        return redirect(url_for("get_all_posts"))
+    return render_template("register.html", form=form)
 
 
 # TODO: Retrieve a user from the database based on their email. 
