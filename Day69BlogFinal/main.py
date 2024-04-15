@@ -87,10 +87,16 @@ def register():
             name=form.name.data,
             password=hash_and_salted_password,
         )
-        db.session.add(new_user)
-        db.session.commit()
-        login_user(new_user)
-        return redirect(url_for("get_all_posts"))
+
+        existing_user = db.session.query(User).filter(User.email == new_user.email).first()
+        if not existing_user:
+            db.session.add(new_user)
+            db.session.commit()
+            login_user(new_user)
+            return redirect(url_for("get_all_posts"))
+        else:
+            flash("You've already signed in with that email! Log in instead.")
+            return redirect(url_for('login'))
     return render_template("register.html", form=form)
 
 
