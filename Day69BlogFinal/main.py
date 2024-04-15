@@ -113,6 +113,9 @@ def login():
         if user and check_password_hash(user.password, submitted_password):
             login_user(user)
             return redirect(url_for("get_all_posts"))
+        # General error message for security to avoid enumerating whether the email or password is incorrect
+        flash("Login failed. Please check your email and password.")
+        return redirect(url_for('login'))
     return render_template("login.html", form=form)
 
 
