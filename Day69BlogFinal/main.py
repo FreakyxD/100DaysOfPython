@@ -67,6 +67,7 @@ class BlogPost(db.Model):
     author_id: Mapped[int] = mapped_column(Integer, db.ForeignKey("users.id"))
     # Create reference to the User object. The "posts" refers to the posts property in the User class.
     author = relationship("User", back_populates="posts")
+    comments = relationship("Comment", back_populates="parent_post")
 
     title: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
     subtitle: Mapped[str] = mapped_column(String(250), nullable=False)
@@ -79,7 +80,9 @@ class Comment(db.Model):
     __tablename__ = "comments"
 
     author_id: Mapped[int] = mapped_column(Integer, db.ForeignKey("users.id"))
+    post_id: Mapped[int] = mapped_column(Integer, db.ForeignKey("blog_posts.id"))
     comment_author = relationship("User", back_populates="comments")
+    parent_post = relationship("BlogPost", back_populates="comments")
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     text: Mapped[str] = mapped_column(Text, nullable=False)
