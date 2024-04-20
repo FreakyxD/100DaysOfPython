@@ -43,7 +43,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
-
+# CONFIGURE TABLES
 class User(UserMixin, db.Model):
     __tablename__ = "users"
 
@@ -57,7 +57,6 @@ class User(UserMixin, db.Model):
     posts = relationship("BlogPost", back_populates="author")
 
 
-# CONFIGURE TABLES
 class BlogPost(db.Model):
     __tablename__ = "blog_posts"
 
