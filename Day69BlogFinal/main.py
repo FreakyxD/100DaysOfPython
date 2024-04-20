@@ -43,6 +43,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
+
 # CONFIGURE TABLES
 class User(UserMixin, db.Model):
     __tablename__ = "users"
@@ -62,6 +63,11 @@ class BlogPost(db.Model):
     __tablename__ = "blog_posts"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    title: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
+    subtitle: Mapped[str] = mapped_column(String(250), nullable=False)
+    date: Mapped[str] = mapped_column(String(250), nullable=False)
+    body: Mapped[str] = mapped_column(Text, nullable=False)
+    img_url: Mapped[str] = mapped_column(String(250), nullable=False)
 
     # Create Foreign Key, "users.id" the users refers to the table name of User.
     author_id: Mapped[int] = mapped_column(Integer, db.ForeignKey("users.id"))
@@ -69,23 +75,17 @@ class BlogPost(db.Model):
     author = relationship("User", back_populates="posts")
     comments = relationship("Comment", back_populates="parent_post")
 
-    title: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
-    subtitle: Mapped[str] = mapped_column(String(250), nullable=False)
-    date: Mapped[str] = mapped_column(String(250), nullable=False)
-    body: Mapped[str] = mapped_column(Text, nullable=False)
-    img_url: Mapped[str] = mapped_column(String(250), nullable=False)
-
 
 class Comment(db.Model):
     __tablename__ = "comments"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    text: Mapped[str] = mapped_column(Text, nullable=False)
 
     author_id: Mapped[int] = mapped_column(Integer, db.ForeignKey("users.id"))
     post_id: Mapped[int] = mapped_column(Integer, db.ForeignKey("blog_posts.id"))
     comment_author = relationship("User", back_populates="comments")
     parent_post = relationship("BlogPost", back_populates="comments")
-
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    text: Mapped[str] = mapped_column(Text, nullable=False)
 
 
 with app.app_context():
@@ -99,6 +99,7 @@ def admin_required(f):
         if not current_user.is_authenticated or current_user.id != 1:
             return abort(403)
         return f(*args, **kwargs)
+
     return decorated_function
 
 
