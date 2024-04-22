@@ -1,4 +1,6 @@
 from datetime import date
+from hashlib import md5
+
 from flask import Flask, abort, render_template, redirect, url_for, flash
 from flask_bootstrap import Bootstrap5
 from flask_ckeditor import CKEditor
@@ -31,6 +33,16 @@ Bootstrap5(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+
+# Add Gravatar function to template context
+@app.context_processor
+def utility_processor():
+    def gravatar_url(email, size=100, rating='g', default='retro', force_default=False):
+        hash_value = md5(email.lower().encode('utf-8')).hexdigest()
+        return f"https://www.gravatar.com/avatar/{hash_value}?s={size}&d={default}&r={rating}&f={force_default}"
+
+    return dict(gravatar_url=gravatar_url)
 
 
 # CREATE DATABASE
