@@ -1,7 +1,7 @@
 from datetime import date
 from hashlib import md5
-
-from flask import Flask, abort, render_template, redirect, url_for, flash
+from Day0UsefulCode.TelegramBot.main import TelegramBot
+from flask import Flask, abort, render_template, redirect, url_for, flash, request
 from flask_bootstrap import Bootstrap5
 from flask_ckeditor import CKEditor
 from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user
@@ -252,9 +252,20 @@ def about():
     return render_template("about.html")
 
 
-@app.route("/contact")
+@app.route("/contact", methods=["POST", "GET"])
 def contact():
-    return render_template("contact.html")
+    if request.method == "POST":
+        if current_user.is_authenticated:
+            data = request.form
+            received_message = f"Name: {data['name']}\nEmail: {data['email']}\nPhone: {data['phone']}\nMessage: {data['message']}"
+            telegram_bot = TelegramBot()
+            print(received_message)
+            telegram_bot.send_message_to_telegram_bot(message=received_message)
+            return render_template("contact.html", msg_sent=True)
+        else:
+            flash("Please login to post a comment.")
+            return redirect(url_for("login"))
+    return render_template("contact.html", msg_sent=False)
 
 
 if __name__ == "__main__":
