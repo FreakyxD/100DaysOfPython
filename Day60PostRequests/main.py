@@ -13,7 +13,6 @@ def receive_data():
     error = None
     if request.method == "POST":
         print(request.form["username"])
-        print(request.form["password"])
     return "Login ok"
 
 
