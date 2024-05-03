@@ -57,7 +57,7 @@ def bye():
 @app.route("/math/add_ten/<int:number>")
 def add_10(number):
     number += 10
-    return f"{str(number)}"
+    return f"{str(escape(number))}"
 
 
 if __name__ == "__main__":
