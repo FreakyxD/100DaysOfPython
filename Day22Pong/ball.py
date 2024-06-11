@@ -28,7 +28,7 @@ class Ball(Turtle):
         self.goto(0, 0)
         self.bounce_x()
 
-    def increase_speed(self, boost):#
+    def increase_speed(self, boost):
         # or def bounce_y(self):
         #     self.y_move *= -1.1
         #
