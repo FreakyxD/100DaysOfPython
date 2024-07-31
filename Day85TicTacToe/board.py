@@ -19,19 +19,8 @@ def format_values(value):
 class Board(Teams):
     def __init__(self):
         super().__init__()
-        self.empty = "  "
-        self.board_values = [self.empty] * 9
+        self.board_values = [str(i+1) for i in range(9)]
 
-        # todo remove debug code
-        self.board_values[0] = self.cross
-        self.board_values[1] = self.circle
-        self.board_values[2] = self.cross
-        self.board_values[3] = self.circle
-        self.board_values[4] = self.empty
-        self.board_values[5] = self.circle
-        self.board_values[6] = self.cross
-        self.board_values[7] = self.circle
-        self.board_values[8] = self.cross
 
     def display_board(self):
         formatted_values = [format_values(value) for value in self.board_values]
@@ -46,7 +35,7 @@ class Board(Teams):
     # todo human readable index conversion
     def add_to_board(self, index, shape):
         while True:
-            if self.board_values[index] != self.empty:
+            if self.board_values[index] == self.circle or self.board_values[index] == self.cross:
                 print("There is already a marker!")
             else:
                 self.board_values[index] = shape
