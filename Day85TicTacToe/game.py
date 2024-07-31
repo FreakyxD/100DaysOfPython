@@ -7,9 +7,9 @@ my_board = Board()
 
 
 def init_game():
-    my_board.get_shapes()
+    my_board.print_teams()
     my_board.set_shape()
-    my_board.get_shapes()
+    my_board.print_teams()
 
 
 def game():

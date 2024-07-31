@@ -20,9 +20,13 @@ class Teams:
             else:
                 print("Invalid choice, try again.")
 
-    def get_shapes(self):
+    def print_teams(self):
         if self.p1 == "" and self.p2 == "":
             print("No team assigned yet.")
             return
         print("You: ", self.p1, "CPU: ", self.p2)
         return
+
+    def get_shapes(self):
+        return self.p1, self.p2
+
