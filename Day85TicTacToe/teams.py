@@ -24,5 +24,5 @@ class Teams:
         if self.p1 == "" and self.p2 == "":
             print("No team assigned yet.")
             return
-        print(self.p1, self.p2)
+        print("You: ", self.p1, "CPU: ", self.p2)
         return
