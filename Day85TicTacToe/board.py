@@ -1,3 +1,5 @@
+import random
+
 from teams import Teams
 from wcwidth import wcswidth
 
@@ -40,3 +42,7 @@ class Board(Teams):
             else:
                 self.board_values[index] = shape
                 break
+
+    def cpu_add_to_board(self, shape):
+        cpu_choice = random.randint(1, 9)
+        self.board_values[cpu_choice - 1] = shape
