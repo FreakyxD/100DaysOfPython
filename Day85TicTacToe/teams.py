@@ -29,4 +29,3 @@ class Teams:
 
     def get_shapes(self):
         return self.p1, self.p2
-
