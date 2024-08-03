@@ -29,24 +29,46 @@ def determine_starter():
         return "cpu"
 
 
+def player_turn():
+    my_board.player_add_to_board()
+
+
+def cpu_turn():
+    print("CPU is thinking", end="", flush=True)
+    _ = [print(".", end="", flush=True) or time.sleep(0.75) for _ in range(5)]
+    my_board.cpu_add_to_board()
+
+
+# todo ending condition - when either team plays the last turn
+# todo only update a single playing board
 def game():
     global game_over
+    game_round = 1
     init_game()
+    starting_player = determine_starter()
+    my_board.display_board()
 
-    while not game_over:
-        my_board.display_board()
-        # todo: player, cpu = my_board.get_shapes()
-
-        starting_player = determine_starter()
-        if starting_player == "player":
-            pass
-        elif starting_player == "cpu":
-            pass
-        else:
-            print("Error while determining starter!")
-            game_over = True
-
+    if starting_player == "player":
+        while not game_over:
+            if game_round % 2 == 0:
+                cpu_turn()
+            else:
+                player_turn()
+            game_round += 1
+            my_board.display_board()
+    elif starting_player == "cpu":
+        while not game_over:
+            if game_round % 2 == 0:
+                player_turn()
+            else:
+                cpu_turn()
+            game_round += 1
+            my_board.display_board()
+    else:
+        print("Error while determining starter!")
         game_over = True
+
+        # game_over = True
 
 
 game()

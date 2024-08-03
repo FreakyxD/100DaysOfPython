@@ -27,5 +27,8 @@ class Teams:
         print("You: ", self.p1, "CPU: ", self.p2)
         return
 
-    def get_shapes(self):
-        return self.p1, self.p2
+    def get_player_shape(self):
+        return self.p1
+
+    def get_cpu_shape(self):
+        return self.p2

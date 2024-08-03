@@ -21,8 +21,7 @@ def format_values(value):
 class Board(Teams):
     def __init__(self):
         super().__init__()
-        self.board_values = [str(i+1) for i in range(9)]
-
+        self.board_values = [str(i + 1) for i in range(9)]
 
     def display_board(self):
         formatted_values = [format_values(value) for value in self.board_values]
@@ -34,15 +33,40 @@ class Board(Teams):
                        {formatted_values[6]}   |   {formatted_values[7]}   |   {formatted_values[8]}   
                     """)
 
-    # todo human readable index conversion
-    def add_to_board(self, index, shape):
-        while True:
-            if self.board_values[index] == self.circle or self.board_values[index] == self.cross:
-                print("There is already a marker!")
-            else:
-                self.board_values[index] = shape
-                break
+    def is_occupied(self, board_index):
+        if self.board_values[board_index - 1] == self.circle or self.board_values[board_index - 1] == self.cross:
+            return True
+        else:
+            return False
 
-    def cpu_add_to_board(self, shape):
-        cpu_choice = random.randint(1, 9)
-        self.board_values[cpu_choice - 1] = shape
+    def player_add_to_board(self):
+        shape = self.get_player_shape()
+
+        while True:
+            board_index = input("Pick a position (1-9): ")
+
+            if not board_index.isdigit():
+                print("Invalid input. Please enter a number between 1 and 9.")
+                continue
+
+            board_index = int(board_index)
+
+            if board_index < 1 or board_index > 9:
+                print("Invalid position. Please pick a position between 1 and 9.")
+                continue
+
+            if not self.is_occupied(board_index):
+                self.board_values[board_index - 1] = shape
+                break
+            else:
+                print("Position already occupied. Please pick another position.")
+
+    # todo: only pick a number that is available
+    def cpu_add_to_board(self):
+        shape = self.get_cpu_shape()
+
+        while True:
+            cpu_board_index = random.randint(1, 9)
+            if not self.is_occupied(cpu_board_index):
+                self.board_values[cpu_board_index - 1] = shape
+                break
