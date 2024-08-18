@@ -70,7 +70,6 @@ def check_win_condition(debug_enabled):
     all_things_to_check = (main_diagonal, anti_diagonal, first_row, second_row, third_row, first_column, second_column,
                            third_column)
 
-
     for shapes_list in all_things_to_check:
         all_same = np.unique(shapes_list).size == 1
         if all_same:
@@ -87,39 +86,32 @@ def game():
     game_round = 1
     debug_enabled = False
     init_game()
-    starting_player = determine_starter(debug_enabled)
+    player_first = determine_starter(debug_enabled) == "player"
     my_board.display_board()
 
     if debug_enabled:
         my_board.debug_fill_board()
         print(check_win_condition(debug_enabled))
     else:
-        if starting_player == "player":
-            while not game_over:
+        while not game_over:
+            if player_first:
                 if game_round % 2 == 0:
                     cpu_turn()
                 else:
                     player_turn()
-                game_round += 1
-                my_board.display_board()
-
-                winner = check_win_condition(debug_enabled)
-                if winner != "none":
-                    print(f"GAME OVER! {winner} won!")
-                    game_over = True
-        elif starting_player == "cpu":
-            while not game_over:
+            else:
                 if game_round % 2 == 0:
                     player_turn()
                 else:
                     cpu_turn()
-                game_round += 1
-                my_board.display_board()
 
-                winner = check_win_condition(debug_enabled)
-                if winner != "none":
-                    print(f"GAME OVER! {winner} won!")
-                    game_over = True
+            game_round += 1
+            my_board.display_board()
+
+            winner = check_win_condition(debug_enabled)
+            if winner != "none":
+                print(f"GAME OVER! {winner} won!")
+                game_over = True
 
 
 game()
