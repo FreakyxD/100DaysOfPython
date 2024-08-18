@@ -70,3 +70,22 @@ class Board(Teams):
             if not self.is_occupied(cpu_board_index):
                 self.board_values[cpu_board_index - 1] = shape
                 break
+
+    def debug_fill_board(self):
+        available_positions = list(range(1, 10))
+
+        for i in range(9):
+            if i % 2 == 0:
+                shape = self.get_player_shape()
+            else:
+                shape = self.get_cpu_shape()
+
+            # Randomly select from the available positions
+            board_index = random.choice(available_positions)
+            self.board_values[board_index - 1] = shape
+
+            # Remove the chosen position from the available list
+            available_positions.remove(board_index)
+
+        # Display the board after filling
+        self.display_board()

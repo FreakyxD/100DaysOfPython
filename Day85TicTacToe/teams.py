@@ -1,7 +1,7 @@
 class Teams:
     def __init__(self):
-        self.p1 = ""
-        self.p2 = ""
+        self.player = ""
+        self.cpu = ""
         self.cross = "❌"
         self.circle = "⭕"
 
@@ -10,25 +10,25 @@ class Teams:
         while True:
             choice = input("Pick 'cross' or 'circle': ").lower()
             if choice == "cross" or choice == "x":
-                self.p1 = self.cross
-                self.p2 = self.circle
+                self.player = self.cross
+                self.cpu = self.circle
                 break
             elif choice == "circle" or choice == "o":
-                self.p1 = self.circle
-                self.p2 = self.cross
+                self.player = self.circle
+                self.cpu = self.cross
                 break
             else:
                 print("Invalid choice, try again.")
 
     def print_teams(self):
-        if self.p1 == "" and self.p2 == "":
+        if self.player == "" and self.cpu == "":
             print("No team assigned yet.")
             return
-        print("You: ", self.p1, "CPU: ", self.p2)
+        print("You: ", self.player, "CPU: ", self.cpu)
         return
 
     def get_player_shape(self):
-        return self.p1
+        return self.player
 
     def get_cpu_shape(self):
-        return self.p2
+        return self.cpu
