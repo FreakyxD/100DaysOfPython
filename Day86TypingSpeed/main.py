@@ -49,23 +49,58 @@ label.pack(pady=10)
 text_field = tk.Text(root, height=3, width=30, font=text_font)
 text_field.pack(pady=10)
 
+
 # Text field handling
 # todo highlight also current letter
-text_field.insert(tk.END, "test", "highlight")
-text_field.insert(tk.END, " text ")
-text_field.insert(tk.END, "hallo ")
-text_field.config(state=tk.DISABLED)
-text_field.tag_configure("highlight", background="teal", relief="raised")
+# text_field.insert(tk.END, "test", "highlight")
+# text_field.insert(tk.END, " text ")
+# text_field.insert(tk.END, "hallo ")
+# text_field.tag_configure("highlight", background="teal", relief="raised")
+
+def insert_text(word, index_to_highlight):
+    i = 0
+    for letter in word:
+        if i == index_to_highlight:
+            text_field.insert(tk.END, letter, "highlight")
+        else:
+            text_field.insert(tk.END, letter)
+        i += 1
+
+    text_field.tag_configure("highlight", background="teal", relief="raised")
+    text_field.config(state=tk.DISABLED)
+    return index_to_highlight
 
 
-# Input reader
-def keydown(e):
-    print('down', e.char)
+def check_current_letter(current_letter, index_highlight):
+    def keydown(e):
+        key = e.char
+        print(key + " pressed!")
+        root.unbind("<KeyPress>")
+        compare(key)
+
+    def compare(pressed_key):
+        if pressed_key == current_letter:
+            print("match")
+            correct_letter_move_on()
+        else:
+            print("no match")
+            incorrect_letter()
+
+    root.bind("<KeyPress>", keydown)
 
 
-root.bind("<KeyPress>", keydown)
+def correct_letter_move_on():
+    pass
 
-# Speed calculation
+
+def incorrect_letter():
+    pass
+
+
+highlighted_index = insert_text("computer", 0)
+check_current_letter("c", highlighted_index)
+
+# todo Speed calculation
 
 # Start the Tkinter event loop
 root.mainloop()
