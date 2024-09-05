@@ -34,14 +34,15 @@ word_list = [
     "found", "test", "draw", "do", "close", "listen", "develop", "blue", "turn",
     "over", "paper", "tree", "use"
 ]
+debug_word_list = ["list", "voice", "war"]
 
 # Create the main window
 root = tk.Tk()
 root.title("test")
 
 # UI Elements
-label_font = ("Helvetica", 24)  # Font family and size
-text_font = ("Helvetica", 24)  # Font family and size
+label_font = ("Menlo", 24)  # Font family and size
+text_font = ("Menlo", 24)  # Font family and size
 
 label = tk.Label(root, text="0", font=label_font)
 label.pack(pady=10)
@@ -50,28 +51,7 @@ text_field = tk.Text(root, height=3, width=30, font=text_font)
 text_field.pack(pady=10)
 
 
-# Text field handling
-# todo highlight also current letter
-# text_field.insert(tk.END, "test", "highlight")
-# text_field.insert(tk.END, " text ")
-# text_field.insert(tk.END, "hallo ")
-# text_field.tag_configure("highlight", background="teal", relief="raised")
-
-def insert_text(word, index_to_highlight):
-    i = 0
-    for letter in word:
-        if i == index_to_highlight:
-            text_field.insert(tk.END, letter, "highlight")
-        else:
-            text_field.insert(tk.END, letter)
-        i += 1
-
-    text_field.tag_configure("highlight", background="teal", relief="raised")
-    text_field.config(state=tk.DISABLED)
-    return index_to_highlight
-
-
-def check_current_letter(current_letter, index_highlight):
+def check_current_letter(current_letter):
     def keydown(e):
         key = e.char
         print(key + " pressed!")
@@ -97,8 +77,26 @@ def incorrect_letter():
     pass
 
 
-highlighted_index = insert_text("computer", 0)
-check_current_letter("c", highlighted_index)
+def print_letter(letter_to_print, to_highlight):
+    if to_highlight:
+        text_field.insert(tk.END, letter_to_print, "highlight")
+        text_field.tag_configure("highlight", background="teal", relief="raised")
+        # text_field.config(state=tk.DISABLED)
+    else:
+        text_field.insert(tk.END, letter_to_print)
+        # text_field.config(state=tk.DISABLED)
+
+
+# main logic
+first_word = True
+for word in debug_word_list:
+    for index, letter in enumerate(word):
+        if first_word:
+            print_letter(letter, True)
+            first_word = False
+        else:
+            print_letter(letter, False)
+    print_letter(" ", False)
 
 # todo Speed calculation
 
