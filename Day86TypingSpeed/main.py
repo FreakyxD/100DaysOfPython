@@ -53,20 +53,27 @@ text_field.pack(pady=10)
 
 def check_current_letter(current_letter):
     def keydown(e):
-        key = e.char
-        print(key + " pressed!")
-        root.unbind("<KeyPress>")
-        compare(key)
+        pressed_key = e.char
+        print(f"{pressed_key} pressed!")
+        compare(pressed_key)
 
     def compare(pressed_key):
         if pressed_key == current_letter:
-            print("match")
+            print("✅")
             correct_letter_move_on()
         else:
-            print("no match")
+            print("❌")
             incorrect_letter()
 
+        # After comparison, stop waiting for the key
+        root.unbind("<KeyPress>")
+        root.quit()  # This will stop the event loop
+
+    # Bind the key press event
     root.bind("<KeyPress>", keydown)
+
+    # Start an event loop that waits for a key press
+    root.mainloop()  # This will block until root.quit() is called after a key press
 
 
 def correct_letter_move_on():
