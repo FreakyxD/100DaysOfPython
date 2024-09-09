@@ -51,14 +51,14 @@ text_field = tk.Text(root, height=3, width=30, font=text_font)
 text_field.pack(pady=10)
 
 
-def check_current_letter(current_letter):
+def check_current_letter(letter_to_check):
     def keydown(e):
         pressed_key = e.char
         print(f"{pressed_key} pressed!")
         compare(pressed_key)
 
     def compare(pressed_key):
-        if pressed_key == current_letter:
+        if pressed_key == letter_to_check:
             print("✅")
             correct_letter_move_on()
         else:
