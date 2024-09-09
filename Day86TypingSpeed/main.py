@@ -95,15 +95,16 @@ def print_letter(letter_to_print, to_highlight):
 
 
 # main logic
-first_word = True
-for word in debug_word_list:
-    for index, letter in enumerate(word):
-        if first_word:
-            print_letter(letter, True)
-            first_word = False
-        else:
-            print_letter(letter, False)
-    print_letter(" ", False)
+fill_print_all_words()
+
+content = text_field.get("1.0", tk.END)  # Retrieve the content
+content_length = len(content.strip())  # Strip any trailing newlines and spaces, then get length
+print(content_length)
+
+for index_current_letter in range(0, content_length):
+    current_letter = index_to_letter(index_current_letter, 1)  # todo dynamic line handling
+    print("will check for letter: ", current_letter)
+    check_current_letter(current_letter)
 
 # todo Speed calculation
 
