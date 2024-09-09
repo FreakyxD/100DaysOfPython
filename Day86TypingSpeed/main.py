@@ -84,18 +84,38 @@ def incorrect_letter():
     pass
 
 
-def print_letter(letter_to_print, to_highlight):
+def insert_letter(letter_to_insert, to_highlight):
     if to_highlight:
-        text_field.insert(tk.END, letter_to_print, "highlight")
+        text_field.insert(tk.END, letter_to_insert, "highlight")
         text_field.tag_configure("highlight", background="teal", relief="raised")
-        # text_field.config(state=tk.DISABLED)
     else:
-        text_field.insert(tk.END, letter_to_print)
-        # text_field.config(state=tk.DISABLED)
+        text_field.insert(tk.END, letter_to_insert)
+
+
+def insert_all_words():
+    first_word = True
+    for word in debug_word_list:
+        for index, letter in enumerate(word):  # todo enumerate still needed?
+            if first_word:
+                insert_letter(letter, True)
+                first_word = False
+            else:
+                insert_letter(letter, False)
+        insert_letter(" ", False)  # space between words
+    text_field.config(state=tk.DISABLED)
+
+
+def index_to_letter(curr_index, line):
+    full_string_start = f"{line}.{curr_index}"
+    full_string_end = f"{line}.{curr_index + 1}"
+
+    letter = text_field.get(full_string_start, full_string_end)  # "1.0" means start at line 1, character 0
+    print("current index letter", letter)
+    return letter
 
 
 # main logic
-fill_print_all_words()
+insert_all_words()
 
 content = text_field.get("1.0", tk.END)  # Retrieve the content
 content_length = len(content.strip())  # Strip any trailing newlines and spaces, then get length
