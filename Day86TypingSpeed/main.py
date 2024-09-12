@@ -50,8 +50,11 @@ label.pack(pady=10)
 text_field = tk.Text(root, height=3, width=30, font=text_font)
 text_field.pack(pady=10)
 
+# Global tkinter variable to control flow
+correct_key_pressed = tk.BooleanVar()
 
-def check_current_letter(letter_to_check):
+
+def current_letter_correct(letter_to_check):
     def keydown(e):
         pressed_key = e.char
         print(f"{pressed_key} pressed!")
@@ -59,21 +62,21 @@ def check_current_letter(letter_to_check):
 
     def compare(pressed_key):
         if pressed_key == letter_to_check:
-            print("✅")
-            correct_letter_move_on()
+            print("✅ Correct Key")
+            correct_key_pressed.set(True)  # Mark as correct
         else:
-            print("❌")
-            incorrect_letter()
+            print("❌ Incorrect Key")
+            correct_key_pressed.set(False)  # Mark as incorrect
 
         # After comparison, stop waiting for the key
         root.unbind("<KeyPress>")
-        root.quit()  # This will stop the event loop
 
     # Bind the key press event
     root.bind("<KeyPress>", keydown)
 
-    # Start an event loop that waits for a key press
-    root.mainloop()  # This will block until root.quit() is called after a key press
+    # Wait until the correct_key_pressed variable changes (a key was pressed)
+    root.wait_variable(correct_key_pressed)  # This will block until a key press
+    return correct_key_pressed.get()  # Return True if correct, False otherwise
 
 
 def correct_letter_move_on():
@@ -84,12 +87,31 @@ def incorrect_letter():
     pass
 
 
-def insert_letter(letter_to_insert, to_highlight):
+def insert_letter_at_end(letter_to_insert, to_highlight):
     if to_highlight:
         text_field.insert(tk.END, letter_to_insert, "highlight")
-        text_field.tag_configure("highlight", background="teal", relief="raised")
+        text_field.tag_configure("highlight", background="green", relief="raised")
     else:
         text_field.insert(tk.END, letter_to_insert)
+
+        # todo text_field.tag_add("highlight", start_index, end_index)
+        # todo text_field.tag_config("highlight", foreground=color)
+
+
+def replace_letter(line, char_index, new_letter, to_highlight=False, color=None):
+    text_field.config(state=tk.NORMAL)
+
+    index_start = f"{line}.{char_index}"
+    index_end = f"{line}.{char_index + 1}"
+
+    text_field.delete(index_start, index_end)
+    if to_highlight and color:
+        text_field.insert(index_start, new_letter, "highlight")
+        text_field.tag_configure("highlight", background=color, relief="raised")
+    else:
+        text_field.insert(index_start, new_letter)
+
+    text_field.config(state=tk.DISABLED)
 
 
 def insert_all_words():
@@ -97,11 +119,11 @@ def insert_all_words():
     for word in debug_word_list:
         for index, letter in enumerate(word):  # todo enumerate still needed?
             if first_word:
-                insert_letter(letter, True)
+                insert_letter_at_end(letter, True)
                 first_word = False
             else:
-                insert_letter(letter, False)
-        insert_letter(" ", False)  # space between words
+                insert_letter_at_end(letter, False)
+        insert_letter_at_end(" ", False)  # space between words
     text_field.config(state=tk.DISABLED)
 
 
@@ -110,7 +132,6 @@ def index_to_letter(curr_index, line):
     full_string_end = f"{line}.{curr_index + 1}"
 
     letter = text_field.get(full_string_start, full_string_end)  # "1.0" means start at line 1, character 0
-    print("current index letter", letter)
     return letter
 
 
@@ -119,12 +140,26 @@ insert_all_words()
 
 content = text_field.get("1.0", tk.END)  # Retrieve the content
 content_length = len(content.strip())  # Strip any trailing newlines and spaces, then get length
-print(content_length)
+print("length: ", content_length)
 
 for index_current_letter in range(0, content_length):
     current_letter = index_to_letter(index_current_letter, 1)  # todo dynamic line handling
+
+    index_next_letter = index_current_letter + 1
+    next_letter = index_to_letter(index_next_letter, 1)
+
     print("will check for letter: ", current_letter)
-    check_current_letter(current_letter)
+
+    correct = False
+    while not correct:
+        if current_letter_correct(current_letter):
+            correct = True
+            replace_letter(line=1, char_index=index_current_letter, new_letter=current_letter, to_highlight=True,
+                           color="red")
+
+    replace_letter(line=1, char_index=index_current_letter, new_letter=current_letter)
+    replace_letter(line=1, char_index=index_current_letter + 1, new_letter=next_letter, to_highlight=True,
+                   color="green")
 
 # todo Speed calculation
 
