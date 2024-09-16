@@ -79,39 +79,39 @@ def current_letter_correct(letter_to_check):
     return correct_key_pressed.get()  # Return True if correct, False otherwise
 
 
-def correct_letter_move_on():
-    pass
-
-
-def incorrect_letter():
-    pass
-
-
 def insert_letter_at_end(letter_to_insert, to_highlight):
     if to_highlight:
-        text_field.insert(tk.END, letter_to_insert, "highlight")
-        text_field.tag_configure("highlight", background="green", relief="raised")
+        text_field.insert(tk.END, letter_to_insert, "border")
+        text_field.tag_configure("border", relief="raised", borderwidth=2)
     else:
         text_field.insert(tk.END, letter_to_insert)
 
-        # todo text_field.tag_add("highlight", start_index, end_index)
-        # todo text_field.tag_config("highlight", foreground=color)
 
-
-def replace_letter(line, char_index, new_letter, to_highlight=False, color=None):
+def add_markup(line, char_index, operation=None):
     text_field.config(state=tk.NORMAL)
 
     index_start = f"{line}.{char_index}"
     index_end = f"{line}.{char_index + 1}"
 
-    text_field.delete(index_start, index_end)
-    if to_highlight and color:
-        text_field.insert(index_start, new_letter, "highlight")
-        text_field.tag_configure("highlight", background=color, relief="raised")
+    if operation == "border":
+        text_field.tag_add("border", index_start, index_end)
+        text_field.tag_configure("border", relief="raised", borderwidth=2)
+    elif operation == "mark":
+        text_field.tag_add("mark", index_start, index_end)
+        text_field.tag_configure("mark", relief="raised", borderwidth=2, background="red")
     else:
-        text_field.insert(index_start, new_letter)
+        raise ValueError(f"Incorrect markup operation at line {line}, char {char_index}")
 
     text_field.config(state=tk.DISABLED)
+
+
+def remove_markup(line, char_index):
+    # Define the start and end index of the current letter
+    start_index = f"{line}.{char_index}"
+    end_index = f"{line}.{char_index + 1}"
+
+    text_field.tag_remove("border", start_index, end_index)
+    text_field.tag_remove("mark", start_index, end_index)
 
 
 def insert_all_words():
@@ -144,22 +144,19 @@ print("length: ", content_length)
 
 for index_current_letter in range(0, content_length):
     current_letter = index_to_letter(index_current_letter, 1)  # todo dynamic line handling
-
-    index_next_letter = index_current_letter + 1
-    next_letter = index_to_letter(index_next_letter, 1)
-
     print("will check for letter: ", current_letter)
+
+    # keep letter highlight
+    add_markup(line=1, char_index=index_current_letter, operation="border")
 
     correct = False
     while not correct:
         if current_letter_correct(current_letter):
             correct = True
-            replace_letter(line=1, char_index=index_current_letter, new_letter=current_letter, to_highlight=True,
-                           color="red")
-
-    replace_letter(line=1, char_index=index_current_letter, new_letter=current_letter)
-    replace_letter(line=1, char_index=index_current_letter + 1, new_letter=next_letter, to_highlight=True,
-                   color="green")
+            remove_markup(line=1, char_index=index_current_letter)
+        else:
+            # keep letter red
+            add_markup(line=1, char_index=index_current_letter, operation="mark")
 
 # todo Speed calculation
 
