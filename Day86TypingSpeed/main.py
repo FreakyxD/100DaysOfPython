@@ -142,6 +142,8 @@ def remove_markup(line, char_index):
 
 
 def insert_all_words(words):
+    text_field.config(state=tk.NORMAL)  # Enable the text field for editing
+
     first_word = True
     for i, word in enumerate(words):
         for letter in word:  # todo enumerate still needed?
@@ -152,7 +154,8 @@ def insert_all_words(words):
                 insert_letter_at_end(letter, False)
         if i < len(words) - 1:  # Only add a space if it's not the last word
             insert_letter_at_end(" ", False)
-    text_field.config(state=tk.DISABLED)
+
+    text_field.config(state=tk.DISABLED)  # Disable the text field after inserting
 
 
 def index_to_letter(curr_index, line):
