@@ -212,5 +212,9 @@ while True:
 
 # todo Speed calculation
 
+
+# Unbind any residual key events
+root.unbind("<KeyPress>")
+
 # Start the Tkinter event loop
 root.mainloop()
