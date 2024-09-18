@@ -167,8 +167,18 @@ def index_to_letter(curr_index, line):
 
 
 # main logic
-while debug_word_list:
+while True:
+    if not debug_word_list:
+        print("No more words to process. Exiting the loop.")
+        break
+
     next_words = pop_next_20_words(debug_word_list)
+    print("Next words:", next_words)
+    print("Remaining words:", debug_word_list)
+
+    if not next_words:
+        print("No next words retrieved. Exiting the loop.")
+        break
 
     insert_all_words(next_words)
 
@@ -177,6 +187,10 @@ while debug_word_list:
     content_length = len(content)
     print("length: ", content_length)
     print("content:", repr(content))
+
+    if content_length == 0:
+        print("No content to process. Exiting the loop.")
+        break
 
     for index_current_letter in range(0, content_length):
         current_letter = index_to_letter(index_current_letter, 1)  # todo dynamic line handling
