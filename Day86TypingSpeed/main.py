@@ -67,7 +67,7 @@ def current_letter_correct(letter_to_check):
     # correct_key_pressed.set(False)  # fix not needed
     def keydown(e):
         pressed_key = e.char
-        print(f"{pressed_key} pressed!")
+        print(f"{repr(pressed_key)} pressed!")
         compare(pressed_key)
 
     def compare(pressed_key):
@@ -146,7 +146,7 @@ def insert_all_words(words):
 
     first_word = True
     for i, word in enumerate(words):
-        for letter in word:  # todo enumerate still needed?
+        for letter in word:
             if first_word:
                 insert_letter_at_end(letter, True)
                 first_word = False
@@ -185,7 +185,7 @@ while True:
     # todo adjust for multiple lines
     content = text_field.get("1.0", "end-1c")  # Retrieve the content without the extra newline
     content_length = len(content)
-    print("length: ", content_length)
+    print("length:", content_length)
     print("content:", repr(content))
 
     if content_length == 0:
@@ -194,7 +194,7 @@ while True:
 
     for index_current_letter in range(0, content_length):
         current_letter = index_to_letter(index_current_letter, 1)  # todo dynamic line handling
-        print("will check for letter: ", current_letter)
+        print("will check for letter:", repr(current_letter))
 
         # keep letter highlight
         add_markup(line=1, char_index=index_current_letter, operation="border")
