@@ -34,7 +34,12 @@ word_list = [
     "found", "test", "draw", "do", "close", "listen", "develop", "blue", "turn",
     "over", "paper", "tree", "use"
 ]
-debug_word_list = ["list", "voice", "war"]
+debug_word_list = [
+    'list', 'voice', 'war', 'array', 'output', 'log', 'return', 'debug', 'test',
+    'execute', 'overflow', 'compile', 'trace', 'stack', 'variable', 'input',
+    'code', 'module', 'exception', 'parameter', 'process', 'loop', 'syntax',
+    'breakpoint', 'function', 'condition'
+]
 
 # Create the main window
 root = tk.Tk()
@@ -47,14 +52,19 @@ text_font = ("Menlo", 24)  # Font family and size
 label = tk.Label(root, text="0", font=label_font)
 label.pack(pady=10)
 
-text_field = tk.Text(root, height=3, width=30, font=text_font)
-text_field.pack(pady=10)
+text_field = tk.Text(root, height=3, width=50, font=text_font, wrap=tk.WORD)
+text_field.pack(pady=10, expand=True, fill=tk.BOTH)
 
 # Global tkinter variable to control flow
 correct_key_pressed = tk.BooleanVar()
 
 
+def pop_next_20_words(list1):  # todo update to 20 words
+    return [list1.pop(0) for _ in range(min(2, len(list1)))]
+
+
 def current_letter_correct(letter_to_check):
+    # correct_key_pressed.set(False)  # fix not needed
     def keydown(e):
         pressed_key = e.char
         print(f"{pressed_key} pressed!")
@@ -87,7 +97,24 @@ def insert_letter_at_end(letter_to_insert, to_highlight):
         text_field.insert(tk.END, letter_to_insert)
 
 
+def clear_text_field():
+    text_field.config(state=tk.NORMAL)
+    text_field.delete("1.0", tk.END)
+    text_field.config(state=tk.DISABLED)
+
+
 def add_markup(line, char_index, operation=None):
+    """
+    Adds markup to a specific character in the text field.
+
+    Parameters:
+    line (int): The line number where the character is located.
+    char_index (int): The index of the character within the line.
+    operation (str, optional): The type of markup to apply. Can be 'border' or 'mark'.
+
+    Raises:
+    ValueError: If an incorrect markup operation is provided.
+    """
     text_field.config(state=tk.NORMAL)
 
     index_start = f"{line}.{char_index}"
@@ -114,16 +141,17 @@ def remove_markup(line, char_index):
     text_field.tag_remove("mark", start_index, end_index)
 
 
-def insert_all_words():
+def insert_all_words(words):
     first_word = True
-    for word in debug_word_list:
-        for index, letter in enumerate(word):  # todo enumerate still needed?
+    for i, word in enumerate(words):
+        for letter in word:  # todo enumerate still needed?
             if first_word:
                 insert_letter_at_end(letter, True)
                 first_word = False
             else:
                 insert_letter_at_end(letter, False)
-        insert_letter_at_end(" ", False)  # space between words
+        if i < len(words) - 1:  # Only add a space if it's not the last word
+            insert_letter_at_end(" ", False)
     text_field.config(state=tk.DISABLED)
 
 
@@ -136,27 +164,34 @@ def index_to_letter(curr_index, line):
 
 
 # main logic
-insert_all_words()
+while debug_word_list:
+    next_words = pop_next_20_words(debug_word_list)
 
-content = text_field.get("1.0", tk.END)  # Retrieve the content
-content_length = len(content.strip())  # Strip any trailing newlines and spaces, then get length
-print("length: ", content_length)
+    insert_all_words(next_words)
 
-for index_current_letter in range(0, content_length):
-    current_letter = index_to_letter(index_current_letter, 1)  # todo dynamic line handling
-    print("will check for letter: ", current_letter)
+    # todo adjust for multiple lines
+    content = text_field.get("1.0", "end-1c")  # Retrieve the content without the extra newline
+    content_length = len(content)
+    print("length: ", content_length)
+    print("content:", repr(content))
 
-    # keep letter highlight
-    add_markup(line=1, char_index=index_current_letter, operation="border")
+    for index_current_letter in range(0, content_length):
+        current_letter = index_to_letter(index_current_letter, 1)  # todo dynamic line handling
+        print("will check for letter: ", current_letter)
 
-    correct = False
-    while not correct:
-        if current_letter_correct(current_letter):
-            correct = True
-            remove_markup(line=1, char_index=index_current_letter)
-        else:
-            # keep letter red
-            add_markup(line=1, char_index=index_current_letter, operation="mark")
+        # keep letter highlight
+        add_markup(line=1, char_index=index_current_letter, operation="border")
+
+        correct = False
+        while not correct:
+            if current_letter_correct(current_letter):
+                correct = True
+                remove_markup(line=1, char_index=index_current_letter)
+            else:
+                # keep letter red
+                add_markup(line=1, char_index=index_current_letter, operation="mark")
+
+    clear_text_field()
 
 # todo Speed calculation
 
