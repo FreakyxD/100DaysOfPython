@@ -1,7 +1,11 @@
 import time
 import tkinter as tk
 
-xword_list = [
+short_word_list = [
+    'list', 'voice', 'war', 'array', 'give', 'direct', 'wait', 'you', 'product', 'eat', 'simple', 'full', 'late', 'by',
+    'figure', 'answer', 'after', 'why', 'also', 'science', 'from', 'step', 'answer', 'stood', 'time', 'example', 'and'
+]
+long_word_list = [
     "list", "voice", "war", "give", "direct", "wait", "you", "product", "eat", "simple",
     "full", "late", "by", "figure", "answer", "after", "why", "also", "science", "from",
     "step", "answer", "stood", "time", "example", "sentence", "sleep", "paper", "yet",
@@ -35,15 +39,12 @@ xword_list = [
     "found", "test", "draw", "do", "close", "listen", "develop", "blue", "turn",
     "over", "paper", "tree", "use"
 ]
-yword_list = [
-    'list', 'voice', 'war', 'array', 'give', 'direct', 'wait', 'you', 'product', 'eat', 'simple', 'full', 'late', 'by', 'figure', 'answer', 'after', 'why', 'also', 'science', 'from', 'step', 'answer', 'stood', 'time', 'example', 'and'
-]
 
-word_list = [
-    'stood', 'time', 'example', 'and'
-]
+# Choose the word list to use
+word_list = short_word_list
 
 start_time = None
+total_word_count = 0
 
 # Create the main window
 root = tk.Tk()
@@ -53,8 +54,10 @@ root.title("test")
 label_font = ("Menlo", 24)  # Font family and size
 text_font = ("Menlo", 24)  # Font family and size
 
-timer = tk.Label(root, text="Please start typing...", font=label_font)
-timer.pack(pady=10)
+timer_label = tk.Label(root, text="Please start typing...", font=label_font)
+timer_label.pack(pady=10)
+
+wpm_label = tk.Label(root, font=label_font)
 
 text_field = tk.Text(root, height=3, width=50, font=text_font, wrap=tk.WORD)
 text_field.pack(pady=10, expand=True, fill=tk.BOTH)
@@ -63,7 +66,7 @@ text_field.pack(pady=10, expand=True, fill=tk.BOTH)
 correct_key_pressed = tk.BooleanVar()
 
 
-def pop_next_20_words(list1):
+def pop_up_to_20_words(list1):
     return [list1.pop(0) for _ in range(min(20, len(list1)))]
 
 
@@ -174,6 +177,7 @@ def index_to_letter(curr_index, line):
     letter = text_field.get(full_string_start, full_string_end)  # "1.0" means start at line 1, character 0
     return letter
 
+
 def start_timer():
     return time.time()
 
@@ -183,8 +187,8 @@ def stop_timer(start):
     end_time = time.time()  # Capture the time at the end
     time_taken = end_time - start  # Calculate time taken
     minutes, seconds = divmod(time_taken, 60)  # Convert to minutes and seconds
-    print(f"Time taken: {int(minutes):02d}:{int(seconds):02d}")  # Display in mm:ss format
     return f"{int(minutes):02d}:{int(seconds):02d}"  # Return the formatted time string
+
 
 # main logic
 while True:
@@ -192,7 +196,7 @@ while True:
         print("No more words to process. Exiting the loop.")
         break
 
-    next_words = pop_next_20_words(word_list)
+    next_words = pop_up_to_20_words(word_list)
     print("Next words:", next_words)
     print("Remaining words:", word_list)
 
@@ -200,6 +204,7 @@ while True:
         print("No next words retrieved. Exiting the loop.")
         break
 
+    total_word_count += len(next_words)
     insert_all_words(next_words)
 
     content = text_field.get("1.0", "end-1c")  # Retrieve the content without the extra newline
@@ -212,7 +217,7 @@ while True:
         break
 
     for index_current_letter in range(0, content_length):
-        current_letter = index_to_letter(index_current_letter, 1)  # todo dynamic line handling
+        current_letter = index_to_letter(index_current_letter, 1)
         print("will check for letter:", repr(current_letter))
 
         # keep letter highlight
@@ -231,7 +236,14 @@ while True:
 
 # Stop the timer and display the elapsed time
 final_time = stop_timer(start_time)
-timer.config(text=f"Time taken: {final_time}")
+timer_label.config(text=f"Time taken: {final_time}")
+
+# calculate words per minute (WPM)
+wpm = total_word_count / (int(final_time.split(":")[0]) + int(final_time.split(":")[1]) / 60)
+wpm_label.config(text=f"WPM: {round(wpm)}")
+
+text_field.pack_forget()  # Hide the text field
+wpm_label.pack(pady=10)  # Show the WPM label
 
 # Unbind any residual key events
 root.unbind("<KeyPress>")
