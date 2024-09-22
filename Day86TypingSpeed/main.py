@@ -1,6 +1,7 @@
+import time
 import tkinter as tk
 
-word_list = [
+xword_list = [
     "list", "voice", "war", "give", "direct", "wait", "you", "product", "eat", "simple",
     "full", "late", "by", "figure", "answer", "after", "why", "also", "science", "from",
     "step", "answer", "stood", "time", "example", "sentence", "sleep", "paper", "yet",
@@ -34,12 +35,15 @@ word_list = [
     "found", "test", "draw", "do", "close", "listen", "develop", "blue", "turn",
     "over", "paper", "tree", "use"
 ]
-debug_word_list = [
-    'list', 'voice', 'war', 'array', 'output', 'log', 'return', 'debug', 'test',
-    'execute', 'overflow', 'compile', 'trace', 'stack', 'variable', 'input',
-    'code', 'module', 'exception', 'parameter', 'process', 'loop', 'syntax',
-    'breakpoint', 'function', 'condition'
+yword_list = [
+    'list', 'voice', 'war', 'array', 'give', 'direct', 'wait', 'you', 'product', 'eat', 'simple', 'full', 'late', 'by', 'figure', 'answer', 'after', 'why', 'also', 'science', 'from', 'step', 'answer', 'stood', 'time', 'example', 'and'
 ]
+
+word_list = [
+    'stood', 'time', 'example', 'and'
+]
+
+start_time = None
 
 # Create the main window
 root = tk.Tk()
@@ -49,8 +53,8 @@ root.title("test")
 label_font = ("Menlo", 24)  # Font family and size
 text_font = ("Menlo", 24)  # Font family and size
 
-label = tk.Label(root, text="0", font=label_font)
-label.pack(pady=10)
+timer = tk.Label(root, text="Please start typing...", font=label_font)
+timer.pack(pady=10)
 
 text_field = tk.Text(root, height=3, width=50, font=text_font, wrap=tk.WORD)
 text_field.pack(pady=10, expand=True, fill=tk.BOTH)
@@ -59,12 +63,17 @@ text_field.pack(pady=10, expand=True, fill=tk.BOTH)
 correct_key_pressed = tk.BooleanVar()
 
 
-def pop_next_20_words(list1):  # todo update to 20 words
-    return [list1.pop(0) for _ in range(min(2, len(list1)))]
+def pop_next_20_words(list1):
+    return [list1.pop(0) for _ in range(min(20, len(list1)))]
 
 
 def current_letter_correct(letter_to_check):
-    # correct_key_pressed.set(False)  # fix not needed
+    global start_time
+
+    # Start the timer on the first key press
+    if start_time is None:
+        start_time = start_timer()
+
     def keydown(e):
         pressed_key = e.char
         print(f"{repr(pressed_key)} pressed!")
@@ -165,16 +174,27 @@ def index_to_letter(curr_index, line):
     letter = text_field.get(full_string_start, full_string_end)  # "1.0" means start at line 1, character 0
     return letter
 
+def start_timer():
+    return time.time()
+
+
+# Function to stop the timer, calculate elapsed time, and display it in mm:ss format
+def stop_timer(start):
+    end_time = time.time()  # Capture the time at the end
+    time_taken = end_time - start  # Calculate time taken
+    minutes, seconds = divmod(time_taken, 60)  # Convert to minutes and seconds
+    print(f"Time taken: {int(minutes):02d}:{int(seconds):02d}")  # Display in mm:ss format
+    return f"{int(minutes):02d}:{int(seconds):02d}"  # Return the formatted time string
 
 # main logic
 while True:
-    if not debug_word_list:
+    if not word_list:
         print("No more words to process. Exiting the loop.")
         break
 
-    next_words = pop_next_20_words(debug_word_list)
+    next_words = pop_next_20_words(word_list)
     print("Next words:", next_words)
-    print("Remaining words:", debug_word_list)
+    print("Remaining words:", word_list)
 
     if not next_words:
         print("No next words retrieved. Exiting the loop.")
@@ -182,7 +202,6 @@ while True:
 
     insert_all_words(next_words)
 
-    # todo adjust for multiple lines
     content = text_field.get("1.0", "end-1c")  # Retrieve the content without the extra newline
     content_length = len(content)
     print("length:", content_length)
@@ -210,8 +229,9 @@ while True:
 
     clear_text_field()
 
-# todo Speed calculation
-
+# Stop the timer and display the elapsed time
+final_time = stop_timer(start_time)
+timer.config(text=f"Time taken: {final_time}")
 
 # Unbind any residual key events
 root.unbind("<KeyPress>")
