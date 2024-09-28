@@ -1,5 +1,6 @@
 from turtle import Turtle
 
+
 class Ball(Turtle):
     def __init__(self, fps):
         super().__init__()
@@ -8,30 +9,37 @@ class Ball(Turtle):
         self.color("white")
         self.penup()
 
-        # Set initial ball speed based on FPS
         if fps == 60:
-            ball_speed = 1.67
+            ball_speed = 1.67  # Movement per frame at 60 fps
         else:
-            ball_speed = 3.33
+            ball_speed = 3.33  # Movement per frame at 30 fps
 
         self.x_move = ball_speed
         self.y_move = ball_speed
-        self.speed_factor = 1.0  # Multiplier for speed, starting at 1.0
+        self.bounce_count = 0  # To track the number of bounces
 
     def move(self):
-        """Move the ball by updating its position based on current speed."""
-        new_x = self.xcor() + self.x_move * self.speed_factor
-        new_y = self.ycor() + self.y_move * self.speed_factor
+        new_x = self.xcor() + self.x_move
+        new_y = self.ycor() + self.y_move
         self.goto(new_x, new_y)
 
     def bounce_x(self):
-        """Reverse the horizontal direction of the ball."""
         self.x_move *= -1
+        self.track_bounces()
 
     def bounce_y(self):
-        """Reverse the vertical direction of the ball."""
         self.y_move *= -1
+        self.track_bounces()
+
+    # todo Additionally, the ball could also speed up when it hit certain rows of bricks,
+    #  specifically the blue or green rows near the top of the screen.
+    def track_bounces(self):
+        """Track the number of bounces and increase speed after 5th and 13th bounce."""
+        self.bounce_count += 1
+        if self.bounce_count in [5, 13]:  # Increase speed after 5th and 13th bounce
+            self.increase_speed()
 
     def increase_speed(self):
-        """Increase ball speed by scaling up the speed factor."""
-        self.speed_factor *= 1.1  # Increase speed by 10%
+        """Increase ball speed by scaling up both x and y moves."""
+        self.x_move *= 1.1
+        self.y_move *= 1.1
