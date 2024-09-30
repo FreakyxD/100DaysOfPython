@@ -19,8 +19,8 @@ class Ball(Turtle):
         self.bounce_count = 0  # To track the number of bounces
 
     def move(self):
-        new_x = self.xcor() + self.x_move
-        new_y = self.ycor() + self.y_move
+        new_x = self.xcor() - self.x_move
+        new_y = self.ycor() - self.y_move
         self.goto(new_x, new_y)
 
     def bounce_x(self):
