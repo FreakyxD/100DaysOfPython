@@ -1,5 +1,7 @@
 from turtle import Turtle
 
+from prompt_toolkit.styles.defaults import COLORS_STYLE
+
 
 class Brick(Turtle):
     COLOR_POINTS = {
@@ -20,6 +22,7 @@ class Brick(Turtle):
         self.shape("square")
 
         self.color(color)
+        self.hex_color = color
 
         # todo start debug
         self.pencolor("red")
@@ -36,3 +39,6 @@ class Brick(Turtle):
         self.goto(self.x, self.y)
 
         self.hit = False
+
+    def get_brick_value(self):
+        return self.COLOR_POINTS[self.hex_color]

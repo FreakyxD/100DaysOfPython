@@ -1,45 +1,43 @@
 from turtle import Turtle
 
 
+# idea: The ball could also speed up when it hit certain rows of bricks,
+#  specifically the blue or green rows near the top of the screen.
 class Ball(Turtle):
-    def __init__(self, fps):
+    def __init__(self):
         super().__init__()
 
-        self.shape("circle")
+        self.shape("square")
         self.color("white")
         self.penup()
 
-        if fps == 60:
-            ball_speed = 1.67  # Movement per frame at 60 fps
-        else:
-            ball_speed = 3.33  # Movement per frame at 30 fps
-
-        self.x_move = ball_speed
-        self.y_move = ball_speed
-        self.bounce_count = 0  # To track the number of bounces
+        self.x_movement_speed = 3.33
+        self.y_movement_speed = 3.33
+        self.bounce_count = 0
 
     def move(self):
-        new_x = self.xcor() - self.x_move
-        new_y = self.ycor() - self.y_move
+        new_x = self.xcor() - self.x_movement_speed
+        new_y = self.ycor() - self.y_movement_speed
         self.goto(new_x, new_y)
 
     def bounce_x(self):
-        self.x_move *= -1
+        self.x_movement_speed *= -1
         self.track_bounces()
 
     def bounce_y(self):
-        self.y_move *= -1
+        self.y_movement_speed *= -1
         self.track_bounces()
 
-    # todo Additionally, the ball could also speed up when it hit certain rows of bricks,
-    #  specifically the blue or green rows near the top of the screen.
     def track_bounces(self):
         """Track the number of bounces and increase speed after 5th and 13th bounce."""
         self.bounce_count += 1
-        if self.bounce_count in [5, 13]:  # Increase speed after 5th and 13th bounce
+        if self.bounce_count in [5, 13]:
             self.increase_speed()
 
     def increase_speed(self):
-        """Increase ball speed by scaling up both x and y moves."""
-        self.x_move *= 1.1
-        self.y_move *= 1.1
+        # Increase speed by 10%, but cap it at 1
+        self.x_movement_speed = min(self.x_movement_speed * 1.05, 10)
+        self.y_movement_speed = min(self.y_movement_speed * 1.05, 10)
+
+    def reset_position(self):
+        self.goto(0, 0)
