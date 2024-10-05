@@ -1,7 +1,5 @@
 from turtle import Turtle
 
-from prompt_toolkit.styles.defaults import COLORS_STYLE
-
 
 class Brick(Turtle):
     COLOR_POINTS = {
@@ -20,15 +18,14 @@ class Brick(Turtle):
             raise ValueError("Invalid brick color")
 
         self.shape("square")
-
         self.color(color)
         self.hex_color = color
 
-        # todo start debug
-        self.pencolor("red")
-        self.pensize(2)
-        self.pendown()
-        # todo end debug
+        # start debug
+        # self.pencolor("red")
+        # self.pensize(2)
+        # self.pendown()
+        # end debug
 
         # default size is 20
         self.shapesize(stretch_len=2, stretch_wid=stretch_wid)  # 40x16 brick

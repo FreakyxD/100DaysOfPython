@@ -1,7 +1,6 @@
 from turtle import Turtle
 
 
-# idea: shrink paddle the fewer bricks are left
 class Paddle(Turtle):
     def __init__(self, screen_width):
         super().__init__()

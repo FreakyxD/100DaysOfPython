@@ -72,22 +72,18 @@ def bounce_angle(my_ball, my_paddle):
         my_ball.x_movement_speed = 0
     else:
         # adjust the angle based on how far the ball is from the center
-        angle_multiplier = min(abs(offset) / (my_paddle.paddle_width / 2), 1)  # normalize within range [-1, 1]
+        angle_multiplier = min(abs(offset) / (my_paddle.paddle_width / 2), 1)  # normalize within range [0, 1]
 
-        if offset < 0:
-            # ball hit the left side of the paddle
-            new_speed = max(abs(my_ball.x_movement_speed), min_x_speed) * (1 + angle_multiplier)
-            if abs(new_speed) > max_speed:
-                my_ball.x_movement_speed = -max_speed if new_speed < 0 else max_speed
-            else:
-                my_ball.x_movement_speed = new_speed
-        else:
-            # ball hit the right side of the paddle
-            new_speed = max(-abs(my_ball.x_movement_speed), min_x_speed) * (1 + angle_multiplier)
-            if abs(new_speed) > max_speed:
-                my_ball.x_movement_speed = -max_speed if new_speed < 0 else max_speed
-            else:
-                my_ball.x_movement_speed = new_speed
+        # determine the new speed while preserving direction
+        base_speed = max(abs(my_ball.x_movement_speed), min_x_speed) * (1 + angle_multiplier)
+        new_speed = base_speed if offset > 0 else -base_speed  # positive for right, negative for left
+
+        # ensure the speed does not exceed the maximum speed
+        if abs(new_speed) > max_speed:
+            new_speed = max_speed if new_speed > 0 else -max_speed
+
+        # assign the new speed to the ball's x movement
+        my_ball.x_movement_speed = new_speed
 
     # reverse the y direction to make the ball bounce upward
     my_ball.bounce_y()
@@ -118,7 +114,6 @@ screen.onkeyrelease(paddle.stop_move_right, "Right")
 
 # start the paddle movement timer
 move_paddle()
-
 
 win = None
 # main game loop
