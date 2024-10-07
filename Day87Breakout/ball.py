@@ -1,6 +1,8 @@
 from turtle import Turtle
 
 
+# idea: The ball could also speed up when it hit certain rows of bricks,
+#  specifically the blue or green rows near the top of the screen.
 class Ball(Turtle):
     def __init__(self):
         super().__init__()
