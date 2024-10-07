@@ -68,7 +68,7 @@ def bounce_angle(my_ball, my_paddle):
     offset = my_ball.xcor() - my_paddle.xcor()
 
     # if the ball hits near the center of the paddle, bounce straight up
-    if abs(offset) < 3:
+    if abs(offset) < 7:
         my_ball.x_movement_speed = 0
     else:
         # adjust the angle based on how far the ball is from the center
@@ -120,7 +120,6 @@ win = None
 while life_counter.life > 0:
     time.sleep(sleep_time)
     screen.update()
-
     ball.move()
 
     # detect collision with paddle
