@@ -1,8 +1,14 @@
 import requests
 import csv
 from bs4 import BeautifulSoup
+from sensitive import USER_AGENT
 
-response = requests.get("https://wiki.dolphin-emu.org/index.php?title=Nintendo_GameCube")
+headers = {
+    "User-Agent": USER_AGENT,
+    "Accept-Language": "en-US,en;q=0.5"
+}
+
+response = requests.get("https://wiki.dolphin-emu.org/index.php?title=Nintendo_GameCube", headers=headers)
 response.raise_for_status()
 
 website_source = response.text
