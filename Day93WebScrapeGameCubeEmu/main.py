@@ -17,7 +17,6 @@ if compatibility_table:
         columns = row.find_all("td")
 
         if len(columns) > 0:
-            # easy, already gets string
             title = columns[0].get_text(strip=True)
             year = columns[1].get_text(strip=True)
             region = columns[2].get_text(strip=True)
@@ -34,12 +33,10 @@ if compatibility_table:
 else:
     raise Exception("No compatibility table found")
 
-print(compatibility_list[0])
-
 with open("compatibility_list.csv", "w", newline="") as csvfile:
-    my_writer = csv.writer(csvfile, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL)
-    my_writer.writerow(compatibility_list[0].keys())
+    fieldnames = compatibility_list[0].keys()
+    my_writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
-    row_content = [[row_dict["Title"], row_dict["Year"], row_dict["Region"], row_dict["Compatibility"]] for row_dict in
-                   compatibility_list]
-    my_writer.writerows(row_content)
+    my_writer.writeheader()
+
+    my_writer.writerows(compatibility_list)
