@@ -1,5 +1,5 @@
 import pygame
-from player import Player
+from starship import Starship
 
 # pygame setup
 pygame.init()
@@ -19,7 +19,7 @@ while running:
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("purple")
 
-    player = Player(screen, dt, player_pos)
+    player = Starship(screen, dt, player_pos)
     player.handle_movement()
 
     # flip() the display to put your work on screen
