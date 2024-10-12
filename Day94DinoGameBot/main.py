@@ -11,14 +11,14 @@ def introduction():
     time.sleep(3)
     webbrowser.open(GAME_URL)
     time.sleep(3)
-    pyautogui.press("space")  # Start the game
+    pyautogui.press("space")  # starts the game
 
 
 def take_screenshot():
     top_left_x = 330
     top_left_y = 555
-    bottom_right_x = top_left_x + 75  # Moving 75 pixels to the right
-    bottom_right_y = top_left_y + 45  # Moving 45 pixels down
+    bottom_right_x = top_left_x + 75  # moving 75 pixels to the right
+    bottom_right_y = top_left_y + 45  # moving 45 pixels down
     bbox = (top_left_x, top_left_y, bottom_right_x, bottom_right_y)
     return PIL.ImageGrab.grab(bbox=bbox)
 
@@ -30,40 +30,30 @@ def screenshot_has_obstacle(image):
     top_colors = color_counter.most_common(2)
 
     if len(top_colors) != 1:
-        return True, top_colors
-    else:
-        return False, top_colors
+        return True
 
 
 introduction()
 
 cooldown = False
 jump_cooldown_time = 0.25
-last_state = None
-unchanged_count = 0  # Counter to track how long the state has been unchanged
+time_since_obstacle = time.time()
 
 while True:
     if not cooldown:
         img = take_screenshot()
-        has_obstacle, current_state = screenshot_has_obstacle(img)
+        has_obstacle = screenshot_has_obstacle(img)
 
-        # If an obstacle is detected, jump
+        # if an obstacle is detected, jump
         if has_obstacle:
             pyautogui.press("space")
             cooldown = True  # Avoid multiple jumps while in the air
+            time_since_obstacle = time.time()  # Reset the timer
 
-        # Check if the state has changed
-        if current_state == last_state:
-            unchanged_count += 1
-        else:
-            unchanged_count = 0  # Reset the counter if there's a change
-
-        # If the state hasn't changed for 3 consecutive seconds (300 iterations), consider it "game over"
-        if unchanged_count >= 300:  # 3 seconds of no change with 0.01s interval
-            print("Game over detected! Exiting...")
+        # check if it's been more than 3 seconds since the last obstacle
+        if time.time() - time_since_obstacle > 5:
+            pyautogui.alert("Game over detected! Exiting...")
             break
-
-        last_state = current_state
 
     else:
         time.sleep(jump_cooldown_time)
