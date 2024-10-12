@@ -3,11 +3,11 @@ from player import Player
 
 # pygame setup
 pygame.init()
-screen = pygame.display.set_mode((1280, 720))
+screen = pygame.display.set_mode((960, 720))
 clock = pygame.time.Clock()
 running = True
 dt = 0
-player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
+player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() * 0.9)
 
 while running:
     # poll for events
