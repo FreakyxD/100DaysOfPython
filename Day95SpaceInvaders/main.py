@@ -6,12 +6,17 @@ pygame.init()
 screen = pygame.display.set_mode((960, 720))
 clock = pygame.time.Clock()
 running = True
-dt = 0
-player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() * 0.9)
+
+player = Starship(screen)
 
 while running:
+    # limits FPS to 60
+    # dt is delta time in seconds since last frame, used for framerate-
+    # independent physics.
+    dt = clock.tick(60) / 1000
+
     # poll for events
-    # pygame.QUIT event means the user clicked X to close your window
+    # pygame.QUIT event means the user clicked X to close the window
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -19,15 +24,10 @@ while running:
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("purple")
 
-    player = Starship(screen, dt, player_pos)
-    player.handle_movement()
+    player.handle_movement(dt)
+    player.draw()
 
-    # flip() the display to put your work on screen
+    # flip() the display to put everything on screen
     pygame.display.flip()
-
-    # limits FPS to 60
-    # dt is delta time in seconds since last frame, used for framerate-
-    # independent physics.
-    dt = clock.tick(60) / 1000
 
 pygame.quit()
