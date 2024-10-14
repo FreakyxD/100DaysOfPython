@@ -12,41 +12,43 @@ class Starship:
         self.side_height = 30
 
         self.starship_width = self.body_width + 2 * self.side_width
+        self.starship_height = self.body_height + 10
 
-    def draw(self):
-        # calculate half dimensions using integer division
-        body_half_width = self.body_width // 2
-        body_half_height = self.body_height // 2
+        self.shape = pygame.Surface((self.starship_width, self.starship_height), pygame.SRCALPHA)
 
-        # main body position (centered)
-        main_body_x = self.pos.x - body_half_width
-        main_body_y = self.pos.y - body_half_height
+        # main body position
+        main_body_x = self.side_width
+        main_body_y = 0
 
-        # left side position (to the left of main body)
-        left_side_x = main_body_x - self.side_width
-        left_side_y = main_body_y + 10
+        # left side position
+        left_side_x = 0
+        left_side_y = 10
 
-        # right side position (to the right of main body)
-        right_side_x = main_body_x + self.body_width
+        # right side position
+        right_side_x = self.side_width + self.body_width
         right_side_y = left_side_y
 
         # draw main central body
         pygame.draw.rect(
-            self.screen, "white",
+            self.shape, "white",
             pygame.Rect(main_body_x, main_body_y, self.body_width, self.body_height)
         )
 
         # draw left side
         pygame.draw.rect(
-            self.screen, "white",
+            self.shape, "white",
             pygame.Rect(left_side_x, left_side_y, self.side_width, self.side_height)
         )
 
         # draw right side
         pygame.draw.rect(
-            self.screen, "white",
+            self.shape, "white",
             pygame.Rect(right_side_x, right_side_y, self.side_width, self.side_height)
         )
+
+    def draw(self):
+        blit_pos = self.shape.get_rect(center=(self.pos.x, self.pos.y))
+        self.screen.blit(self.shape, blit_pos)
 
     def handle_movement(self, dt):
         keys = pygame.key.get_pressed()
