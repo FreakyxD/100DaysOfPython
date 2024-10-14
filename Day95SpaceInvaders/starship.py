@@ -46,9 +46,14 @@ class Starship:
             pygame.Rect(right_side_x, right_side_y, self.side_width, self.side_height)
         )
 
+        self.mask = pygame.mask.from_surface(self.shape)
+
     def draw(self):
         blit_pos = self.shape.get_rect(center=(self.pos.x, self.pos.y))
         self.screen.blit(self.shape, blit_pos)
+
+    def get_mask(self):
+        return self.mask
 
     def handle_movement(self, dt):
         keys = pygame.key.get_pressed()
