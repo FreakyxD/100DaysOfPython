@@ -24,13 +24,13 @@ def upload_page():
 
 @app.route("/upload", methods=["POST"])
 def upload():
-    if "file" not in request.files:
-        return redirect(request.url)
+    if request.files["file"].filename == "":
+        flash("Please select a file to be uploaded")
+        return redirect(url_for("upload_page"))
     file = request.files["file"]
     if file and allowed_file(file.filename):
         file_path = os.path.join(UPLOAD_FOLDER, secure_filename(file.filename))
         file.save(file_path)
-        flash("File successfully uploaded")
         return redirect(url_for('results', filename=file.filename))
     return "Invalid file type", 400
 

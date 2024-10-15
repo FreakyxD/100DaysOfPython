@@ -3,6 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Find the Top colors</title>
+    <script>
+        window.onload = function() {
+            var flashMessages = {{ get_flashed_messages() | tojson }};
+            if (flashMessages.length > 0) {
+                var messageText = flashMessages.join('\n');
+                alert(messageText);  // Show the popup
+            }
+        };
+    </script>
 </head>
 <body>
 <p>Please upload a picture to find the top colors:</p>
