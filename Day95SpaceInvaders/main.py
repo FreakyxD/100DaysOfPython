@@ -1,7 +1,7 @@
 import pygame
 from typing import Union
 
-from scoreboard import Scoreboard
+from scoreboard import Score, Lives
 from separator import Separator
 from starship import Starship
 from projectile import Projectile
@@ -14,9 +14,10 @@ pygame.display.set_caption("Space Invaders")
 clock = pygame.time.Clock()
 running = True
 
-scoreboard = Scoreboard(screen, STARSHIP_SPAWN_Y)
+score = Score(screen, STARSHIP_SPAWN_Y)
 separator = Separator(screen, STARSHIP_SPAWN_Y)
 starship = Starship(screen, STARSHIP_SPAWN_Y)
+lives = Lives(screen, STARSHIP_SPAWN_Y, starship.get_surface())
 
 player_projectiles = []
 
@@ -50,7 +51,8 @@ while running:
 
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("black")
-    scoreboard.draw()
+    score.draw()
+    lives.draw()
 
     separator.draw()
 
@@ -72,6 +74,10 @@ while running:
 
         if is_collision_with_screen_top(player_projectile):
             player_projectiles.remove(player_projectile)
+            # todo for debugging purposes
+            lives.decrease_life()
+            if lives.current_lives < 0:
+                running = False
 
     # flip() the display to put everything on screen
     pygame.display.flip()

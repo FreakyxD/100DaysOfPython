@@ -55,6 +55,9 @@ class Starship:
     def get_mask(self):
         return self.mask
 
+    def get_surface(self):
+        return self.shape
+
     def handle_movement(self, dt):
         keys = pygame.key.get_pressed()
         move_distance = int(300 * dt)

@@ -1,11 +1,11 @@
 import pygame
 
 
-# todo handle score
-class Scoreboard:
+class Score:
     def __init__(self, screen, y_starship):
         self.screen = screen
         self.y_below_starship = y_starship + 40
+        self.current_score = 0
 
         try:
             self.font = pygame.font.Font("FontPressStart2P/PressStart2P.ttf", 36)
@@ -16,8 +16,29 @@ class Scoreboard:
             font_x = self.screen.get_width() // 2 + 250
             font_y = self.y_below_starship + 10
 
-        self.text_surface = self.font.render("Score: 9876", False, (0, 255, 0))
         self.text_pos = (font_x, font_y)
 
     def draw(self):
-        self.screen.blit(self.text_surface, self.text_pos)
+        text_surface = self.font.render(f"Score: {self.current_score}", False, (0, 255, 0))
+        self.screen.blit(text_surface, self.text_pos)
+
+    def increase_score(self, to_add):
+        self.current_score += to_add
+
+
+class Lives:
+    def __init__(self, screen, y_starship, starship_surface):
+        self.screen = screen
+        self.y_below_starship = y_starship + 37
+        self.starship_surface = starship_surface
+
+        self.current_lives = 2
+
+    def draw(self):
+        for i in range(self.current_lives):
+            x_pos = 10 + i * 50
+            y_pos = self.y_below_starship + 10
+            self.screen.blit(self.starship_surface, (x_pos, y_pos))
+
+    def decrease_life(self):
+        self.current_lives -= 1
