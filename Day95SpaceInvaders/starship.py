@@ -65,3 +65,8 @@ class Starship:
 
     def get_coords(self):
         return self.pos.x, self.pos.y
+
+    def get_top_center(self):
+        center_x = self.pos.x
+        top_y = self.pos.y - (self.starship_height // 2)
+        return center_x, top_y

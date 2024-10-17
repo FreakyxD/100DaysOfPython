@@ -12,7 +12,7 @@ class Projectile:
     def __init__(self, screen, starship_x, y_starship, projectile_state=ProjectileState.READY):
         self.screen = screen
 
-        self.pos = pygame.Vector2(starship_x + 1, y_starship - 10)
+        self.pos = pygame.Vector2(starship_x + 1, y_starship)
         self.projectile_state = projectile_state
 
         self.shape = pygame.Surface((4, 10), pygame.SRCALPHA)
@@ -24,7 +24,7 @@ class Projectile:
         self.mask = pygame.mask.from_surface(self.shape)
 
     def draw(self):
-        blit_pos = self.shape.get_rect(center=(self.pos.x, self.pos.y))
+        blit_pos = self.shape.get_rect(midtop=(self.pos.x, self.pos.y))
         self.screen.blit(self.shape, blit_pos)
 
     def get_mask(self):
