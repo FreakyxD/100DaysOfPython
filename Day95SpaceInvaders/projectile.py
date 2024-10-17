@@ -9,9 +9,10 @@ class ProjectileState(Enum):
 
 
 class Projectile:
-    def __init__(self, screen, projectile_state=ProjectileState.READY):
+    def __init__(self, screen, starship_x, projectile_state=ProjectileState.READY):
         self.screen = screen
-        self.pos = pygame.Vector2(self.screen.get_width() / 2, self.screen.get_height() * 0.9 - 15)
+
+        self.pos = pygame.Vector2(starship_x + 1, self.screen.get_height() * 0.9 - 10)
         self.projectile_state = projectile_state
 
         self.shape = pygame.Surface((4, 10), pygame.SRCALPHA)

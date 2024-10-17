@@ -1,5 +1,4 @@
 import pygame
-from matplotlib.projections import projection_registry
 
 from starship import Starship
 from projectile import Projectile
@@ -30,7 +29,8 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                projectiles.append(Projectile(screen))  # handle shooting
+                starship_x, _ = starship.get_coords()
+                projectiles.append(Projectile(screen, starship_x))  # handle shooting
         elif event.type == pygame.QUIT:
             running = False  # user clicked X to close the window
 
@@ -39,7 +39,6 @@ while running:
         projectile.draw()
 
     # todo destroy projectiles
-    # todo align projectiles with starship
 
     # flip() the display to put everything on screen
     pygame.display.flip()

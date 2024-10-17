@@ -63,3 +63,6 @@ class Starship:
             self.pos.x -= move_distance
         if keys[pygame.K_d] and (self.pos.x + self.starship_width // 2) < self.screen.get_width() - edge_offset:
             self.pos.x += move_distance
+
+    def get_coords(self):
+        return self.pos.x, self.pos.y
