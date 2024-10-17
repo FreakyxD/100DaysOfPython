@@ -1,15 +1,18 @@
 import pygame
 
+from scoreboard import Scoreboard
 from starship import Starship
 from projectile import Projectile
 
 # pygame setup
 pygame.init()
 screen = pygame.display.set_mode((960, 720))
+Y_STARSHIP = screen.get_height() * 0.87
 clock = pygame.time.Clock()
 running = True
 
-starship = Starship(screen)
+scoreboard = Scoreboard(screen, Y_STARSHIP)
+starship = Starship(screen, Y_STARSHIP)
 
 projectiles = []
 
@@ -20,7 +23,8 @@ while running:
     dt = clock.tick(60) / 1000
 
     # fill the screen with a color to wipe away anything from last frame
-    screen.fill("purple")
+    screen.fill("black")
+    scoreboard.draw()
 
     starship.handle_movement(dt)
     starship.draw()
@@ -30,7 +34,7 @@ while running:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 starship_x, _ = starship.get_coords()
-                projectiles.append(Projectile(screen, starship_x))  # handle shooting
+                projectiles.append(Projectile(screen, starship_x, Y_STARSHIP))  # handle shooting
         elif event.type == pygame.QUIT:
             running = False  # user clicked X to close the window
 

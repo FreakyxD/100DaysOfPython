@@ -1,10 +1,9 @@
 import pygame
 
-
 class Starship:
-    def __init__(self, screen):
+    def __init__(self, screen, y_starship):
         self.screen = screen
-        self.pos = pygame.Vector2(self.screen.get_width() // 2, int(self.screen.get_height() * 0.9))
+        self.pos = pygame.Vector2(self.screen.get_width() // 2, y_starship)
 
         self.body_width = 15
         self.body_height = 30
@@ -30,19 +29,19 @@ class Starship:
 
         # draw main central body
         pygame.draw.rect(
-            self.shape, "white",
+            self.shape, (0, 255, 0),
             pygame.Rect(main_body_x, main_body_y, self.body_width, self.body_height)
         )
 
         # draw left side
         pygame.draw.rect(
-            self.shape, "white",
+            self.shape, (0, 255, 0),
             pygame.Rect(left_side_x, left_side_y, self.side_width, self.side_height)
         )
 
         # draw right side
         pygame.draw.rect(
-            self.shape, "white",
+            self.shape, (0, 255, 0),
             pygame.Rect(right_side_x, right_side_y, self.side_width, self.side_height)
         )
 
