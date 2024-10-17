@@ -10,6 +10,7 @@ from projectile import Projectile
 pygame.init()
 screen = pygame.display.set_mode((960, 720))
 STARSHIP_SPAWN_Y = screen.get_height() * 0.87
+pygame.display.set_caption("Space Invaders")
 clock = pygame.time.Clock()
 running = True
 
@@ -35,6 +36,7 @@ def is_collision_detected(object_1: Union[Starship, Projectile],
     collision_point = object_2.mask.overlap(object_1.mask, (offset_x, offset_y))
 
     return collision_point is not None
+
 
 def is_collision_with_screen_top(p_projectile: Projectile):
     return p_projectile.pos.y < 0

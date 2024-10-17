@@ -1,5 +1,6 @@
 import pygame
 
+
 class Starship:
     def __init__(self, screen, y_starship):
         self.screen = screen
