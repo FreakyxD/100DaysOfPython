@@ -43,6 +43,8 @@ def is_collision_with_screen_top(p_projectile: Projectile):
 
 
 player_projectile = None
+player_last_shot_time = 0
+player_shooting_cooldown = 500  # in milliseconds
 while running:
     # limits FPS to 60
     # dt is delta time in seconds since last frame, used for framerate-
@@ -64,8 +66,12 @@ while running:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 center_x, top_y = starship.get_top_center()
-                if not player_projectile:  # allow only one projectile at a time
+
+                current_time = pygame.time.get_ticks()
+                # allow only one projectile at a time and check if cooldown is over
+                if not player_projectile and (current_time - player_last_shot_time) >= player_shooting_cooldown:
                     player_projectile = Projectile(screen, center_x, top_y)  # handle shooting
+                    player_last_shot_time = current_time
         elif event.type == pygame.QUIT:
             running = False  # user clicked X to close the window
 
