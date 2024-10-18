@@ -5,6 +5,7 @@ from scoreboard import Score, Lives
 from separator import Separator
 from starship import Starship
 from projectile import Projectile
+from alien import Alien, ALIEN_WIDTH
 
 # pygame setup
 pygame.init()
@@ -20,6 +21,28 @@ starship = Starship(screen, STARSHIP_SPAWN_Y)
 lives = Lives(screen, STARSHIP_SPAWN_Y, starship.get_surface())
 
 
+def spawn_aliens(alien_list):
+    number_of_columns = 11
+    number_of_rows = 5
+    row_alien_types = [1, 2, 2, 3, 3]
+
+    x_spacing = 20  # column spacing
+    y_spacing = 60  # row spacing
+
+    total_row_width = number_of_columns * ALIEN_WIDTH + (number_of_columns - 1) * x_spacing
+    start_x = (screen.get_width() - total_row_width) / 2
+    start_y = int(screen.get_height() * 0.15)
+
+    for row in range(number_of_rows):
+        alien_type = row_alien_types[row]
+        alien_y = start_y + row * y_spacing
+
+        for column in range(number_of_columns):
+            alien_x = start_x + column * (ALIEN_WIDTH + x_spacing) + ALIEN_WIDTH / 2
+
+            # create and add the alien to the list
+            new_alien = Alien(screen, (alien_x, alien_y), alien_type)
+            alien_list.append(new_alien)
 
 def is_collision_detected(object_1: Union[Starship, Projectile],
                           object_2: Union[Starship, Projectile, Separator]):
@@ -42,6 +65,9 @@ def is_collision_with_screen_top(p_projectile: Projectile):
     return p_projectile.pos.y < 0
 
 
+aliens = []
+spawn_aliens(aliens)
+
 player_projectile = None
 player_last_shot_time = 0
 player_shooting_cooldown = 500  # in milliseconds
@@ -60,6 +86,9 @@ while running:
 
     starship.handle_movement(dt)
     starship.draw()
+
+    for alien in aliens:
+        alien.draw()
 
     # poll for events
     for event in pygame.event.get():
