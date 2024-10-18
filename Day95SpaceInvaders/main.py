@@ -89,6 +89,7 @@ while running:
 
     for alien in aliens:
         alien.draw()
+        alien.handle_movement(dt)
 
     # poll for events
     for event in pygame.event.get():

@@ -3,6 +3,9 @@ import pygame
 ALIEN_WIDTH = 40
 ALIEN_HEIGHT = 40
 
+global alien_direction
+alien_direction = 1  # 1 for moving right, -1 for moving left
+
 
 def create_alien_type1():
     # create Alien Type 1: body and eyes
@@ -61,19 +64,20 @@ class Alien:
             raise ValueError("Invalid alien type. Choose 1, 2, or 3.")
 
         self.mask = pygame.mask.from_surface(self.shape)  # mask for collisions
-        self.speed = pygame.Vector2(100, 0)  # horizontal speed
+        self.speed = 100  # horizontal speed
 
     def draw(self):
         blit_pos = self.shape.get_rect(center=self.pos)
         self.screen.blit(self.shape, blit_pos)
 
     def handle_movement(self, dt):
-        self.pos += self.speed * dt
+        # todo fix movement
+        global alien_direction
+        if self.pos.x - ALIEN_WIDTH // 2 <= 0 or self.pos.x + ALIEN_WIDTH // 2 >= self.screen.get_width():
+            # hit the wall
+            alien_direction *= -1
 
-        # Reverse direction at screen edges and move down (commented out logic)
-        # if self.pos.x - ALIEN_WIDTH // 2 <= 0 or self.pos.x + ALIEN_WIDTH // 2 >= self.screen.get_width():
-        #     self.speed.x = -self.speed.x
-        #     self.pos.y += ALIEN_HEIGHT
+        self.pos.x += alien_direction * int(self.speed * dt)
 
     def get_mask(self):
         return self.mask
