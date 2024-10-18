@@ -19,7 +19,6 @@ separator = Separator(screen, STARSHIP_SPAWN_Y)
 starship = Starship(screen, STARSHIP_SPAWN_Y)
 lives = Lives(screen, STARSHIP_SPAWN_Y, starship.get_surface())
 
-player_projectiles = []
 
 
 def is_collision_detected(object_1: Union[Starship, Projectile],
@@ -43,6 +42,7 @@ def is_collision_with_screen_top(p_projectile: Projectile):
     return p_projectile.pos.y < 0
 
 
+player_projectile = None
 while running:
     # limits FPS to 60
     # dt is delta time in seconds since last frame, used for framerate-
@@ -64,20 +64,22 @@ while running:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 center_x, top_y = starship.get_top_center()
-                player_projectiles.append(Projectile(screen, center_x, top_y))  # handle shooting
+                if not player_projectile:  # allow only one projectile at a time
+                    player_projectile = Projectile(screen, center_x, top_y)  # handle shooting
         elif event.type == pygame.QUIT:
             running = False  # user clicked X to close the window
 
-    for player_projectile in player_projectiles:
+    if player_projectile:
         player_projectile.handle_projectile_movement(dt)
         player_projectile.draw()
 
         if is_collision_with_screen_top(player_projectile):
-            player_projectiles.remove(player_projectile)
+            player_projectile = None
             # todo for debugging purposes
-            lives.decrease_life()
-            if lives.current_lives < 0:
-                running = False
+            # lives.decrease_life()
+
+    if lives.current_lives < 0:
+        running = False
 
     # flip() the display to put everything on screen
     pygame.display.flip()
