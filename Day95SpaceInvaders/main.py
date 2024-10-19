@@ -112,6 +112,11 @@ while running:
             # todo for debugging purposes
             # lives.decrease_life()
 
+    for alien in aliens:
+        if is_collision_detected(starship, alien):
+            lives.decrease_life()
+            aliens.remove(alien)
+
     if lives.current_lives < 0:
         running = False
 
