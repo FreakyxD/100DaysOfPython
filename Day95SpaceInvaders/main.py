@@ -5,7 +5,7 @@ from scoreboard import Score, Lives
 from separator import Separator
 from starship import Starship
 from projectile import Projectile
-from alien import Alien, ALIEN_WIDTH
+from alien import Alien, ALIEN_WIDTH, handle_alien_movement
 
 # pygame setup
 pygame.init()
@@ -87,9 +87,7 @@ while running:
     starship.handle_movement(dt)
     starship.draw()
 
-    for alien in aliens:
-        alien.draw()
-        alien.handle_movement(dt)
+    handle_alien_movement(aliens, dt, screen.get_width())
 
     # poll for events
     for event in pygame.event.get():

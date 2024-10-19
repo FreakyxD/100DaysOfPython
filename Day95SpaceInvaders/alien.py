@@ -48,6 +48,29 @@ def create_alien_type3():
     return surface
 
 
+def handle_alien_movement(list_of_aliens, dt, screen_width):
+    global alien_direction
+    edge_hit = False
+
+    for alien in list_of_aliens:
+        if alien.pos.x - ALIEN_WIDTH // 2 <= 0 or alien.pos.x + ALIEN_WIDTH // 2 >= screen_width:
+            # hit the wall
+            edge_hit = True
+            break
+
+    if edge_hit:
+        alien_direction *= -1
+
+        # move every alien down
+        for alien in list_of_aliens:
+            alien.pos.y += ALIEN_HEIGHT // 2
+
+    for alien in list_of_aliens:
+        alien.move(dt, alien_direction)
+        alien.draw()
+
+
+
 class Alien:
     def __init__(self, screen, pos, alien_type):
         self.screen = screen
@@ -70,14 +93,8 @@ class Alien:
         blit_pos = self.shape.get_rect(center=self.pos)
         self.screen.blit(self.shape, blit_pos)
 
-    def handle_movement(self, dt):
-        # todo fix movement
-        global alien_direction
-        if self.pos.x - ALIEN_WIDTH // 2 <= 0 or self.pos.x + ALIEN_WIDTH // 2 >= self.screen.get_width():
-            # hit the wall
-            alien_direction *= -1
-
-        self.pos.x += alien_direction * int(self.speed * dt)
+    def move(self, dt, direction):
+        self.pos.x += direction * int(self.speed * dt)
 
     def get_mask(self):
         return self.mask
