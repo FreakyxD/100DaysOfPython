@@ -52,18 +52,25 @@ def handle_alien_movement(list_of_aliens, dt, screen_width):
     global alien_direction
     edge_hit = False
 
-    for alien in list_of_aliens:
-        if alien.pos.x - ALIEN_WIDTH // 2 <= 0 or alien.pos.x + ALIEN_WIDTH // 2 >= screen_width:
-            # hit the wall
-            edge_hit = True
-            break
+    cooldown_time = 2000  # in milliseconds
+    last_edge_hit_time = getattr(handle_alien_movement, "last_edge_hit_time", 0)
+    current_ticks = pygame.time.get_ticks()
 
-    if edge_hit:
-        alien_direction *= -1
-
-        # move every alien down
+    if current_ticks - last_edge_hit_time > cooldown_time:
         for alien in list_of_aliens:
-            alien.pos.y += ALIEN_HEIGHT // 2
+            if alien.pos.x - ALIEN_WIDTH // 2 <= 0 or alien.pos.x + ALIEN_WIDTH // 2 >= screen_width:
+                # hit the wall
+                edge_hit = True
+                break
+
+        if edge_hit:
+            alien_direction *= -1
+
+            # move every alien down
+            for alien in list_of_aliens:
+                alien.pos.y += ALIEN_HEIGHT // 2
+
+            handle_alien_movement.last_edge_hit_time = current_ticks
 
     for alien in list_of_aliens:
         alien.move(dt, alien_direction)
