@@ -109,13 +109,16 @@ while running:
 
         if is_collision_with_screen_top(player_projectile):
             player_projectile = None
-            # todo for debugging purposes
-            # lives.decrease_life()
 
     for alien in aliens:
         if is_collision_detected(starship, alien):
             lives.decrease_life()
             aliens.remove(alien)
+
+        if player_projectile:
+            if is_collision_detected(player_projectile, alien):
+                aliens.remove(alien)
+                player_projectile = None
 
     if lives.current_lives < 0:
         running = False
