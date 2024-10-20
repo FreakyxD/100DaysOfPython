@@ -46,7 +46,7 @@ def spawn_aliens(alien_list):
 
 
 def is_collision_detected(object_1: Union[Starship, Projectile],
-                          object_2: Union[Starship, Projectile, Separator]):
+                          object_2: Union[Separator, Alien]):
     if isinstance(object_2, Separator):
         # separator is horizontal line, no need for offset_x
         offset_x = 0
