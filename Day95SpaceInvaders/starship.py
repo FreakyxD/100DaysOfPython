@@ -52,8 +52,6 @@ class Starship:
         blit_pos = self.shape.get_rect(center=(self.pos.x, self.pos.y))
         self.screen.blit(self.shape, blit_pos)
 
-    def get_mask(self):
-        return self.mask
 
     def get_surface(self):
         return self.shape
@@ -66,9 +64,6 @@ class Starship:
             self.pos.x -= move_distance
         if keys[pygame.K_d] and (self.pos.x + self.starship_width // 2) < self.screen.get_width() - edge_offset:
             self.pos.x += move_distance
-
-    def get_coords(self):
-        return self.pos.x, self.pos.y
 
     def get_top_center(self):
         center_x = self.pos.x

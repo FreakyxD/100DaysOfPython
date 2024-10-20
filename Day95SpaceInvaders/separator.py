@@ -20,8 +20,6 @@ class Separator:
     def draw(self):
         self.screen.blit(self.shape, (0, self.y_below_starship))
 
-    def get_mask(self):
-        return self.mask
 
     def get_y(self):
         return self.y_below_starship

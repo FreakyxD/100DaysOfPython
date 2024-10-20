@@ -101,12 +101,3 @@ class Alien:
 
     def move(self, dt, direction):
         self.pos.x += direction * int(self.speed * dt)
-
-    def get_mask(self):
-        return self.mask
-
-    def get_surface(self):
-        return self.shape
-
-    def get_coords(self):
-        return self.pos.x, self.pos.y
