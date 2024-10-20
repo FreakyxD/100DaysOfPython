@@ -3,7 +3,6 @@ import pygame
 ALIEN_WIDTH = 40
 ALIEN_HEIGHT = 40
 
-global alien_direction
 alien_direction = 1  # 1 for moving right, -1 for moving left
 
 
