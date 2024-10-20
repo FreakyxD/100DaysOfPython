@@ -76,11 +76,11 @@ def handle_alien_movement(list_of_aliens, dt, screen_width):
         alien.draw()
 
 
-
 class Alien:
     def __init__(self, screen, pos, alien_type):
         self.screen = screen
         self.pos = pygame.Vector2(pos)
+        self.rect = None
 
         # assign alien shape based on type
         if alien_type == 1:
@@ -98,6 +98,9 @@ class Alien:
     def draw(self):
         blit_pos = self.shape.get_rect(center=self.pos)
         self.screen.blit(self.shape, blit_pos)
+
+    def update_rect(self):
+        self.rect = self.shape.get_rect(center=self.pos)
 
     def move(self, dt, direction):
         self.pos.x += direction * int(self.speed * dt)

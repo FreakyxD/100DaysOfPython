@@ -5,6 +5,7 @@ class Starship:
     def __init__(self, screen, y_starship):
         self.screen = screen
         self.pos = pygame.Vector2(self.screen.get_width() // 2, y_starship)
+        self.rect = None
 
         self.body_width = 15
         self.body_height = 30
@@ -52,6 +53,8 @@ class Starship:
         blit_pos = self.shape.get_rect(center=(self.pos.x, self.pos.y))
         self.screen.blit(self.shape, blit_pos)
 
+    def update_rect(self):
+        self.rect = self.shape.get_rect(center=(self.pos.x, self.pos.y))
 
     def get_surface(self):
         return self.shape

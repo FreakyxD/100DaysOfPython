@@ -53,11 +53,11 @@ def is_collision_detected(object_1: Union[Starship, Projectile],
         offset_y = int(object_2.get_y() - object_1.pos.y)
     else:
         # offset between the objects
-        offset_x = int(object_2.pos.x - object_1.pos.x)
-        offset_y = int(object_2.pos.y - object_1.pos.y)
+        offset_x = object_2.rect.x - object_1.rect.x
+        offset_y = object_2.rect.y - object_1.rect.y
 
     # check if the masks overlap
-    collision_point = object_2.mask.overlap(object_1.mask, (offset_x, offset_y))
+    collision_point = object_1.mask.overlap(object_2.mask, (offset_x, offset_y))
 
     return collision_point is not None
 
@@ -105,6 +105,13 @@ while running:
     handle_alien_movement(aliens, dt, screen.get_width())
     if player_projectile:
         player_projectile.handle_projectile_movement(dt)
+
+    # update rects of all movable objects for precise collision handling
+    starship.update_rect()
+    for alien in aliens:
+        alien.update_rect()
+    if player_projectile:
+        player_projectile.update_rect()
 
     # collision checks
     if player_projectile:
