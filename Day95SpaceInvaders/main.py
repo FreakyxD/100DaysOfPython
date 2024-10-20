@@ -44,6 +44,7 @@ def spawn_aliens(alien_list):
             new_alien = Alien(screen, (alien_x, alien_y), alien_type)
             alien_list.append(new_alien)
 
+
 def is_collision_detected(object_1: Union[Starship, Projectile],
                           object_2: Union[Starship, Projectile, Separator]):
     if isinstance(object_2, Separator):
@@ -72,23 +73,6 @@ player_projectile = None
 player_last_shot_time = 0
 player_shooting_cooldown = 500  # in milliseconds
 while running:
-    # limits FPS to 60
-    # dt is delta time in seconds since last frame, used for framerate-
-    # independent physics.
-    dt = clock.tick(60) / 1000
-
-    # fill the screen with a color to wipe away anything from last frame
-    screen.fill("black")
-    score.draw()
-    lives.draw()
-
-    separator.draw()
-
-    starship.handle_movement(dt)
-    starship.draw()
-
-    handle_alien_movement(aliens, dt, screen.get_width())
-
     # poll for events
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
@@ -103,10 +87,27 @@ while running:
         elif event.type == pygame.QUIT:
             running = False  # user clicked X to close the window
 
+    # limits FPS to 60
+    # dt is delta time in seconds since last frame, used for framerate-
+    # independent physics.
+    dt = clock.tick(60) / 1000
+
+    # fill the screen with a color to wipe away anything from last frame
+    screen.fill("black")
+
+    # draw static elements
+    score.draw()
+    lives.draw()
+    separator.draw()
+
+    # move everything
+    starship.handle_movement(dt)
+    handle_alien_movement(aliens, dt, screen.get_width())
     if player_projectile:
         player_projectile.handle_projectile_movement(dt)
-        player_projectile.draw()
 
+    # collision checks
+    if player_projectile:
         if is_collision_with_screen_top(player_projectile):
             player_projectile = None
 
@@ -114,12 +115,17 @@ while running:
         if is_collision_detected(starship, alien):
             lives.decrease_life()
             aliens.remove(alien)
-
         if player_projectile:
             if is_collision_detected(player_projectile, alien):
                 aliens.remove(alien)
                 player_projectile = None
 
+    # draw dynamic elements
+    starship.draw()
+    if player_projectile:
+        player_projectile.draw()
+
+    # check lives
     if lives.current_lives < 0:
         running = False
 
