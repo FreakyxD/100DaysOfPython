@@ -45,16 +45,11 @@ def spawn_aliens(alien_list):
             alien_list.append(new_alien)
 
 
-def is_collision_detected(object_1: Union[Starship, Projectile],
+def is_collision_detected(object_1: Union[Starship, Projectile, Alien],
                           object_2: Union[Separator, Alien]):
-    if isinstance(object_2, Separator):
-        # separator is horizontal line, no need for offset_x
-        offset_x = 0
-        offset_y = int(object_2.get_y() - object_1.pos.y)
-    else:
-        # offset between the objects
-        offset_x = object_2.rect.x - object_1.rect.x
-        offset_y = object_2.rect.y - object_1.rect.y
+    # offset between the objects
+    offset_x = object_2.rect.x - object_1.rect.x
+    offset_y = object_2.rect.y - object_1.rect.y
 
     # check if the masks overlap
     collision_point = object_1.mask.overlap(object_2.mask, (offset_x, offset_y))
@@ -107,6 +102,7 @@ while running:
         player_projectile.handle_projectile_movement(dt)
 
     # update rects of all movable objects for precise collision handling
+    separator.update_rect()
     starship.update_rect()
     for alien in aliens:
         alien.update_rect()
@@ -122,6 +118,8 @@ while running:
         if is_collision_detected(starship, alien):
             lives.decrease_life()
             aliens.remove(alien)
+        if is_collision_detected(alien, separator):
+            aliens.remove(alien)
         if player_projectile:
             if is_collision_detected(player_projectile, alien):
                 aliens.remove(alien)
@@ -129,6 +127,8 @@ while running:
 
     # draw dynamic elements
     starship.draw()
+    for alien in aliens:
+        alien.draw()
     if player_projectile:
         player_projectile.draw()
 
