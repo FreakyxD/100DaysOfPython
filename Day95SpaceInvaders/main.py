@@ -1,9 +1,10 @@
 import random
+import time
 
 import pygame
 from typing import Union
 
-from scoreboard import Score, Lives
+from scoreboard import Score, Lives, GameOver
 from separator import Separator
 from starship import Starship
 from projectile import Projectile
@@ -18,6 +19,7 @@ clock = pygame.time.Clock()
 running = True
 
 score = Score(screen, STARSHIP_SPAWN_Y)
+game_over = GameOver(screen)
 separator = Separator(screen, STARSHIP_SPAWN_Y)
 starship = Starship(screen, STARSHIP_SPAWN_Y)
 lives = Lives(screen, STARSHIP_SPAWN_Y, starship.get_surface())
@@ -153,6 +155,7 @@ while running:
             aliens.remove(alien)
         if is_collision_detected(alien, separator):
             aliens.remove(alien)
+            running = False
         if player_projectile:
             if is_collision_detected(player_projectile, alien):
                 aliens.remove(alien)
@@ -175,5 +178,9 @@ while running:
 
     # flip() the display to put everything on screen
     pygame.display.flip()
+
+game_over.draw()
+pygame.display.flip()
+pygame.time.wait(10000)  # wait for 10 seconds
 
 pygame.quit()

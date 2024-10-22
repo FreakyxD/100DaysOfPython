@@ -42,3 +42,21 @@ class Lives:
 
     def decrease_life(self):
         self.current_lives -= 1
+
+
+class GameOver:
+    def __init__(self, screen):
+        self.screen = screen
+        self.string = "Game Over"
+
+        try:
+            self.font = pygame.font.Font("FontPressStart2P/PressStart2P.ttf", 70)
+        except FileNotFoundError:
+            self.font = pygame.font.Font(None, 120)
+
+        self.text_pos = (self.screen.get_width() // 2 - self.font.size(self.string)[0] // 2,
+                         self.screen.get_height() // 2 - self.font.size(self.string)[1] // 2)
+
+    def draw(self):
+        text_surface = self.font.render(self.string, False, (255, 0, 0))
+        self.screen.blit(text_surface, self.text_pos)
