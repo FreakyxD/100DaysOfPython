@@ -1,3 +1,5 @@
+import random
+
 import pygame
 from typing import Union
 
@@ -46,7 +48,7 @@ def spawn_aliens(alien_list):
 
 
 def is_collision_detected(object_1: Union[Starship, Projectile, Alien],
-                          object_2: Union[Separator, Alien]):
+                          object_2: Union[Separator, Projectile, Alien]):
     # offset between the objects
     offset_x = object_2.rect.x - object_1.rect.x
     offset_y = object_2.rect.y - object_1.rect.y
@@ -61,7 +63,12 @@ def is_collision_with_screen_top(p_projectile: Projectile):
     return p_projectile.pos.y < 0
 
 
+def is_collision_with_screen_bottom(p_projectile: Projectile):
+    return p_projectile.pos.y > separator.get_y()
+
+
 aliens = []
+alien_projectiles = []
 spawn_aliens(aliens)
 
 player_projectile = None
@@ -98,6 +105,15 @@ while running:
     # move everything
     starship.handle_movement(dt)
     handle_alien_movement(aliens, dt, screen.get_width())
+
+    if len(alien_projectiles) < 6 and random.random() < 0.05:  # 5% chance per frame
+        random_alien = random.choice(aliens)
+        alien_projectiles.append(
+            Projectile(screen, random_alien.pos.x, random_alien.pos.y, is_half_speed=True, wide_shots=True))
+    if alien_projectiles:
+        for projectile in alien_projectiles:
+            projectile.handle_projectile_movement(dt, direction='down')
+
     if player_projectile:
         player_projectile.handle_projectile_movement(dt)
 
@@ -106,6 +122,9 @@ while running:
     starship.update_rect()
     for alien in aliens:
         alien.update_rect()
+    if alien_projectiles:
+        for projectile in alien_projectiles:
+            projectile.update_rect()
     if player_projectile:
         player_projectile.update_rect()
 
@@ -113,6 +132,20 @@ while running:
     if player_projectile:
         if is_collision_with_screen_top(player_projectile):
             player_projectile = None
+    if alien_projectiles and player_projectile:
+        for projectile in alien_projectiles:
+            if is_collision_detected(player_projectile, projectile):
+                alien_projectiles.remove(projectile)
+                player_projectile = None
+                break
+
+    if alien_projectiles:
+        for projectile in alien_projectiles:
+            if is_collision_detected(starship, projectile):
+                lives.decrease_life()
+                alien_projectiles.remove(projectile)
+            if is_collision_with_screen_bottom(projectile):
+                alien_projectiles.remove(projectile)
 
     for alien in aliens:
         if is_collision_detected(starship, alien):
@@ -131,6 +164,9 @@ while running:
         alien.draw()
     if player_projectile:
         player_projectile.draw()
+    if alien_projectiles:
+        for projectile in alien_projectiles:
+            projectile.draw()
 
     # check lives
     if lives.current_lives < 0:
