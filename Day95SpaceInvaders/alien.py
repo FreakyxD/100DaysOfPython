@@ -84,10 +84,13 @@ class Alien:
         # assign alien shape based on type
         if alien_type == 1:
             self.shape = create_alien_type1()
+            self.value = 30
         elif alien_type == 2:
             self.shape = create_alien_type2()
+            self.value = 20
         elif alien_type == 3:
             self.shape = create_alien_type3()
+            self.value = 10
         else:
             raise ValueError("Invalid alien type. Choose 1, 2, or 3.")
 

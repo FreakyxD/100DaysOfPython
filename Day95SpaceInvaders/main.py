@@ -157,6 +157,7 @@ while running:
             if is_collision_detected(player_projectile, alien):
                 aliens.remove(alien)
                 player_projectile = None
+                score.increase_score(alien.value)
 
     # draw dynamic elements
     starship.draw()
