@@ -9,7 +9,6 @@ class Separator:
         self.pos = pygame.Vector2(0, self.y_below_starship)
         self.rect = None
 
-
         self.shape = pygame.Surface((self.screen.get_width(), 40), pygame.SRCALPHA)
         pygame.draw.line(
             self.shape,

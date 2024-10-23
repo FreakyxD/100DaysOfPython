@@ -4,7 +4,7 @@ import time
 import pygame
 from typing import Union
 
-from scoreboard import Score, Lives, GameOver
+from scoreboard import Score, Lives, EndGameMessage
 from separator import Separator
 from starship import Starship
 from projectile import Projectile
@@ -17,9 +17,11 @@ STARSHIP_SPAWN_Y = screen.get_height() * 0.87
 pygame.display.set_caption("Space Invaders")
 clock = pygame.time.Clock()
 running = True
+won = False
 
 score = Score(screen, STARSHIP_SPAWN_Y)
-game_over = GameOver(screen)
+game_over = EndGameMessage(screen, "Game Over", (255, 0, 0))
+you_win = EndGameMessage(screen, "You Win!", (0, 255, 0))
 separator = Separator(screen, STARSHIP_SPAWN_Y)
 starship = Starship(screen, STARSHIP_SPAWN_Y)
 lives = Lives(screen, STARSHIP_SPAWN_Y, starship.get_surface())
@@ -100,7 +102,6 @@ while running:
     screen.fill("black")
 
     # draw static elements
-    score.draw()
     lives.draw()
     separator.draw()
 
@@ -176,10 +177,20 @@ while running:
     if lives.current_lives < 0:
         running = False
 
+    if not aliens:
+        running = False
+        won = True
+
+    score.draw()
+
     # flip() the display to put everything on screen
     pygame.display.flip()
 
-game_over.draw()
+if won:
+    you_win.draw()
+else:
+    game_over.draw()
+
 pygame.display.flip()
 pygame.time.wait(10000)  # wait for 10 seconds
 

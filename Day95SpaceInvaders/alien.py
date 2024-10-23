@@ -46,6 +46,7 @@ def create_alien_type3():
 
     return surface
 
+
 def handle_alien_movement(list_of_aliens, dt, screen_width):
     global alien_direction
     edge_hit = False
@@ -79,7 +80,6 @@ class Alien:
         self.screen = screen
         self.pos = pygame.Vector2(pos)
         self.rect = None
-
 
         # assign alien shape based on type
         if alien_type == 1:
