@@ -17,7 +17,7 @@ cycler==0.12.1
 debugpy==1.8.1
 decorator==5.1.1
 defusedxml==0.8.0rc2
-Django==5.0.10
+Django==5.1.6
 django-embed-video==1.4.9
 dnspython==2.6.1
 docopt==0.6.2
@@ -111,5 +111,3 @@ Werkzeug==3.0.6
 wsproto==1.2.0
 WTForms==3.1.2
 yarg==0.1.9
-
-pygame==2.6.1
